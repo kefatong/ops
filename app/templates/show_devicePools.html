@@ -1,0 +1,111 @@
+{% import "macros.html" as macros %}
+{% extends "common/base.html" %}
+
+{% block static %}
+    {{ super() }}
+    <link href="{{ url_for("static", filename="assets/jquery-datatables-editable/datatables.css") }}" rel="stylesheet">
+    <link href="{{ url_for("static", filename="assets/datatables/jquery.dataTables.min.css") }}" rel="stylesheet"
+          type="text/css"/>
+
+
+{% endblock static %}
+
+{% block page_content %}
+
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <div class="page-title">
+            <h3 class="title">虚拟机管理</h3>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="m-b-28">
+                        <a href="{{ url_for('main.create_devicePools') }}">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">添加<i
+                                    class="fa fa-plus"></i></button>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>资源池类型</th>
+                                        <th>资源池名称</th>
+                                        <th>使用部门</th>
+                                        <th>虚拟机数量</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                    {% for pool in devicePools %}
+                                        <tr>
+                                            <td>
+                                                <label class="cr-styled">
+                                                    <input type="checkbox" checked="">
+                                                    <i class="fa"></i>
+                                                </label>
+                                            </td>
+                                            <td>{{ pool.type }}</td>
+                                            <td>{{ pool.name }}</td>
+                                            <td>{{ pool.usedept }}</td>
+                                            <td>{{ db.session.query(VirtMachine).filter(VirtMachine.pool_id == pool.id).count() }}</td>
+                                            <td class="actions">
+                                                <a class="hidden on-editing save-row" href="#"><i
+                                                        class="fa fa-save"></i></a>
+                                                <a class="hidden on-editing cancel-row" href="#"><i
+                                                        class="fa fa-times"></i></a>
+                                                <a class="on-default edit-row"
+                                                   href="{{ url_for('main.edit_devicePools',id=pool.id) }}"><i
+                                                        class="fa fa-pencil"></i></a>
+                                                <a class="on-default remove-row"
+                                                   href="{{ url_for('main.delete_devicePools',id=pool.id) }}"><i
+                                                        class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Row -->
+
+
+    </div>
+
+    <!-- Page Content Ends -->
+    <!-- ================== -->
+
+
+
+{% endblock page_content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='assets/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/datatables/dataTables.bootstrap.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').dataTable();
+        });
+    </script>
+
+{% endblock scripts %}

@@ -1,0 +1,61 @@
+import re
+import os
+import datetime
+
+
+
+def check_logs(logfile):
+    if os.path.exists(logfile):
+        with open(logfile) as f:
+        
+            contents = []
+            block_contents = {'Error':False, 'discard':True, 'contents':[]}
+            for i in f:
+                i = i.strip('\xef\xbb\xbf').strip('\n').strip()
+
+                block_contents['contents'].append(i)
+                if re.search('AM - ',i) or re.search('PM - ',i):
+                    str_time = i.split('-')[0]
+                    now_time = datetime.datetime.now()
+                    log_time = datetime.datetime.strptime(str_time.strip(),'%m/%d/%Y %H:%M:%S %p')
+
+                    day = now_time - log_time
+
+                    if day.days <= 7:
+                        block_contents['discard'] = False
+
+                if re.search('error', i):
+                    block_contents['Error'] = True
+
+                if re.search('-'*10, i):
+                    if block_contents['Error'] is True:
+                        contents.append(block_contents)
+                        block_contents = {'Error':False, 'discard':True, 'contents':[]}
+                    block_contents = {'Error':False, 'discard':True, 'contents':[]}
+                    
+                #print i.split()
+            
+
+        for t in contents:
+            for c in t['contents']:
+                print c
+        print "\nError Count: {0} \n".format(len(contents))
+
+
+
+
+if __name__ == '__main__':
+    QUEUE_HOME = [ os.path.dirname(dir) for dir in os.popen('find / -name qm.ini 2> /dev/null').read().split('\n') ]
+
+    for h in QUEUE_HOME:
+        if h != '':
+
+            for number in (3,2,1):
+                print "Queue Name: {0}".format(h)
+                logfile_path = '{0}/errors/AMQERR0{1}.LOG'.format(h,number)
+                if os.path.exists(logfile_path):
+                    print "Logfile: {0}".format(logfile_path)
+                    check_logs(logfile_path)
+                    print '#'*50 + '\n'
+                    
+                    

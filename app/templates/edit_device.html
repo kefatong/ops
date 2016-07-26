@@ -1,0 +1,290 @@
+{% import "macros.html" as macros %}
+{% extends "common/base.html" %}
+
+{% block static %}
+
+    {{ super() }}
+    <!-- Plugins css-->
+    <link href="{{ url_for("static", filename="assets/tagsinput/jquery.tagsinput.css") }}" rel="stylesheet"/>
+    <link href="{{ url_for("static", filename="assets/toggles/toggles.css") }}" rel="stylesheet"/>
+    <link href="{{ url_for("static", filename="assets/timepicker/bootstrap-timepicker.min.css") }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename="assets/timepicker/bootstrap-datepicker.min.css") }}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for("static", filename="assets/colorpicker/colorpicker.css") }}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename="assets/jquery-multi-select/multi-select.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/select2/select2.css') }}"/>
+
+{% endblock static %}
+
+{% block page_content %}
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <div class="page-title">
+            <h3 class="title">修改设备</h3>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">设备信息</h3></div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.edit_device', id=device.id) }}"
+                              method="POST">
+                            {{ form.csrf_token }}
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">资产号</label>
+
+                                <div class="col-md-6">
+                                    {{ form.asset_id(class='select2', placeholder='资产号') }}
+                                    {{ macros.print_form_messages(form.errors.asset_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">设备类型</label>
+
+                                <div class="col-md-6">
+                                    {{ form.classType_id(class='select2', placeholder='资产号') }}
+                                    {{ macros.print_form_messages(form.errors.classType_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">机柜</label>
+
+                                <div class="col-md-6">
+                                    {{ form.rack_id(class='select2', placeholder='机柜') }}
+                                    {{ macros.print_form_messages(form.errors.rack_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">主机名</label>
+
+                                <div class="col-md-6">
+                                    {{ form.hostname(class='form-control', placeholder='主机名') }}
+                                    {{ macros.print_form_messages(form.errors.hostname) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label cr-styled">虚拟化</label>
+
+                                <div class="col-md-1">
+                                    <label class="cr-styled">
+                                        {{ form.is_virtualization(class='form-control', placeholder='虚拟化') }}
+                                        {{ macros.print_form_messages(form.errors.is_virtualization) }}
+                                        <i class="fa"></i>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">CPU型号</label>
+
+                                <div class="col-md-6">
+                                    {{ form.cpumodel(type="text", class='form-control', placeholder='CPU型号') }}
+                                    {{ macros.print_form_messages(form.errors.cpumodel) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">CPU内核(个)</label>
+
+                                <div class="col-md-6">
+                                    {{ form.cpucount(type="text", class='form-control', placeholder='CPU内核(个)') }}
+                                    {{ macros.print_form_messages(form.errors.cpucount) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">内存大小(GB)</label>
+
+                                <div class="col-md-6">
+                                    {{ form.memsize(type="text", class='form-control', placeholder='内存大小(GB)') }}
+                                    {{ macros.print_form_messages(form.errors.memsize) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">磁盘大小(GB)</label>
+
+                                <div class="col-md-6">
+                                    {{ form.disksize(type="text", class='form-control', placeholder='磁盘大小(GB)') }}
+                                    {{ macros.print_form_messages(form.errors.disksize) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">远控卡模块</label>
+
+                                <div class="col-md-6">
+                                    {{ form.powermanage_id(class='select2', placeholder='远控卡模块') }}
+                                    {{ macros.print_form_messages(form.errors.powermanage_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">用途</label>
+
+                                <div class="col-md-6">
+                                    {{ form.use(type="text", class='form-control', placeholder='用途') }}
+                                    {{ macros.print_form_messages(form.errors.use) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">所属业务</label>
+
+                                <div class="col-md-6">
+                                    {{ form.business(class='select2', placeholder='所属业务') }}
+                                    {{ macros.print_form_messages(form.errors.business) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">电源状态</label>
+
+                                <div class="col-md-6">
+                                    {{ form.powerstatus(class='select2', placeholder='电源状态') }}
+                                    {{ macros.print_form_messages(form.errors.powerstatus) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">备注</label>
+
+                                <div class="col-md-6">
+                                    {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
+                                    {{ macros.print_form_messages(form.errors.remarks) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+
+                                <div class="col-md-6">
+                                    {{ form.submit(class='btn btn-info') }}
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- panel-body -->
+                </div>
+                <!-- panel -->
+            </div>
+            <!-- col -->
+        </div>
+        <!-- End row -->
+
+
+    </div>
+    <!-- Page Content Ends -->
+    <!-- ================== -->
+{% endblock page_content %}
+
+{% block scripts %}
+
+    {{ super() }}
+    <script src="{{ url_for("static", filename="assets/tagsinput/jquery.tagsinput.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/toggles/toggles.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/timepicker/bootstrap-timepicker.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/timepicker/bootstrap-datepicker.js") }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for("static", filename="assets/colorpicker/bootstrap-colorpicker.js") }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename="assets/jquery-multi-select/jquery.multi-select.js") }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for("static", filename="assets/jquery-multi-select/jquery.quicksearch.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/bootstrap-inputmask/bootstrap-inputmask.min.js") }}"
+            type="text/javascript"></script>
+    <script type="text/javascript" src="{{ url_for("static", filename="assets/spinner/spinner.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/select2/select2.min.js") }}" type="text/javascript"></script>
+
+
+
+    <script>
+        jQuery(document).ready(function () {
+
+            // Tags Input
+            jQuery('#tags').tagsInput({width: 'auto'});
+
+            // Form Toggles
+            jQuery('.toggle').toggles({on: true});
+
+            // Date Picker
+            jQuery('#datepicker').datepicker('option', 'dateFormat', 'yy-mm-dd');
+
+
+            //colorpicker start
+
+            $('.colorpicker-default').colorpicker({
+                format: 'hex'
+            });
+            $('.colorpicker-rgba').colorpicker();
+
+
+            //multiselect start
+
+            $('#my_multi_select1').multiSelect();
+            $('#my_multi_select2').multiSelect({
+                selectableOptgroup: true
+            });
+
+            $('#my_multi_select3').multiSelect({
+                selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                afterInit: function (ms) {
+                    var that = this,
+                            $selectableSearch = that.$selectableUl.prev(),
+                            $selectionSearch = that.$selectionUl.prev(),
+                            selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                            selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                            .on('keydown', function (e) {
+                                if (e.which === 40) {
+                                    that.$selectableUl.focus();
+                                    return false;
+                                }
+                            });
+
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                            .on('keydown', function (e) {
+                                if (e.which == 40) {
+                                    that.$selectionUl.focus();
+                                    return false;
+                                }
+                            });
+                },
+                afterSelect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                },
+                afterDeselect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                }
+            });
+
+            //spinner start
+            $('#spinner1').spinner();
+            $('#spinner2').spinner({disabled: true});
+            $('#spinner3').spinner({value: 0, min: 0, max: 10});
+            $('#spinner4').spinner({value: 0, step: 5, min: 0, max: 200});
+            //spinner end
+
+            // Select2
+            jQuery(".select2").select2({
+                width: '100%'
+            });
+        });
+    </script>
+
+{% endblock scripts %}

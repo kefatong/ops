@@ -1,0 +1,128 @@
+{% import "macros.html" as macros %}
+{% extends "common/base.html" %}
+
+{% block static %}
+    {{ super() }}
+    <link href="{{ url_for("static", filename="assets/jquery-datatables-editable/datatables.css") }}" rel="stylesheet">
+    <link href="{{ url_for("static", filename="assets/datatables/jquery.dataTables.min.css") }}" rel="stylesheet"
+          type="text/css"/>
+
+
+{% endblock static %}
+
+{% block page_content %}
+
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <div class="page-title">
+            <h3 class="title">虚拟机管理</h3>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="m-b-28">
+                        <a href="{{ url_for('main.create_virtmachine') }}">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">添加<i
+                                    class="fa fa-plus"></i></button>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>类型</th>
+                                        <th>状态</th>
+                                        <th>使用人</th>
+                                        <th>主机</th>
+                                        <th>资源池</th>
+                                        <th>主机名</th>
+                                        <th>系统</th>
+                                        <th>CPU</th>
+                                        <th>内存</th>
+                                        <th>磁盘</th>
+                                        <th>业务</th>
+                                        <th>电源</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                    {% for virt in virtMachine %}
+                                        <tr>
+                                            <td>
+                                                <label class="cr-styled">
+                                                    <input type="checkbox" checked="">
+                                                    <i class="fa"></i>
+                                                </label>
+                                            </td>
+                                            <td>{{ virt.deviceType }}</td>
+                                            <td>{{ choices.onstatus.get(virt.onstatus, '未知') }}</td>
+                                            <td>{{ virt.usestaff }}</td>
+                                            <td>{{ db.session.query(Device).filter(Device.id == virt.device_id).first().hostname }}</td>
+                                            <td>{{ virt.pool.name }}</td>
+                                            <td>{{ virt.hostname }}</td>
+                                            <td>{{ virt.os }}</td>
+                                            <td>{{ virt.cpucount }}</td>
+                                            <td>{{ virt.memsize }}</td>
+                                            <td>{{ virt.disksize }}</td>
+                                            <td>{{ virt.business }}</td>
+                                            <td>{{ choices.powerstatus.get(virt.powerstatus, '未知') }}</td>
+
+                                            <td class="actions">
+                                                <a class="hidden on-editing save-row" href="#"><i
+                                                        class="fa fa-save"></i></a>
+                                                <a class="hidden on-editing cancel-row" href="#"><i
+                                                        class="fa fa-times"></i></a>
+                                                <a class="on-default edit-row"
+                                                   href="{{ url_for('main.edit_virtmachine',id=virt.id) }}"><i
+                                                        class="fa fa-pencil"></i></a>
+                                                <a class="on-default remove-row"
+                                                   href="{{ url_for('main.delete_virtmachine',id=virt.id) }}"><i
+                                                        class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Row -->
+
+
+    </div>
+
+    <!-- Page Content Ends -->
+    <!-- ================== -->
+
+
+
+{% endblock page_content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='assets/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/datatables/dataTables.bootstrap.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').dataTable();
+        });
+    </script>
+
+{% endblock scripts %}

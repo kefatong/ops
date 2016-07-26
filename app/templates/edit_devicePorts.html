@@ -1,0 +1,261 @@
+{% import "macros.html" as macros %}
+{% extends "common/base.html" %}
+
+{% block static %}
+
+    {{ super() }}
+    <!-- Plugins css-->
+    <link href="{{ url_for("static", filename="assets/tagsinput/jquery.tagsinput.css") }}" rel="stylesheet"/>
+    <link href="{{ url_for("static", filename="assets/toggles/toggles.css") }}" rel="stylesheet"/>
+    <link href="{{ url_for("static", filename="assets/timepicker/bootstrap-timepicker.min.css") }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename="assets/timepicker/bootstrap-datepicker.min.css") }}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for("static", filename="assets/colorpicker/colorpicker.css") }}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename="assets/jquery-multi-select/multi-select.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/select2/select2.css') }}"/>
+
+{% endblock static %}
+
+{% block page_content %}
+    <!-- Page Content Start -->
+    <!-- ================== -->
+
+    <div class="wraper container-fluid">
+        <div class="page-title">
+            <h3 class="title">修改网络端口管理</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">端口管理</h3></div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.edit_devicePorts',id=devicePorts.id) }}"
+                              method="POST">
+                            {{ form.csrf_token }}
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">接口名称</label>
+
+                                <div class="col-md-6">
+                                    {{ form.name(class='form-control', placeholder='接口名称') }}
+                                    {{ macros.print_form_messages(form.errors.name) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">IP地址</label>
+
+                                <div class="col-md-6">
+                                    {{ form.ip(class='form-control', placeholder='IP地址') }}
+                                    {{ macros.print_form_messages(form.errors.ip) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Mac地址</label>
+
+                                <div class="col-md-6">
+                                    {{ form.mac(class='form-control', placeholder='Mac地址') }}
+                                    {{ macros.print_form_messages(form.errors.mac) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">接口类型</label>
+
+                                <div class="col-md-6">
+                                    {{ form.type(class='select2', placeholder='接口类型') }}
+                                    {{ macros.print_form_messages(form.errors.type) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">端口类型</label>
+
+                                <div class="col-md-6">
+                                    {{ form.mode(class='select2', placeholder='端口类型') }}
+                                    {{ macros.print_form_messages(form.errors.mode) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">速率</label>
+
+                                <div class="col-md-6">
+                                    {{ form.rate(class='select2', placeholder='速率') }}
+                                    {{ macros.print_form_messages(form.errors.rate) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">VlanID</label>
+
+                                <div class="col-md-6">
+                                    {{ form.vlanid(class='form-control', placeholder='VlanID') }}
+                                    {{ macros.print_form_messages(form.errors.vlanid) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">模块</label>
+
+                                <div class="col-md-6">
+                                    {{ form.model_id(class='select2', placeholder='模块') }}
+                                    {{ macros.print_form_messages(form.errors.model_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">连接至</label>
+
+                                <div class="col-md-6">
+                                    {{ form.target(class='select2', placeholder='连接至') }}
+                                    {{ macros.print_form_messages(form.errors.target) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label cr-styled">在查询也显示</label>
+
+                                <div class="col-md-1">
+                                    <label class="cr-styled">
+                                        {{ form.display(class='form-control', placeholder='虚拟化') }}
+                                        {{ macros.print_form_messages(form.errors.display) }}
+                                        <i class="fa"></i>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">备注</label>
+
+                                <div class="col-md-6">
+                                    {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
+                                    {{ macros.print_form_messages(form.errors.remarks) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+
+                                <div class="col-md-6">
+                                    {{ form.submit(class='btn btn-info') }}
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- panel-body -->
+                </div>
+                <!-- panel -->
+            </div>
+            <!-- col -->
+        </div>
+        <!-- End row -->
+
+
+    </div>
+    <!-- Page Content Ends -->
+    <!-- ================== -->
+{% endblock page_content %}
+
+{% block scripts %}
+
+    {{ super() }}
+    <script src="{{ url_for("static", filename="assets/tagsinput/jquery.tagsinput.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/toggles/toggles.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/timepicker/bootstrap-timepicker.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/timepicker/bootstrap-datepicker.js") }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for("static", filename="assets/colorpicker/bootstrap-colorpicker.js") }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename="assets/jquery-multi-select/jquery.multi-select.js") }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for("static", filename="assets/jquery-multi-select/jquery.quicksearch.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/bootstrap-inputmask/bootstrap-inputmask.min.js") }}"
+            type="text/javascript"></script>
+    <script type="text/javascript" src="{{ url_for("static", filename="assets/spinner/spinner.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="assets/select2/select2.min.js") }}" type="text/javascript"></script>
+
+
+
+    <script>
+        jQuery(document).ready(function () {
+
+            // Tags Input
+            jQuery('#tags').tagsInput({width: 'auto'});
+
+            // Form Toggles
+            jQuery('.toggle').toggles({on: true});
+
+            // Date Picker
+            jQuery('#datepicker').datepicker('option', 'dateFormat', 'yy-mm-dd');
+
+
+            //colorpicker start
+
+            $('.colorpicker-default').colorpicker({
+                format: 'hex'
+            });
+            $('.colorpicker-rgba').colorpicker();
+
+
+            //multiselect start
+
+            $('#my_multi_select1').multiSelect();
+            $('#my_multi_select2').multiSelect({
+                selectableOptgroup: true
+            });
+
+            $('#my_multi_select3').multiSelect({
+                selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                afterInit: function (ms) {
+                    var that = this,
+                            $selectableSearch = that.$selectableUl.prev(),
+                            $selectionSearch = that.$selectionUl.prev(),
+                            selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                            selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                            .on('keydown', function (e) {
+                                if (e.which === 40) {
+                                    that.$selectableUl.focus();
+                                    return false;
+                                }
+                            });
+
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                            .on('keydown', function (e) {
+                                if (e.which == 40) {
+                                    that.$selectionUl.focus();
+                                    return false;
+                                }
+                            });
+                },
+                afterSelect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                },
+                afterDeselect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                }
+            });
+
+            //spinner start
+            $('#spinner1').spinner();
+            $('#spinner2').spinner({disabled: true});
+            $('#spinner3').spinner({value: 0, min: 0, max: 10});
+            $('#spinner4').spinner({value: 0, step: 5, min: 0, max: 200});
+            //spinner end
+
+            // Select2
+            jQuery(".select2").select2({
+                width: '100%'
+            });
+        });
+    </script>
+
+{% endblock scripts %}
