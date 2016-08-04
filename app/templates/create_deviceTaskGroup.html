@@ -48,7 +48,7 @@
                                 <label class="col-md-2 control-label">任务脚本</label>
 
                                 <div class="col-md-6">
-                                    {{ form.tasks(class='form-control', placeholder='任务脚本') }}
+                                    {{ form.tasks(style="position: absolute; left: -9999px;", class="multi-select", multiple="", id="my_multi_select3") }}
                                     {{ macros.print_form_messages(form.errors.tasks) }}
                                 </div>
                             </div>

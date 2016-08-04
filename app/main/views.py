@@ -47,7 +47,6 @@ def edit_profile():
 def index():
 
     json_device = get_api_json(current_app, postfix='/devices/')
-    #if json_device:
     print json_device
 
     return render_template('index.html')
@@ -125,11 +124,10 @@ def show_deviceTaskGroups():
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def create_deviceTaskGroup():
-    form = EditDeviceTaskGroupForm(deviceTaskGroup=None)
+    form = EditDeviceTaskGroupForm(deviceTaskGroup=None, edit=True)
     if form.validate_on_submit():
         deviceTaskGroup = DeviceTaskGroup()
         deviceTaskGroup.name = form.name.data
-        print form.tasks.data
         for task in form.tasks.data:
             deviceTaskGroup.tasks.append(DeviceTasks.query.get(task))
         deviceTaskGroup.enabled = form.enabled.data
@@ -148,7 +146,7 @@ def create_deviceTaskGroup():
 @permission_required(Permission.DEVICE_LOOK)
 def edit_deviceTaskGroup(id):
     deviceTaskGroup = DeviceTaskGroup.query.get_or_404(id)
-    form = EditDeviceTaskGroupForm(deviceTaskGroup)
+    form = EditDeviceTaskGroupForm(deviceTaskGroup, edit=True)
     if form.validate_on_submit():
         deviceTaskGroup.name = form.name.data
 
@@ -269,9 +267,9 @@ def show_deviceTasks():
 @permission_required(Permission.DEVICE_LOOK)
 def show_deviceTaskGroup(id):
     deviceTaskGroup = DeviceTaskGroup.query.get_or_404(id)
-    form = EditDeviceTaskGroupForm(None)
+    form = EditDeviceTaskGroupForm(deviceTaskGroup, edit=False)
     form.name.data = deviceTaskGroup.name
-    form.tasks.data = deviceTaskGroup.tasks
+    form.tasks.data = deviceTaskGroup.tasks.all()
     form.enabled.data = deviceTaskGroup.enabled
     form.remarks.data = deviceTaskGroup.remarks
     return render_template('show_deviceTaskGroup.html', deviceTaskGroup=deviceTaskGroup, form=form)

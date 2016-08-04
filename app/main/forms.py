@@ -145,11 +145,17 @@ class EditDeviceTaskGroupForm(Form):
     remarks = TextAreaField(u'备注')  # 备注
     submit = SubmitField(u'提交')
 
-    def __init__(self, deviceTaskGroup, *args, **kwargs):
+    def __init__(self, deviceTaskGroup, edit, *args, **kwargs):
         super(EditDeviceTaskGroupForm, self).__init__(*args, **kwargs)
         self.deviceTaskGroup = deviceTaskGroup
-        self.tasks.choices = [ (task.id, task.taskname)
-                              for task in DeviceTasks.query.all()]
+        self.edit = edit
+
+        if self.edit:
+            self.tasks.choices = [ (task.id, task.taskname)
+                                for task in DeviceTasks.query.all()]
+        else:
+            self.tasks.choices = [(task.id, task.taskname)
+                                  for task in deviceTaskGroup.tasks.all()]
 
     def validate_name(self,field):
         if not self.deviceTaskGroup:
