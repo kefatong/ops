@@ -280,7 +280,6 @@ class User(UserMixin, db.Model):
 
 
 
-
 class DevicePower(db.Model):
     __tablename__ = 'devicePowers'
     id = db.Column(db.Integer, primary_key=True)
@@ -330,11 +329,32 @@ class DevicePower(db.Model):
 
 
 
+DeviceRelationshipDeviceGroup = db.Table('DeviceRelationshipDeviceGroup',
+    db.Column('deviceGroup_id', db.Integer, db.ForeignKey('deviceGroups.id')),
+    db.Column('device_id', db.Integer, db.ForeignKey('devices.id')),
+)
+
+class DeviceGroup(db.Model):
+    __tablename__ = 'deviceGroups'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    business = db.Column(db.String(64))    #所属业务
+    devices = db.relationship('Device', secondary=DeviceRelationshipDeviceGroup, backref=db.backref('DeviceGroup', lazy='dynamic'), lazy='dynamic')
+    isdelete = db.Column(db.Boolean)
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)  # 澶囨敞
+
+
+
 
 class Device(db.Model):
     __tablename__ = 'devices'
     id = db.Column(db.Integer, primary_key=True)
+    device_id = db.Column(db.Integer, unique=True, index=True)
     hostname = db.Column(db.String(64))  # Hostname
+    ip = db.Column(db.String(64))
+    an = db.Column(db.String(64), unique=True, index=True)
     sn = db.Column(db.String(64), unique=True, index=True)  # SN 璁惧搴忓垪鍙�
     os = db.Column(db.String(64))  # os绫诲瀷
     cpumodel = db.Column(db.String(64))  # CPU 鍨嬪彿
@@ -347,50 +367,21 @@ class Device(db.Model):
     usedept = db.Column(db.String(64))  # 浣跨敤閮ㄩ棬
     usestaff = db.Column(db.String(64))  # 閮ㄩ棬浣跨敤浜�
     mainuses = db.Column(db.String(128))  # 涓昏鐢ㄩ��
-    managedept = db.Column(db.String(64))  # 绠＄悊閮ㄩ棬
-    managestaff = db.Column(db.String(64))  # 绠＄悊浜�
     isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
     remarks = db.Column(db.Text)  # 澶囨敞
 
-    def to_json(self):
-        json_virtMachine = {
-            'url' : self.id,
-            'device' : self.device_id,
-            'deviceType': self.deviceType,
-            'virtType': self.virtType,
-            'pool_id' : self.pool_id,
-            'hostname' : self.hostname,
-            'os' : self.os,
-            'cpumodel' : self.cpumodel,
-            'cpucount' : self.cpucount,
-            'memsize' : self.memsize,
-            'disksize' : self.disksize,
-            'business' : self.business,
-            'powerstatus' : self.powerstatus,
-            'onstatus' : self.onstatus,
-            'usedept' : self.usedept,
-            'usestaff' : self.usestaff,
-            'mainues' : self.mainuses,
-            'managedept' : self.managestaff,
-            'managestaff' : self.managestaff,
-            'remarks' : self.remarks,
-            'isdelete' : self.isdelete,
-        }
-        return json_virtMachine
-
-
     def __repr__(self):
-        return '<VirtMachine %r>' % self.hostname
+        return '<Device %r>' % self.hostname
+
+#
 
 
-
-
-registrations = db.Table('registrations',
+TaskRelationshipTaskGroup = db.Table('TaskRelationshipTaskGroup',
     db.Column('deviceTaskGroup_id', db.Integer, db.ForeignKey('deviceTaskGroup.id')),
     db.Column('deviceTask_id', db.Integer, db.ForeignKey('deviceTasks.id')),
-
+    db.Column('PQ', db.Integer)
 )
 
 class DeviceTaskGroup(db.Model):
@@ -399,7 +390,7 @@ class DeviceTaskGroup(db.Model):
     name = db.Column(db.String(64))
     enabled = db.Column(db.Boolean)    #是否启用
     run_priority = db.Column(db.String(128))
-    tasks = db.relationship('DeviceTasks', secondary=registrations, backref=db.backref('taskGroup', lazy='dynamic'), lazy='dynamic')
+    tasks = db.relationship('DeviceTasks', secondary=TaskRelationshipTaskGroup, backref=db.backref('taskGroup', lazy='dynamic'), lazy='dynamic')
     isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
@@ -443,6 +434,25 @@ class DeploySystem(db.Model):
     def __repr__(self):
         return '<TaskScripts %r>' % self.hostname
 
+
+class histroyCommands(db.Model):
+    __tablename__ = 'histroyCommands'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    command = db.Column(db.String(512))  # 命令记录
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
+
+
+class pushCommandLogger(db.Model):
+    __tablename__ = 'pushCommandLogger'
+    id = db.Column(db.Integer, primary_key=True)
+    device_id = db.Column(db.Integer, db.ForeignKey('devices.id'))
+    command = db.Column(db.Text)
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+
+    def __repr__(self):
+        return '<command %r>' % self.command
 
 
 class Logger(db.Model):

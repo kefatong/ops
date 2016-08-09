@@ -3,6 +3,8 @@
 _author__ = 'eric'
 
 
+
+from flask.ext.login import current_user
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, DateTimeField, FileField, SelectMultipleField
 from wtforms.validators import Email, Length, Regexp, EqualTo, InputRequired, IPAddress, HostnameValidation, MacAddress, NumberRange
@@ -46,39 +48,58 @@ class EditProfileAdminForm(Form):
                 raise ValidationError('Username already registered')
 
 
+class EditDeviceGroupForm(Form):
+    name = StringField(u'主机组')
+    business = StringField(u'业务')
+    devices = SelectMultipleField(u'设备', coerce=int)
+    remarks = TextAreaField(u'备注')                          # 备注
+    submit = SubmitField(u'提交')
+
+    def __init__(self, deviceGroup, edit, *args, **kwargs):
+        super(EditDeviceGroupForm, self).__init__(*args, **kwargs)
+        self.deviceGroup = deviceGroup
+        self.edit = edit
+
+        if self.edit:
+            self.devices.choices = [(device.id, device.hostname)
+                                  for device in Device.query.all()]
+        else:
+            self.devices.choices = [(device.id, device.hostname)
+                                  for device in deviceGroup.devices.all()]
+
+
+    def validate_name(self, field):
+        if not self.deviceGroup:
+            if DeviceGroup.query.filter_by(name=field.data).first():
+                raise ValidationError(u'主机组{0}已经存在.'.format(field.data))
+        else:
+            if field.data != self.deviceGroup.name and DeviceGroup.query.filter_by(name=field.data).first():
+                raise ValidationError(u'主机组{0}已经存在.'.format(field.data))
+
+
 class EditDeviceForm(Form):
-    deviceType = SelectField(u'设备类型', coerce=int)   # 资产类别   关联ClassType table
-    onstatus = SelectField(u'使用状态', coerce=int)                        # 使用状态
-    usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
-    usestaff = StringField(u'部门使用人', validators=[Length(1,64)])                     # 部门使用人
-    mainuses = StringField(u'主要用途', validators=[Length(1,128)])                    # 主要用途
-    managedept = StringField(u'管理部门', validators=[Length(1,64)])                   # 管理部门
-    managestaff = StringField(u'管理人', validators=[Length(1,64)])                  # 管理人
-    device_id = SelectField(u'运行主机', coerce=int)
-    pool = SelectField(u'资源池', coerce=int)
     hostname = StringField(u'主机名', validators=[HostnameValidation, Length(0,64)])
+    ip = StringField(u'IP地址')
+    an = StringField(u'资产号')
+    sn = StringField(u'序列号')
     os = StringField(u'操作系统')
     cpumodel = StringField(u'CPU型号', validators=[Length(0,64)])                     # CPU 型号
-    cpucount = IntegerField(u'CPU内核(个)')                        # CPU 核数
-    memsize = IntegerField(u'内存大小(GB)')                      # 内存容量
-    disksize = IntegerField(u'磁盘大小(GB)')                        # 磁盘容量
-    business = SelectField(u'所属业务', coerce=int)
+    cpucount = IntegerField(u'CPU(个)')                        # CPU 核数
+    memsize = IntegerField(u'内存(GB)')                      # 内存容量
+    disksize = IntegerField(u'磁盘(GB)')                        # 磁盘容量
+    business = SelectField(u'业务', coerce=int)
     powerstatus = SelectField(u'电源状态', coerce=int)
+    onstatus = IntegerField(u'状态')
+    usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
+    usestaff = StringField(u'使用人', validators=[Length(1,64)])                     # 部门使用人
+    mainuses = StringField(u'主要用途', validators=[Length(1,128)])                    # 主要用途
     remarks = TextAreaField(u'备注')                          # 备注
     submit = SubmitField(u'提交')
 
     def __init__(self, *args, **kwargs):
         super(EditDeviceForm, self).__init__(*args, **kwargs)
 
-        self.deviceType.choices = [(1, u'OpenStack'), (2, u'VMware')]
-
         self.onstatus.choices = [(1, u'已用'), (2, u'空闲'), (3, u'下线'), (3, u'待回收')]
-
-        self.device_id.choices = [(device.id, device.hostname)
-                             for device in Device.query.order_by(Device.hostname).all()]
-
-        self.pool.choices = [(pool.id, pool.name)
-                             for pool in DevicePools.query.order_by(DevicePools.name).all()]
 
         self.business.choices = [(1, u'云计算',),(2, u'大数据')]
 
@@ -164,3 +185,51 @@ class EditDeviceTaskGroupForm(Form):
         else:
             if field.data != self.deviceTaskGroup.name and DeviceTaskGroup.query.filter_by(name=field.data).first():
                 raise ValidationError(u'任务组名称{0}已经存在.'.format(field.data))
+
+
+
+class EditRunningCommandForm(Form):
+    devices = SelectMultipleField(u'设备', coerce=int)
+    command = StringField(u'命令:', validators=[InputRequired()])
+    histroy = SelectField(u'历史')
+    saved = BooleanField(u'保存')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'执行')
+
+    def __init__(self, *args, **kwargs):
+        super(EditRunningCommandForm, self).__init__(*args, **kwargs)
+
+        self.devices.choices = [(device.id, device.hostname)
+                                for device in Device.query.all()]
+
+        if not histroyCommands.query.filter(histroyCommands.user_id == current_user.id).all():
+            db.session.add(histroyCommands(command='', user_id = current_user.id)) and db.session.commit()
+
+        self.histroy.choices = [(h.command, h.command)
+                                for h in histroyCommands.query.filter(histroyCommands.user_id == current_user.id).all()]
+
+
+class EditPushTasksToDeviceForm(Form):
+    devices = SelectMultipleField(u'设备', coerce=int)
+    tasks = SelectMultipleField(u'任务', coerce=int)
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'推送')
+
+    def __init__(self, *args, **kwargs):
+        super(EditPushTasksToDeviceForm, self).__init__(*args, **kwargs)
+
+        self.devices.choices = [(device.id, device.hostname)
+                                for device in Device.query.all()]
+
+        self.tasks.choices = [(task.id, task.taskname)
+                                for task in DeviceTasks.query.all()]
+
+
+class EditPushTasksToDeviceGroupForm(Form):
+    devices = SelectMultipleField(u'设备组', coerce=int)
+    tasks = SelectMultipleField(u'任务组', coerce=int)
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'推送')
+
+
+

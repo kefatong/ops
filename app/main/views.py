@@ -10,8 +10,20 @@ from .. import db
 from ..models import *
 from ..email import send_email
 import requests
+import stat
 import os
+import re
 import uuid
+
+import ansible
+import ansible.runner
+import ansible.playbook
+from ansible import callbacks
+from ansible import utils
+import json
+import hashlib
+import random
+import time
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -55,6 +67,7 @@ def index():
 
 ########################################################################
 
+
 def get_api_token(app):
     app = app._get_current_object()
 
@@ -74,18 +87,23 @@ def get_api_token(app):
             return None
 
 
-def get_api_json(app, postfix):
 
-    if app and postfix:
+def get_api_json(app, postfix, id=None):
 
-        token = get_api_token(app)
-        print token
-        if not token:
-            return None
+    if not app:
+        return None
 
-        app = app._get_current_object()
-        API_URL = app.config['FLASK_USE_CMDB_API']
-        print API_URL
+    token = get_api_token(app)
+    print token
+
+    if not token:
+        return None
+
+    app = app._get_current_object()
+    API_URL = app.config['FLASK_USE_CMDB_API']
+    print API_URL
+
+    if postfix and not id:
         request = requests.get(API_URL + postfix, auth=requests.auth.HTTPBasicAuth(token, ''))
 
         try:
@@ -94,7 +112,73 @@ def get_api_json(app, postfix):
         except:
             return None
 
+    else:
+        request = requests.get(API_URL + postfix + str(id), auth=requests.auth.HTTPBasicAuth(token, ''))
 
+        try:
+            json = request.json()
+            return json
+        except:
+            return None
+
+
+
+
+def check_update(current_app,devices):
+    if not  devices:
+        return None
+    cmdb_devices = set([ device['id'] for device in devices['devices']])
+    ops_devices = set([device.device_id for device in Device.query.all()])
+
+    print ops_devices.difference(cmdb_devices)
+    if cmdb_devices.difference(ops_devices):
+        for device_id in  cmdb_devices.difference(ops_devices):
+            api_json = get_api_json(current_app, postfix='/device/', id=device_id)
+
+            if api_json is None:
+                continue
+
+            api_json = api_json['device']
+            device = Device()
+            device.device_id = device_id
+            device.an       = api_json['an']
+            device.sn       = api_json['sn']
+            device.hostname = api_json['hostname']
+            device.ip       = api_json['ip']
+            device.os       = api_json['os']
+            device.cpumodel = api_json['cpumodel']
+            device.cpucount = api_json['cpucount']
+            device.memsize  = api_json['memsize']
+            device.disksize = api_json['disksize']
+            device.business = api_json['business']
+            device.powerstatus = api_json['powerstatus']
+            device.onstatus = api_json['onstatus']
+            device.usedept  = api_json['usedept']
+            device.usestaff = api_json['usestaff']
+            device.mainuses = api_json['mainuses']
+            device.managedept = api_json['managedept']
+            device.managestaff = api_json['managestaff']
+            device.instaff  = api_json['instaff']
+            device.remarks  = api_json['remarks']
+
+            db.session.add(device)
+            print device.hostname
+
+
+
+    #print devices
+
+def update_device():
+    pass
+
+
+
+@main.route('/show-device.device/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_device(id):
+    deviceGroup = DeviceGroup.query.get_or_404(id)
+    return render_template('show_device.html', devices=deviceGroup.devices.all())
 
 
 
@@ -106,10 +190,99 @@ def show_devices():
     devices = get_api_json(current_app, postfix='/devices/')
     if not devices:
         render_template('show_devices.html')
+
+    check_update(current_app,devices)
+
+    devices = Device.query.all()
     return render_template('show_devices.html', is_json=True, devices=devices)
 
     #devices = Device.query.all()
     #return render_template('show_devices.html', devices=devices)
+
+
+
+@main.route('/show-device.deviceGroup/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceGroup(id):
+    deviceGroup = DeviceGroup.query.get_or_404(id)
+    form = EditDeviceGroupForm(deviceGroup=deviceGroup, edit=None)
+    form.name.data = deviceGroup.name
+    form.business.data = deviceGroup.business
+    form.devices.data = deviceGroup.devices
+    form.remarks.data = deviceGroup.remarks
+    return render_template('show_deviceGroup.html', form=form, deviceGroup=deviceGroup)
+
+
+
+@main.route('/show-device.deviceGroups', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceGroups():
+    deviceGroups = DeviceGroup.query.all()
+    return render_template('show_deviceGroups.html', deviceGroups=deviceGroups)
+
+
+
+@main.route('/create-device.deviceGroup', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceGroup():
+    form = EditDeviceGroupForm(None,True)
+    if form.validate_on_submit():
+        deviceGroup = DeviceGroup()
+        deviceGroup.name = form.name.data
+        deviceGroup.business = form.business.data
+        for device in form.devices.data:
+            deviceGroup.devices.append(Device.query.get(device))
+        deviceGroup.remarks = form.remarks.data
+        deviceGroup.instaff = current_user.username
+
+        db.session.add(deviceGroup)
+        db.session.commit()
+        redirect(url_for('main.show_deviceGroups'))
+    return render_template('create_deviceGroup.html', form=form)
+
+
+
+
+@main.route('/edit-device.deviceGroup/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def edit_deviceGroup(id):
+    deviceGroup = DeviceGroup.query.get_or_404(id)
+    form = EditDeviceGroupForm(deviceGroup,True)
+    if form.validate_on_submit():
+        deviceGroup.name = form.name.data
+        deviceGroup.business = form.business.data
+
+        for device in form.devices.data:
+            deviceGroup.devices.remove(device)
+
+        for device in form.devices.data:
+            deviceGroup.devices.append(Device.query.get(device))
+        deviceGroup.remarks = form.remarks.data
+
+        db.session.add(deviceGroup)
+        db.session.commit()
+        redirect(url_for('main.show_deviceGroups'))
+
+    form.name.data = deviceGroup.name
+    form.business.data = deviceGroup.business
+    form.devices.data = deviceGroup.devices
+    form.remarks.data = deviceGroup.remarks
+    return render_template('create_deviceGroup.html', form=form)
+
+
+@main.route('/delete-device.deviceGroup/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceGroup(id):
+    deviceGroup = DeviceGroup.query.get_or_404(id)
+    db.session.delete(deviceGroup)
+    db.session.commit()
+    return redirect(url_for('main.show_deviceGroups'))
+
 
 
 @main.route('/show-device.taskGroups', methods=['GET', 'POST'])
@@ -251,6 +424,14 @@ def show_deviceTaskScript(id):
     form.instaff.data = deviceTask.instaff
 
     return render_template('show_deviceTaskScript.html', form=form, deviceTask=deviceTask)
+
+
+@main.route('/show-device.task/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceTask(id):
+    deviceTaskGroup = DeviceTaskGroup.query.get_or_404(id)
+    return render_template('show_deviceTask.html', deviceTasks=deviceTaskGroup.tasks.all())
 
 
 
@@ -399,6 +580,170 @@ def delete_device(id):
 
 ########################################################################
 
+
+
+
+
+
+@main.route('/show-device.running.tasks', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceRunningTasks(id):
+    pass
+
+
+def generateInventory_hosts(current_app,devices=None):
+    if not devices:
+        return None
+
+    app = current_app._get_current_object()
+    FLASK_TMP_HOME = app.config['FLASK_TMP_HOME']
+    print FLASK_TMP_HOME
+    if not os.path.exists(FLASK_TMP_HOME):
+        os.mkdir(FLASK_TMP_HOME)
+
+    Inventory_devices = {
+        "devices": {
+            'hosts': [],
+        },
+    }
+
+    print Inventory_devices
+
+    for device in devices:
+        if device.ip is None:
+            flash(u'设备{0}IP地址未设置.'.format(device.hostname))
+            return None
+        Inventory_devices['devices']['hosts'].append(device.ip)
+
+    if len(Inventory_devices['devices']['hosts']) < 1:
+        return None
+
+
+    Inventory_devices = json.dumps(Inventory_devices)
+    print Inventory_devices
+    md5 = hashlib.md5(Inventory_devices)
+    print md5.hexdigest()
+
+    json_devices = '''#!/usr/bin/env python\n# encoding: utf-8\nimport json\ndevices = json.dumps({0})\nprint devices\n'''.format(Inventory_devices)
+
+    Inventory_devices_file = FLASK_TMP_HOME + '/tasks/{0}'.format(str(md5.hexdigest()))
+
+    with open(Inventory_devices_file, 'w') as f:
+        f.write(json_devices)
+        os.chmod(Inventory_devices_file, stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
+
+    return Inventory_devices_file
+
+def playbook_runner(playbook, inventory):
+    stats = callbacks.AggregateStats()
+    playbook_cb = callbacks.PlaybookCallbacks(verbose=utils.VERBOSITY)
+    runner_cb = callbacks.PlaybookRunnerCallbacks(stats, verbose=utils.VERBOSITY)
+
+    res = ansible.playbook.PlayBook(
+        playbook=playbook,
+        stats=stats,
+        callbacks=playbook_cb,
+        runner_callbacks=runner_cb,
+        host_list = inventory,
+    ).run()
+
+    return res
+
+
+@main.route('/push-tasksTo.devices', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def push_TasksTo_devices():
+    form = EditPushTasksToDeviceForm()
+    if form.validate_on_submit():
+
+        Inventory_tasks = []
+
+        devices = form.devices.data
+        tasks = form.tasks.data
+        if not devices and not tasks:
+            flash(u'选择主机有误')
+            return render_template('push_tasks.html', form=form)
+
+        devices = [ Device.query.get_or_404(device) for device in devices ]
+        Inventory_hosts_file = generateInventory_hosts(current_app,devices)
+
+        for task in tasks:
+            t = DeviceTasks.query.get_or_404(task)
+            if not t.path:
+                flash(u'脚本{0}上传文件有误,请重新上传。')
+                redirect(url_for('main.index'))
+            Inventory_tasks.append(t.path)
+
+        print Inventory_tasks
+
+        tasks_res = []
+        for task in  Inventory_tasks:
+            print task
+            tasks_res.append(playbook_runner(task, Inventory_hosts_file))
+
+        print tasks_res
+
+        return render_template('push_tasks.html', form=form, tasks_res=tasks_res)
+
+
+    return render_template('push_tasks.html', form=form)
+
+
+def command_runner(user,command, inventory):
+    res = ansible.runner.Runner(
+                module_name='shell',  # 调用shell模块，这个代码是为了示例执行shell命令
+                module_args= command,  # shell命令
+                remote_user=user,
+                host_list=inventory,
+                pattern='all',
+                private_key_file='/Users/kefatong/.ssh/id_rsa'
+            ).run()
+    return res
+
+
+
+@main.route('/push-command-to.device', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def push_CommandsTo_device():
+    form = EditRunningCommandForm()
+    if form.validate_on_submit():
+
+        if form.saved.data:
+            histroy = histroyCommands()
+            histroy.command = form.command.data
+            histroy.remarks = form.remarks.data
+            histroy.user_id = current_user.id
+            db.session.add(histroy)
+            db.session.commit()
+
+        devices = form.devices.data
+        if devices is None:
+            return redirect(url_for('main.index'))
+
+        devices = [Device.query.get_or_404(device) for device in devices]
+        Inventory_hosts_file = generateInventory_hosts(current_app, devices)
+
+        command = form.command.data
+        if command:
+            if re.findall('rm', command) or re.findall('mv', command):
+                flash(u'内容包含删除了移动命令')
+                return redirect(url_for('main.push_CommandsTo_device'))
+
+            command_res = command_runner('kefatong',command, Inventory_hosts_file)
+            print command_res
+            return render_template('push_commands.html', form=form, command_res=command_res)
+
+    return render_template('push_commands.html', form=form)
+
+
+@main.route('/push-tasksTo.deviceGroups', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def push_TasksTo_deviceGroups(id):
+    pass
 
 
 @main.route('/xxx')

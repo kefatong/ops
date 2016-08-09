@@ -33,6 +33,7 @@ class Config:
     FLASK_USE_CMDB_PASSWORD = '123456'
 
     FLASK_UPLOAD_HOME = './upload'
+    FLASK_TMP_HOME = './tmp'
 
     @staticmethod
     def init_app(app):

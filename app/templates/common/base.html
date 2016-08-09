@@ -86,7 +86,8 @@
 
             <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span class="nav-label">设备信息</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="inbox.html">服务器</a></li>
+                    <li><a href="{{ url_for('main.show_devices') }}">设备</a></li>
+                    <li><a href="{{ url_for('main.show_deviceGroups') }}">设备组</a></li>
                 </ul>
             </li>
 
@@ -126,7 +127,8 @@
                     class="badge bg-pink">5</span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{ url_for('main.show_deviceTaskGroups') }}">任务管理</a></li>
-                    <li><a href="{{ url_for('main.show_deviceTaskGroups') }}">推送任务</a></li>
+                    <li><a href="{{ url_for('main.push_TasksTo_devices') }}">推送任务</a></li>
+                    <li><a href="{{ url_for('main.push_CommandsTo_device') }}">推送命令</a></li>
                     <li><a href="invoice.html">任务日志</a></li>
                     <li><a href="contact.html">Contact-list</a></li>
                     <li><a href="login.html">Login</a></li>
@@ -216,7 +218,7 @@
                         <li><a href="#">Spanish</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Files</a></li>
+                <li><a href="#">值班管理</a></li>
             </ul>
 
             <!-- Right navbar -->

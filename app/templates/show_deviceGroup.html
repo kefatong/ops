@@ -23,80 +23,42 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">添加设备</h3>
+            <h3 class="title">{{ deviceGroup.name }}-主机组信息</h3>
         </div>
 
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">设备信息</h3></div>
+                    <div class="panel-heading"><h3 class="panel-title">主机组信息</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_device') }}"
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_deviceGroup') }}"
                               method="POST">
                             {{ form.csrf_token }}
-
                             <div class="form-group">
-                                <label class="col-md-2 control-label">主机名</label>
+                                <label class="col-md-2 control-label">主机组</label>
 
                                 <div class="col-md-6">
-                                    {{ form.hostname(class='form-control', placeholder='主机名') }}
-                                    {{ macros.print_form_messages(form.errors.hostname) }}
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">CPU型号</label>
-
-                                <div class="col-md-6">
-                                    {{ form.cpumodel(type="text", class='form-control', placeholder='CPU型号') }}
-                                    {{ macros.print_form_messages(form.errors.cpumodel) }}
+                                    {{ form.name(class='form-control', disabled="", placeholder='主机组') }}
+                                    {{ macros.print_form_messages(form.errors.name) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">CPU内核(个)</label>
+                                <label class="col-md-2 control-label">业务组</label>
 
                                 <div class="col-md-6">
-                                    {{ form.cpucount(type="text", class='form-control', placeholder='CPU内核(个)') }}
-                                    {{ macros.print_form_messages(form.errors.cpucount) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">内存大小(GB)</label>
-
-                                <div class="col-md-6">
-                                    {{ form.memsize(type="text", class='form-control', placeholder='内存大小(GB)') }}
-                                    {{ macros.print_form_messages(form.errors.memsize) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">磁盘大小(GB)</label>
-
-                                <div class="col-md-6">
-                                    {{ form.disksize(type="text", class='form-control', placeholder='磁盘大小(GB)') }}
-                                    {{ macros.print_form_messages(form.errors.disksize) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">所属业务</label>
-
-                                <div class="col-md-6">
-                                    {{ form.business(class='select2', placeholder='所属业务') }}
+                                    {{ form.business(class='form-control', disabled="", placeholder='业务组') }}
                                     {{ macros.print_form_messages(form.errors.business) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">电源状态</label>
+                                <label class="col-md-2 control-label">设备</label>
 
                                 <div class="col-md-6">
-                                    {{ form.powerstatus(class='select2', placeholder='电源状态') }}
-                                    {{ macros.print_form_messages(form.errors.powerstatus) }}
+                                    {{ form.devices(style="position: absolute; left: -9999px;", disabled="", class="multi-select", multiple="", id="my_multi_select3") }}
+                                    {{ macros.print_form_messages(form.errors.devices) }}
                                 </div>
                             </div>
 
@@ -104,7 +66,7 @@
                                 <label class="col-md-2 control-label">备注</label>
 
                                 <div class="col-md-6">
-                                    {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
+                                    {{ form.remarks(class='form-control autogrow', disabled="", placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
                                     {{ macros.print_form_messages(form.errors.remarks) }}
                                 </div>
                             </div>
