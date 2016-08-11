@@ -83,13 +83,17 @@ class EditDeviceForm(Form):
     an = StringField(u'资产号')
     sn = StringField(u'序列号')
     os = StringField(u'操作系统')
+    manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
+    brand = StringField(u'品牌', validators=[Length(0,64)])                        # 品牌
+    model = StringField(u'型号', validators=[Length(0,64)])                        # 型号
     cpumodel = StringField(u'CPU型号', validators=[Length(0,64)])                     # CPU 型号
     cpucount = IntegerField(u'CPU(个)')                        # CPU 核数
     memsize = IntegerField(u'内存(GB)')                      # 内存容量
     disksize = IntegerField(u'磁盘(GB)')                        # 磁盘容量
-    business = SelectField(u'业务', coerce=int)
-    powerstatus = SelectField(u'电源状态', coerce=int)
-    onstatus = IntegerField(u'状态')
+    business = StringField(u'业务')
+    #business = SelectField(u'业务', coerce=int)
+    powerstatus = SelectField(u'电源', coerce=int)
+    onstatus = SelectField(u'状态', coerce=int)
     usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
     usestaff = StringField(u'使用人', validators=[Length(1,64)])                     # 部门使用人
     mainuses = StringField(u'主要用途', validators=[Length(1,128)])                    # 主要用途
@@ -101,7 +105,7 @@ class EditDeviceForm(Form):
 
         self.onstatus.choices = [(1, u'已用'), (2, u'空闲'), (3, u'下线'), (3, u'待回收')]
 
-        self.business.choices = [(1, u'云计算',),(2, u'大数据')]
+        #self.business.choices = [(1, u'测试',), (2, u'云计算',),(3, u'大数据')]
 
         self.powerstatus.choices = [(1, u'开机'), (2, u'关机')]
 

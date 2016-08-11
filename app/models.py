@@ -357,11 +357,14 @@ class Device(db.Model):
     an = db.Column(db.String(64), unique=True, index=True)
     sn = db.Column(db.String(64), unique=True, index=True)  # SN 璁惧搴忓垪鍙�
     os = db.Column(db.String(64))  # os绫诲瀷
+    manufacturer = db.Column(db.String(64))  # 鐢熶骇鍟�
+    brand = db.Column(db.String(64))  # 鍝佺墝
+    model = db.Column(db.String(64))  # 鍨嬪彿
     cpumodel = db.Column(db.String(64))  # CPU 鍨嬪彿
     cpucount = db.Column(db.Integer)  # CPU 鏍告暟
     memsize = db.Column(db.Integer)  # 鍐呭瓨瀹归噺
     disksize = db.Column(db.String(64))
-    business = db.Column(db.Integer)    #所属业务
+    business = db.Column(db.String(64))    #所属业务
     powerstatus = db.Column(db.Integer)  #电源状态
     onstatus = db.Column(db.Integer)  # 浣跨敤鐘舵��
     usedept = db.Column(db.String(64))  # 浣跨敤閮ㄩ棬
@@ -375,7 +378,6 @@ class Device(db.Model):
     def __repr__(self):
         return '<Device %r>' % self.hostname
 
-#
 
 
 TaskRelationshipTaskGroup = db.Table('TaskRelationshipTaskGroup',

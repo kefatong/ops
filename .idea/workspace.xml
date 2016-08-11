@@ -2,26 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c410cb3-0002-4a66-a174-dfd8d475c2e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/create_deviceGroup.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/push_commands.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/push_tasks.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_device.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_deviceGroup.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_deviceGroups.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_deviceRunningCommands.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_deviceTask.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/main/test.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/forms.py" afterPath="$PROJECT_DIR$/app/main/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/views.py" afterPath="$PROJECT_DIR$/app/main/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models.py" afterPath="$PROJECT_DIR$/app/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/common/base.html" afterPath="$PROJECT_DIR$/app/templates/common/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_device.html" afterPath="$PROJECT_DIR$/app/templates/create_device.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_device.html" afterPath="$PROJECT_DIR$/app/templates/edit_device.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTask.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTask.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTasks.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTasks.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_devices.html" afterPath="$PROJECT_DIR$/app/templates/show_devices.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/test.html" afterPath="$PROJECT_DIR$/app/templates/test.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manage.py" afterPath="$PROJECT_DIR$/manage.py" />
     </list>
     <ignored path="cmdb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +36,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/main/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="709" column="26" selection-start-line="709" selection-start-column="4" selection-end-line="709" selection-end-column="26" />
+            <state relative-caret-position="382">
+              <caret line="468" column="0" selection-start-line="468" selection-start-column="0" selection-end-line="468" selection-end-column="0" />
               <folding>
                 <element signature="e#15#118#0" expanded="true" />
               </folding>
@@ -57,8 +45,62 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show_classType.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/show_classType.html">
+      <file leaf-file-name="show_deviceTask.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTask.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="735">
+              <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show_deviceTasks.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTasks.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="63" column="74" selection-start-line="63" selection-start-column="74" selection-end-line="63" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exceptions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/exceptions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="337">
+              <caret line="401" column="45" selection-start-line="401" selection-start-column="45" selection-end-line="401" selection-end-column="45" />
+              <folding>
+                <element signature="e#45#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/main/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="87" column="85" selection-start-line="87" selection-start-column="85" selection-end-line="87" selection-end-column="85" />
+              <folding>
+                <element signature="e#36#76#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_deviceAsset.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/create_deviceAsset.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -70,85 +112,29 @@
       <file leaf-file-name="create_device.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/create_device.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1245">
-              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+            <state relative-caret-position="328">
+              <caret line="109" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="331" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/main/forms.py">
+      <file leaf-file-name="edit_deviceAsset.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceAsset.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="210" selection-end-column="0" />
-              <folding>
-                <element signature="e#36#76#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="push_tasks.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/push_tasks.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="179" column="17" selection-start-line="179" selection-start-column="17" selection-end-line="179" selection-end-column="17" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models.py">
+      <file leaf-file-name="edit_device.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/edit_device.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5663">
-              <caret line="35" column="31" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
-              <folding>
-                <element signature="e#45#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="push_commands.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/push_commands.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="126" selection-end-column="42" />
+            <state relative-caret-position="375">
+              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="130" column="83" selection-start-line="130" selection-start-column="83" selection-end-line="130" selection-end-column="83" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="manage.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/manage.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
-              <folding>
-                <element signature="e#23#52#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -183,7 +169,6 @@
         <option value="$PROJECT_DIR$/app/templates/edit_deviceAsset.html" />
         <option value="$PROJECT_DIR$/app/templates/show_virtmachine.html" />
         <option value="$PROJECT_DIR$/app/templates/create_devicePowermanage.html" />
-        <option value="$PROJECT_DIR$/app/templates/edit_device.html" />
         <option value="$PROJECT_DIR$/app/templates/show_devicePowermanage.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceNetworks.html" />
         <option value="$PROJECT_DIR$/app/templates/create_devicePorts.html" />
@@ -200,29 +185,30 @@
         <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/app/auth/views.py" />
         <option value="$PROJECT_DIR$/app/main/test.py" />
-        <option value="$PROJECT_DIR$/app/templates/show_deviceTask.html" />
         <option value="$PROJECT_DIR$/app/templates/create_deviceTask.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTaskScript.html" />
-        <option value="$PROJECT_DIR$/app/templates/show_deviceTasks.html" />
         <option value="$PROJECT_DIR$/app/templates/create_deviceTaskGroup.html" />
         <option value="$PROJECT_DIR$/app/templates/edit_deviceTaskGroup.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTaskGroup.html" />
-        <option value="$PROJECT_DIR$/app/templates/show_devices.html" />
         <option value="$PROJECT_DIR$/app/templates/create_deviceGroup.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceGroup.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceGroups.html" />
         <option value="$PROJECT_DIR$/app/templates/test.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" />
         <option value="$PROJECT_DIR$/config.py" />
-        <option value="$PROJECT_DIR$/app/templates/create_device.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceRunningCommands.html" />
-        <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/app/templates/push_commands.html" />
-        <option value="$PROJECT_DIR$/app/main/forms.py" />
-        <option value="$PROJECT_DIR$/app/main/views.py" />
         <option value="$PROJECT_DIR$/app/templates/push_tasks.html" />
         <option value="$PROJECT_DIR$/app/templates/common/base.html" />
+        <option value="$PROJECT_DIR$/app/templates/show_devices.html" />
+        <option value="$PROJECT_DIR$/app/main/forms.py" />
+        <option value="$PROJECT_DIR$/app/templates/create_device.html" />
+        <option value="$PROJECT_DIR$/app/templates/edit_device.html" />
+        <option value="$PROJECT_DIR$/app/main/views.py" />
+        <option value="$PROJECT_DIR$/app/templates/show_deviceTask.html" />
+        <option value="$PROJECT_DIR$/app/models.py" />
+        <option value="$PROJECT_DIR$/app/templates/show_deviceTasks.html" />
       </list>
     </option>
   </component>
@@ -737,7 +723,7 @@
     <frame x="0" y="23" width="1440" height="823" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33194444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23194444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822758" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -797,7 +783,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/templates/create_devicePorts.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/edit_devicePorts.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/show_devicePowers.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/edit_devicePower.html" />
@@ -813,17 +798,12 @@
     <entry file="file://$PROJECT_DIR$/app/templates/404.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/403.html" />
     <entry file="file://$PROJECT_DIR$/app/main/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/app/exceptions.py" />
     <entry file="file://$PROJECT_DIR$/app/email.py" />
     <entry file="file://$PROJECT_DIR$/app/auth/views.py" />
     <entry file="file://$PROJECT_DIR$/app/templates/index.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceAsset.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceAsset.html" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/LICENSE" />
     <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTask.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/show_idcs.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTasks.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskScript.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTaskGroup.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -850,20 +830,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTask.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_devices.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="66" column="68" selection-start-line="66" selection-start-column="68" selection-end-line="66" selection-end-column="68" />
         </state>
       </provider>
     </entry>
@@ -910,28 +876,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/create_device.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
           <folding>
-            <element signature="e#23#52#0" expanded="true" />
+            <element signature="e#23#52#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -941,26 +891,6 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5663">
-          <caret line="35" column="31" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
-          <folding>
-            <element signature="e#45#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/main/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="210" selection-end-column="0" />
-          <folding>
-            <element signature="e#36#76#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -988,20 +918,120 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="130" column="83" selection-start-line="130" selection-start-column="83" selection-end-line="130" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_idcs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-795">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_devices.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="91" column="48" selection-start-line="91" selection-start-column="48" selection-end-line="91" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceAsset.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceAsset.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_device.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="109" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="331" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/edit_device.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/main/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="87" column="85" selection-start-line="87" selection-start-column="85" selection-end-line="87" selection-end-column="85" />
+          <folding>
+            <element signature="e#36#76#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/main/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="709" column="26" selection-start-line="709" selection-start-column="4" selection-end-line="709" selection-end-column="26" />
+        <state relative-caret-position="382">
+          <caret line="468" column="0" selection-start-line="468" selection-start-column="0" selection-end-line="468" selection-end-column="0" />
           <folding>
             <element signature="e#15#118#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTask.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="130" column="83" selection-start-line="130" selection-start-column="83" selection-end-line="130" selection-end-column="83" />
+        <state relative-caret-position="735">
+          <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/exceptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="401" column="45" selection-start-line="401" selection-start-column="45" selection-end-line="401" selection-end-column="45" />
+          <folding>
+            <element signature="e#45#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTasks.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="63" column="74" selection-start-line="63" selection-start-column="74" selection-end-line="63" selection-end-column="74" />
           <folding />
         </state>
       </provider>

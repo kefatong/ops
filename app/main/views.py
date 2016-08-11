@@ -54,7 +54,7 @@ def edit_profile():
     return render_template('edit_profile.html', form=form, username=current_user.username, logs=logs)
 
 
-@main.route('/index', methods=['GET', 'POST'])
+@main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
 
@@ -173,31 +173,6 @@ def update_device():
 
 
 
-@main.route('/show-device.device/<int:id>', methods=['GET', 'POST'])
-@login_required
-@permission_required(Permission.DEVICE_LOOK)
-def show_device(id):
-    deviceGroup = DeviceGroup.query.get_or_404(id)
-    return render_template('show_device.html', devices=deviceGroup.devices.all())
-
-
-
-@main.route('/show-device.devices', methods=['GET', 'POST'])
-@login_required
-@permission_required(Permission.DEVICE_LOOK)
-def show_devices():
-
-    devices = get_api_json(current_app, postfix='/devices/')
-    if not devices:
-        render_template('show_devices.html')
-
-    check_update(current_app,devices)
-
-    devices = Device.query.all()
-    return render_template('show_devices.html', is_json=True, devices=devices)
-
-    #devices = Device.query.all()
-    #return render_template('show_devices.html', devices=devices)
 
 
 
@@ -468,6 +443,31 @@ def delete_deviceTask(id):
 
 
 
+
+@main.route('/show-device.device/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_device(id):
+    deviceGroup = DeviceGroup.query.get_or_404(id)
+    return render_template('show_device.html', devices=deviceGroup.devices.all())
+
+
+
+@main.route('/show-device.devices', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_devices():
+
+    devices = get_api_json(current_app, postfix='/devices/')
+    print devices
+    if devices:
+        check_update(current_app,devices)
+
+    devices = Device.query.all()
+    return render_template('show_devices.html', is_json=True, devices=devices)
+
+
+
 @main.route('/create-device.device', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_EDIT)
@@ -475,15 +475,18 @@ def create_device():
     form = EditDeviceForm()
     if form.validate_on_submit():
         device = Device()
-        device.deviceType = form.deviceType.data
+        device.hostname = form.hostname.data
+        device.ip = form.ip.data
+        device.an = form.an.data
+        device.sn = form.sn.data
+        device.os = form.os.data
+        device.manufacturer = form.manufacturer.data
+        device.brand = form.brand.data
+        device.model = form.model.data
         device.onstatus = form.onstatus.data
         device.usedept = form.usedept.data
         device.usestaff = form.usestaff.data
         device.mainuses = form.mainuses.data
-        device.managedept = form.managedept.data
-        device.managestaff = form.managestaff.data
-        device.hostname = form.hostname.data
-        device.os = form.os.data
         device.cpumodel = form.cpumodel.data
         device.cpucount = form.cpucount.data
         device.memsize = form.memsize.data
@@ -500,8 +503,7 @@ def create_device():
             db.session.rollback()
             flash(u'虚拟机添加失败!')
 
-        return redirect(url_for('main.show_device'))
-
+        return redirect(url_for('main.show_devices'))
     return render_template('create_device.html', form=form)
 
 
@@ -512,16 +514,18 @@ def edit_device(id):
     device = Device.query.get_or_404(id)
     form = EditDeviceForm()
     if form.validate_on_submit():
-        device.deviceType = form.deviceType.data
+        device.hostname = form.hostname.data
+        device.ip = form.ip.data
+        device.an = form.an.data
+        device.sn = form.sn.data
+        device.os = form.os.data
+        device.manufacturer = form.manufacturer.data
+        device.brand = form.brand.data
+        device.model = form.model.data
         device.onstatus = form.onstatus.data
         device.usedept = form.usedept.data
         device.usestaff = form.usestaff.data
         device.mainuses = form.mainuses.data
-        device.managedept = form.managedept.data
-        device.managestaff = form.managestaff.data
-        device.device_id = form.device_id.data
-        device.hostname = form.hostname.data
-        device.os = form.os.data
         device.cpumodel = form.cpumodel.data
         device.cpucount = form.cpucount.data
         device.memsize = form.memsize.data
@@ -530,26 +534,28 @@ def edit_device(id):
         device.powerstatus = form.powerstatus.data
         device.remarks = form.remarks.data
 
-        try:
-            db.session.add(device)
-            db.session.commit()
-            flash(u'设备添加完成!')
-        except:
-            db.session.rollback()
-            flash(u'设备添加失败!')
+        #try:
+        db.session.add(device)
+        db.session.commit()
+        flash(u'设备添加完成!')
+        #except:
+            #db.session.rollback()
+            #flash(u'设备添加失败!')
 
         return redirect(url_for('main.show_devices'))
 
-    form.deviceType.data = device.deviceType
+
+    form.hostname.data = device.hostname
+    form.ip.data = device.ip
+    form.an.data = device.an
+    form.sn.data = device.sn
+    form.manufacturer.data = device.manufacturer
+    form.brand.data = device.brand
+    form.model.data = device.model
     form.onstatus.data = device.onstatus
     form.usedept.data = device.usedept
     form.usestaff.data = device.usestaff
     form.mainuses.data = device.mainuses
-    form.managedept.data = device.managedept
-    form.managestaff.data = device.managestaff
-    form.device_id.data = device.device_id
-    form.pool.data = device.pool
-    form.hostname.data = device.hostname
     form.os.data = device.os
     form.cpumodel.data = device.cpumodel
     form.cpucount.data = device.cpucount
@@ -576,7 +582,7 @@ def delete_device(id):
         db.session.rollback()
         flash(u'虚拟机: {0} 删除失败!'.format(device.hostname))
 
-    return redirect(url_for('main.show_virtmachine'))
+    return redirect(url_for('main.show_devices'))
 
 ########################################################################
 
