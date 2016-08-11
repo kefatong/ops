@@ -17,7 +17,7 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">主机组管理</h3>
+            <h3 class="title">任务类型管理</h3>
         </div>
 
 
@@ -25,8 +25,8 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="m-b-28">
-                        <a href="{{ url_for('main.create_deviceGroup') }}">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">创建主机组<i
+                        <a href="{{ url_for('main.create_deviceTaskClass') }}">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">创建任务类型<i
                                     class="fa fa-plus"></i></button>
                         </a>
                     </div>
@@ -39,16 +39,15 @@
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th>主机组</th>
-                                        <th>主机数量</th>
-                                        <th>业务</th>
+                                        <th>任务名称</th>
+                                        <th>任务类型</th>
                                         <th>创建人</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
-                                    {% for Group in deviceGroups %}
+                                    {% for Class in taskClass %}
                                         <tr>
                                             <td>
                                                 <label class="cr-styled">
@@ -56,20 +55,19 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-                                            <td><a href="{{ url_for('main.show_deviceGroup', id=Group.id) }}">{{ Group.name }}</a></td>
-                                            <td><a href="{{ url_for('main.show_device', id=Group.id) }}">{{ Group.devices.count() }}</a></td>
-                                            <td>{{ Group.business }}</td>
-                                            <td>{{ Group.instaff }}</td>
+                                            <td>{{ Class.name }}</td>
+                                            <td>{{ Class.type }}</td>
+                                            <td>{{ Class.instaff }}</td>
                                             <td class="actions">
                                                 <a class="hidden on-editing save-row" href="#"><i
                                                         class="fa fa-save"></i></a>
                                                 <a class="hidden on-editing cancel-row" href="#"><i
                                                         class="fa fa-times"></i></a>
                                                 <a class="on-default edit-row"
-                                                   href="{{ url_for('main.edit_deviceGroup',id=Group.id) }}"><i
+                                                   href="{{ url_for('main.edit_deviceTaskClass',id=Class.id) }}"><i
                                                         class="fa fa-pencil"></i></a>
                                                 <a class="on-default remove-row"
-                                                   href="{{ url_for('main.delete_deviceGroup',id=Group.id) }}"><i
+                                                   href="{{ url_for('main.delete_deviceTaskClass',id=Class.id) }}"><i
                                                         class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>

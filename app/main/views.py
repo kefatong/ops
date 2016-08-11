@@ -174,6 +174,59 @@ def update_device():
 
 
 
+@main.route('/show-device.TaskClass', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceTaskClass():
+    taskClass = TaskClass.query.all()
+    return render_template('show_deviceTaskClass.html', taskClass=taskClass)
+
+
+@main.route('/create-device.TaskClass', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceTaskClass():
+    form = EditDeviceTaskClassForm(None)
+    if form.validate_on_submit():
+        taskClass = TaskClass()
+        taskClass.name = form.name.data
+        taskClass.remarks = form.remarks.data
+        db.session.add(taskClass)
+        db.session.commit()
+
+        flash(u'任务类型添加成功!')
+        return redirect(url_for('main.show_deviceTaskClass'))
+
+    return render_template('create_deviceTaskClass.html', form=form)
+
+
+@main.route('/edit-device.TaskClass/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def edit_deviceTaskClass(id):
+    taskClass = TaskClass.query.get_or_404(id)
+    form = EditDeviceTaskClassForm(taskClass)
+    if form.validate_on_submit():
+        taskClass.name = form.name.data
+        taskClass.remarks = form.remarks.data
+        db.session.add(taskClass)
+        db.session.commit()
+        flash(u'任务类型修改成功!')
+        return redirect(url_for('main.show_deviceTaskClass'))
+    form.name.data = taskClass.name
+    form.remarks.data = taskClass.remarks
+    return render_template('create_deviceTaskClass.html', form=form, taskClass=taskClass)
+
+
+@main.route('/delete-device.TaskClass/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceTaskClass(id):
+    taskClass = TaskClass.query.get_or_404(id)
+    db.session.delete(taskClass)
+    db.session.commit()
+    flash(u'任务类型删除成功!')
+    return redirect(url_for('main.show_deviceTaskClass'))
 
 
 @main.route('/show-device.deviceGroup/<int:id>', methods=['GET', 'POST'])

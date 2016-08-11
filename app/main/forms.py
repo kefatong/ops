@@ -163,9 +163,23 @@ class EditDeviceTaskForm(Form):
             raise ValidationError(u'请确认上传文件是否正确.'.format(field.data))
 
 
+
+class EditDeviceTaskClassForm(Form):
+    name = StringField(u'任务名称', validators=[InputRequired()])
+    type = SelectField(u'任务类型', coerce=int)
+    remarks = TextAreaField(u'备注')  # 备注
+    submit = SubmitField(u'提交')
+
+    def __init__(self, taskClass, *args, **kwargs):
+        super(EditDeviceTaskClassForm, self).__init__(*args, **kwargs)
+        self.taskClass = taskClass
+
+        self.type.choices = [(1, u'系统部署'),(2, u'合规巡检'), (3, u'应用发布')]
+
 class EditDeviceTaskGroupForm(Form):
     name = StringField(u'任务组名称', validators=[InputRequired()])
     tasks = SelectMultipleField(u'任务脚本', coerce=int)
+    type = SelectField(u'任务类型', coerce=int)
     enabled = BooleanField(u'启用')
     remarks = TextAreaField(u'备注')  # 备注
     submit = SubmitField(u'提交')
@@ -181,6 +195,10 @@ class EditDeviceTaskGroupForm(Form):
         else:
             self.tasks.choices = [(task.id, task.taskname)
                                   for task in deviceTaskGroup.tasks.all()]
+
+        self.type.choices = [(taskClass.id, taskClass.name)
+                             for taskClass in TaskClass.query.all()]
+
 
     def validate_name(self,field):
         if not self.deviceTaskGroup:

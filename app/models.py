@@ -380,11 +380,28 @@ class Device(db.Model):
 
 
 
+
+class TaskClass(db.Model):
+    __tablename__ = 'taskClass'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    isdelete = db.Column(db.Boolean)
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)  # 澶囨敞
+
+    def __repr__(self):
+        return '<TaskClass %r>' % self.name
+
+
+
 TaskRelationshipTaskGroup = db.Table('TaskRelationshipTaskGroup',
     db.Column('deviceTaskGroup_id', db.Integer, db.ForeignKey('deviceTaskGroup.id')),
     db.Column('deviceTask_id', db.Integer, db.ForeignKey('deviceTasks.id')),
     db.Column('PQ', db.Integer)
 )
+
+
 
 class DeviceTaskGroup(db.Model):
     __tablename__ = 'deviceTaskGroup'
