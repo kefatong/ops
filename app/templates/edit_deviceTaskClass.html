@@ -31,7 +31,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3 class="panel-title">任务信息</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_deviceTaskClass') }}"
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.edit_deviceTaskClass', id=taskClass.id) }}"
                               method="POST">
                             {{ form.csrf_token }}
                             <div class="form-group">
@@ -47,8 +47,8 @@
                                 <label class="col-md-2 control-label">任务类型</label>
 
                                 <div class="col-md-6">
-                                    {{ form.type(class='select2', placeholder='任务类型') }}
-                                    {{ macros.print_form_messages(form.errors.type) }}
+                                    {{ form.module_id(class='select2', placeholder='任务类型') }}
+                                    {{ macros.print_form_messages(form.errors.module_id) }}
                                 </div>
                             </div>
 

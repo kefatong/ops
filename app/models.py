@@ -380,11 +380,26 @@ class Device(db.Model):
 
 
 
+class ModuleClass(db.Model):
+    __tablename__ = 'moduleClass'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    separator = db.Column(db.String(64), default='\t')
+    isdelete = db.Column(db.Boolean)
+    instaff = db.Column(db.String(64))  # 褰曞叆浜�
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
+    remarks = db.Column(db.Text)  # 澶囨敞
+
+    def __repr__(self):
+        return '<ModuleClass %r>' % self.name
+
 
 class TaskClass(db.Model):
     __tablename__ = 'taskClass'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
+    module_id = db.Column(db.Integer, db.ForeignKey('moduleClass.id'))
+    separator = db.Column(db.String(64), default='  ')
     isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
@@ -408,7 +423,7 @@ class DeviceTaskGroup(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     enabled = db.Column(db.Boolean)    #是否启用
-    run_priority = db.Column(db.String(128))
+    type = db.Column(db.Integer)
     tasks = db.relationship('DeviceTasks', secondary=TaskRelationshipTaskGroup, backref=db.backref('taskGroup', lazy='dynamic'), lazy='dynamic')
     isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
@@ -439,19 +454,25 @@ class DeviceTasks(db.Model):
         return '<TaskScripts %r>' % self.taskname
 
 
-class DeploySystem(db.Model):
-    __tablename__ = 'DeploySystem'
+class System(db.Model):
+    __tablename__ = 'System'
     id = db.Column(db.Integer, primary_key=True)
     device_id = db.Column(db.Integer)       #设备id  通过cmdb读取设备
-    uuid = db.Column(db.String(64))         #设备UUID  选择设备后自动获取设备UUID  在正式安装时判断是否与设备一致
+    an = db.Column(db.String(64))
+    sn = db.Column(db.String(64))
     ip = db.Column(db.String(20))           #设备IP地址 选择设备后自动获取设备IP  在正式安装时判断是否与设备一致
-    version = db.Column(db.Integer)         #系统版本
-    tasks = db.Column(db.Integer)           #任务列表   安装系统后需要执行的
-    is_deploy = db.Column(db.Integer)       #新创建任务后不直接安装, 需要手动确认安装信息
-
+    hostname = db.Column(db.String(64))
+    power_ip = db.Column(db.String(32))
+    os_version = db.Column(db.Integer)         #系统版本
+    post = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))           #任务列表   安装系统后需要执行的
+    status = db.Column(db.Integer, default=1)
+    isdelete = db.Column(db.Boolean)
+    instaff = db.Column(db.String(64))   #录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
 
     def __repr__(self):
-        return '<TaskScripts %r>' % self.hostname
+        return '<TaskScripts %r>' % self.sn
 
 
 class histroyCommands(db.Model):

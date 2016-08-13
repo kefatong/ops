@@ -1,5 +1,6 @@
 # coding:utf8
 
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import render_template, redirect, url_for, flash, current_app, abort, request, make_response
 from flask.ext.login import login_required, current_user
 from ..decorators import admin_required, permission_required
@@ -14,16 +15,17 @@ import stat
 import os
 import re
 import uuid
-
-import ansible
-import ansible.runner
-import ansible.playbook
-from ansible import callbacks
-from ansible import utils
 import json
 import hashlib
 import random
 import time
+
+
+import Queue
+
+import cobbler.api as capi
+
+cobbler_handle = capi.BootAPI()
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -57,12 +59,10 @@ def edit_profile():
 @main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-
     json_device = get_api_json(current_app, postfix='/devices/')
     print json_device
 
     return render_template('index.html')
-
 
 
 ########################################################################
@@ -75,7 +75,6 @@ def get_api_token(app):
     API_USER = app.config['FLASK_USE_CMDB_USER']
     API_PASSWORD = app.config['FLASK_USE_CMDB_PASSWORD']
 
-
     if API_URL and API_USER and API_PASSWORD:
         print API_URL + '/token/'
         print API_USER, API_PASSWORD
@@ -87,9 +86,7 @@ def get_api_token(app):
             return None
 
 
-
 def get_api_json(app, postfix, id=None):
-
     if not app:
         return None
 
@@ -122,17 +119,15 @@ def get_api_json(app, postfix, id=None):
             return None
 
 
-
-
-def check_update(current_app,devices):
-    if not  devices:
+def check_update(current_app, devices):
+    if not devices:
         return None
-    cmdb_devices = set([ device['id'] for device in devices['devices']])
+    cmdb_devices = set([device['id'] for device in devices['devices']])
     ops_devices = set([device.device_id for device in Device.query.all()])
 
     print ops_devices.difference(cmdb_devices)
     if cmdb_devices.difference(ops_devices):
-        for device_id in  cmdb_devices.difference(ops_devices):
+        for device_id in cmdb_devices.difference(ops_devices):
             api_json = get_api_json(current_app, postfix='/device/', id=device_id)
 
             if api_json is None:
@@ -141,37 +136,95 @@ def check_update(current_app,devices):
             api_json = api_json['device']
             device = Device()
             device.device_id = device_id
-            device.an       = api_json['an']
-            device.sn       = api_json['sn']
+            device.an = api_json['an']
+            device.sn = api_json['sn']
             device.hostname = api_json['hostname']
-            device.ip       = api_json['ip']
-            device.os       = api_json['os']
+            device.ip = api_json['ip']
+            device.os = api_json['os']
             device.cpumodel = api_json['cpumodel']
             device.cpucount = api_json['cpucount']
-            device.memsize  = api_json['memsize']
+            device.memsize = api_json['memsize']
             device.disksize = api_json['disksize']
             device.business = api_json['business']
             device.powerstatus = api_json['powerstatus']
             device.onstatus = api_json['onstatus']
-            device.usedept  = api_json['usedept']
+            device.usedept = api_json['usedept']
             device.usestaff = api_json['usestaff']
             device.mainuses = api_json['mainuses']
             device.managedept = api_json['managedept']
             device.managestaff = api_json['managestaff']
-            device.instaff  = api_json['instaff']
-            device.remarks  = api_json['remarks']
+            device.instaff = api_json['instaff']
+            device.remarks = api_json['remarks']
 
             db.session.add(device)
             print device.hostname
 
 
 
-    #print devices
+            # print devices
+
 
 def update_device():
     pass
 
 
+@main.route('/show-module.class', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_moduleClass():
+    moduleClass = ModuleClass.query.all()
+    return render_template('show_moduleClass.html', moduleClass=moduleClass)
+
+
+@main.route('/create-module.class', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_moduleClass():
+    form = EditModuleClassForm(None)
+    if form.validate_on_submit():
+        moduleClass = ModuleClass()
+        moduleClass.name = form.name.data
+        moduleClass.remarks = form.remarks.data
+        moduleClass.instaff = current_user.username
+        db.session.add(moduleClass)
+        db.session.commit()
+
+        flash(u'任务类型添加成功!')
+        return redirect(url_for('main.show_moduleClass'))
+
+    return render_template('create_moduleClass.html', form=form)
+
+
+@main.route('/edit-module.class/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def edit_moduleClass(id):
+    moduleClass = ModuleClass.query.get_or_404(id)
+    form = EditModuleClassForm(moduleClass)
+    if form.validate_on_submit():
+        moduleClass.name = form.name.data
+        moduleClass.remarks = form.remarks.data
+        moduleClass.instaff = current_user.username
+        db.session.add(moduleClass)
+        db.session.commit()
+
+        flash(u'任务类型添加成功!')
+        return redirect(url_for('main.show_moduleClass'))
+
+    form.name.data = moduleClass.name
+    form.remarks.data = moduleClass.remarks
+    return render_template('edit_moduleClass.html', form=form, moduleClass=moduleClass)
+
+
+@main.route('/delete-module.class/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_moduleClass(id):
+    moduleClass = ModuleClass.query.get_or_404(id)
+    db.session.delete(moduleClass)
+    db.session.commit()
+    flash(u'目录删除成功!')
+    return redirect(url_for('main.show_moduleClass'))
 
 
 @main.route('/show-device.TaskClass', methods=['GET', 'POST'])
@@ -190,7 +243,9 @@ def create_deviceTaskClass():
     if form.validate_on_submit():
         taskClass = TaskClass()
         taskClass.name = form.name.data
+        taskClass.module_id = form.module_id.data
         taskClass.remarks = form.remarks.data
+        taskClass.instaff = current_user.username
         db.session.add(taskClass)
         db.session.commit()
 
@@ -208,14 +263,16 @@ def edit_deviceTaskClass(id):
     form = EditDeviceTaskClassForm(taskClass)
     if form.validate_on_submit():
         taskClass.name = form.name.data
+        taskClass.module_id = form.module_id.data
         taskClass.remarks = form.remarks.data
         db.session.add(taskClass)
         db.session.commit()
         flash(u'任务类型修改成功!')
         return redirect(url_for('main.show_deviceTaskClass'))
     form.name.data = taskClass.name
+    form.module_id.data = taskClass.module_id
     form.remarks.data = taskClass.remarks
-    return render_template('create_deviceTaskClass.html', form=form, taskClass=taskClass)
+    return render_template('edit_deviceTaskClass.html', form=form, taskClass=taskClass)
 
 
 @main.route('/delete-device.TaskClass/<int:id>', methods=['GET', 'POST'])
@@ -242,7 +299,6 @@ def show_deviceGroup(id):
     return render_template('show_deviceGroup.html', form=form, deviceGroup=deviceGroup)
 
 
-
 @main.route('/show-device.deviceGroups', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
@@ -251,12 +307,11 @@ def show_deviceGroups():
     return render_template('show_deviceGroups.html', deviceGroups=deviceGroups)
 
 
-
 @main.route('/create-device.deviceGroup', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def create_deviceGroup():
-    form = EditDeviceGroupForm(None,True)
+    form = EditDeviceGroupForm(None, True)
     if form.validate_on_submit():
         deviceGroup = DeviceGroup()
         deviceGroup.name = form.name.data
@@ -272,14 +327,12 @@ def create_deviceGroup():
     return render_template('create_deviceGroup.html', form=form)
 
 
-
-
 @main.route('/edit-device.deviceGroup/<int:id>', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def edit_deviceGroup(id):
     deviceGroup = DeviceGroup.query.get_or_404(id)
-    form = EditDeviceGroupForm(deviceGroup,True)
+    form = EditDeviceGroupForm(deviceGroup, True)
     if form.validate_on_submit():
         deviceGroup.name = form.name.data
         deviceGroup.business = form.business.data
@@ -299,7 +352,7 @@ def edit_deviceGroup(id):
     form.business.data = deviceGroup.business
     form.devices.data = deviceGroup.devices
     form.remarks.data = deviceGroup.remarks
-    return render_template('create_deviceGroup.html', form=form)
+    return render_template('edit_deviceGroup.html', form=form, deviceGroup=deviceGroup)
 
 
 @main.route('/delete-device.deviceGroup/<int:id>', methods=['GET', 'POST'])
@@ -310,7 +363,6 @@ def delete_deviceGroup(id):
     db.session.delete(deviceGroup)
     db.session.commit()
     return redirect(url_for('main.show_deviceGroups'))
-
 
 
 @main.route('/show-device.taskGroups', methods=['GET', 'POST'])
@@ -331,6 +383,7 @@ def create_deviceTaskGroup():
         deviceTaskGroup.name = form.name.data
         for task in form.tasks.data:
             deviceTaskGroup.tasks.append(DeviceTasks.query.get(task))
+        deviceTaskGroup.type = form.type.data
         deviceTaskGroup.enabled = form.enabled.data
         deviceTaskGroup.remarks = form.remarks.data
         deviceTaskGroup.instaff = current_user.username
@@ -353,11 +406,11 @@ def edit_deviceTaskGroup(id):
 
         for task in deviceTaskGroup.tasks.all():
             deviceTaskGroup.tasks.remove(task)
-            
 
         for task in form.tasks.data:
             deviceTaskGroup.tasks.append(DeviceTasks.query.get(task))
 
+        deviceTaskGroup.type = form.type.data
         deviceTaskGroup.enabled = form.enabled.data
         deviceTaskGroup.remarks = form.remarks.data
         deviceTaskGroup.instaff = current_user.username
@@ -369,6 +422,7 @@ def edit_deviceTaskGroup(id):
 
     form.name.data = deviceTaskGroup.name
     form.tasks.data = deviceTaskGroup.tasks
+    form.type.data = deviceTaskGroup.type
     form.enabled.data = deviceTaskGroup.enabled
     form.remarks.data = deviceTaskGroup.remarks
 
@@ -385,7 +439,6 @@ def delete_deviceTaskGroup(id):
     return redirect(url_for('main.show_deviceTaskGroups'))
 
 
-
 @main.route('/create-device.task', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
@@ -397,7 +450,6 @@ def create_deviceTask():
         deviceTask.taskname = form.taskname.data
         deviceTask.type = form.type.data
         deviceTask.scriptname = secure_filename(form.scriptfile.data.filename)
-
 
         app = current_app._get_current_object()
         FLASK_UPLOAD_HOME = app.config['FLASK_UPLOAD_HOME']
@@ -418,11 +470,11 @@ def create_deviceTask():
 
         import shutil
         new_script_name = SCRIPT_DIRS + '/' + deviceTask.md5code
-        shutil.copy(script_name,new_script_name)
+        shutil.copy(script_name, new_script_name)
         os.remove(script_name)
 
-        deviceTask.path    = new_script_name
-        deviceTask.arch    = form.arch.data
+        deviceTask.path = new_script_name
+        deviceTask.arch = form.arch.data
         deviceTask.version = form.version.data
         deviceTask.enabled = form.enabled.data
         deviceTask.remarks = form.remarks.data
@@ -432,7 +484,6 @@ def create_deviceTask():
         db.session.commit()
         return redirect(url_for('main.index'))
     return render_template('create_deviceTask.html', form=form)
-
 
 
 @main.route('/show-device.taskScript/<int:id>', methods=['GET', 'POST'])
@@ -462,7 +513,6 @@ def show_deviceTask(id):
     return render_template('show_deviceTask.html', deviceTasks=deviceTaskGroup.tasks.all())
 
 
-
 @main.route('/show-device.tasks', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
@@ -484,7 +534,6 @@ def show_deviceTaskGroup(id):
     return render_template('show_deviceTaskGroup.html', deviceTaskGroup=deviceTaskGroup, form=form)
 
 
-
 @main.route('/delete-device.task/<int:id>', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
@@ -495,8 +544,6 @@ def delete_deviceTask(id):
     return redirect(url_for('main.show_deviceTasks'))
 
 
-
-
 @main.route('/show-device.device/<int:id>', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
@@ -505,20 +552,17 @@ def show_device(id):
     return render_template('show_device.html', devices=deviceGroup.devices.all())
 
 
-
 @main.route('/show-device.devices', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def show_devices():
-
     devices = get_api_json(current_app, postfix='/devices/')
     print devices
     if devices:
-        check_update(current_app,devices)
+        check_update(current_app, devices)
 
     devices = Device.query.all()
     return render_template('show_devices.html', is_json=True, devices=devices)
-
 
 
 @main.route('/create-device.device', methods=['GET', 'POST'])
@@ -587,16 +631,15 @@ def edit_device(id):
         device.powerstatus = form.powerstatus.data
         device.remarks = form.remarks.data
 
-        #try:
+        # try:
         db.session.add(device)
         db.session.commit()
         flash(u'设备添加完成!')
-        #except:
-            #db.session.rollback()
-            #flash(u'设备添加失败!')
+        # except:
+        # db.session.rollback()
+        # flash(u'设备添加失败!')
 
         return redirect(url_for('main.show_devices'))
-
 
     form.hostname.data = device.hostname
     form.ip.data = device.ip
@@ -637,6 +680,7 @@ def delete_device(id):
 
     return redirect(url_for('main.show_devices'))
 
+
 ########################################################################
 
 
@@ -651,7 +695,7 @@ def show_deviceRunningTasks(id):
     pass
 
 
-def generateInventory_hosts(current_app,devices=None):
+def generateInventory_hosts(current_app, devices=None):
     if not devices:
         return None
 
@@ -678,21 +722,22 @@ def generateInventory_hosts(current_app,devices=None):
     if len(Inventory_devices['devices']['hosts']) < 1:
         return None
 
-
     Inventory_devices = json.dumps(Inventory_devices)
     print Inventory_devices
     md5 = hashlib.md5(Inventory_devices)
     print md5.hexdigest()
 
-    json_devices = '''#!/usr/bin/env python\n# encoding: utf-8\nimport json\ndevices = json.dumps({0})\nprint devices\n'''.format(Inventory_devices)
+    json_devices = '''#!/usr/bin/env python\n# encoding: utf-8\nimport json\ndevices = json.dumps({0})\nprint devices\n'''.format(
+        Inventory_devices)
 
     Inventory_devices_file = FLASK_TMP_HOME + '/tasks/{0}'.format(str(md5.hexdigest()))
 
     with open(Inventory_devices_file, 'w') as f:
         f.write(json_devices)
-        os.chmod(Inventory_devices_file, stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
+        os.chmod(Inventory_devices_file, stat.S_IRWXU | stat.S_IRGRP | stat.S_IROTH)
 
     return Inventory_devices_file
+
 
 def playbook_runner(playbook, inventory):
     stats = callbacks.AggregateStats()
@@ -704,7 +749,7 @@ def playbook_runner(playbook, inventory):
         stats=stats,
         callbacks=playbook_cb,
         runner_callbacks=runner_cb,
-        host_list = inventory,
+        host_list=inventory,
     ).run()
 
     return res
@@ -717,7 +762,7 @@ def push_TasksTo_devices():
     form = EditPushTasksToDeviceForm()
     if form.validate_on_submit():
 
-        Inventory_tasks = []
+        TaskList = []
 
         devices = form.devices.data
         tasks = form.tasks.data
@@ -725,20 +770,20 @@ def push_TasksTo_devices():
             flash(u'选择主机有误')
             return render_template('push_tasks.html', form=form)
 
-        devices = [ Device.query.get_or_404(device) for device in devices ]
-        Inventory_hosts_file = generateInventory_hosts(current_app,devices)
+        devices = [Device.query.get_or_404(device) for device in devices]
+        Inventory_hosts_file = generateInventory_hosts(current_app, devices)
 
         for task in tasks:
             t = DeviceTasks.query.get_or_404(task)
             if not t.path:
                 flash(u'脚本{0}上传文件有误,请重新上传。')
-                redirect(url_for('main.index'))
-            Inventory_tasks.append(t.path)
+                return redirect(url_for('main.index'))
+            TaskList.append(t.path)
 
-        print Inventory_tasks
+        print TaskList
 
         tasks_res = []
-        for task in  Inventory_tasks:
+        for task in TaskList:
             print task
             tasks_res.append(playbook_runner(task, Inventory_hosts_file))
 
@@ -746,21 +791,63 @@ def push_TasksTo_devices():
 
         return render_template('push_tasks.html', form=form, tasks_res=tasks_res)
 
-
     return render_template('push_tasks.html', form=form)
 
 
-def command_runner(user,command, inventory):
-    res = ansible.runner.Runner(
-                module_name='shell',  # 调用shell模块，这个代码是为了示例执行shell命令
-                module_args= command,  # shell命令
-                remote_user=user,
-                host_list=inventory,
-                pattern='all',
-                private_key_file='/Users/kefatong/.ssh/id_rsa'
-            ).run()
-    return res
+@main.route('/push-tasksTo.deviceGroup', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def push_TasksTo_deviceGroup():
+    form = EditPushTasksToDeviceGroupForm()
+    if form.validate_on_submit():
 
+        deviceGroups = form.deviceGroup.data
+        taskGroups = form.taskGroup.data
+        if not deviceGroups and not taskGroups:
+            flash(u'选择主机有误')
+            return render_template('push_taskGroup.html', form=form)
+
+        devices = []
+        for deviceGroup in deviceGroups:
+            group = DeviceGroup.query.get_or_404(deviceGroup).devices.all()
+            if group:
+                devices.extend(group)
+
+        Inventory_hosts_file = generateInventory_hosts(current_app, devices)
+
+        tasks = []
+        for taskGroup in taskGroups:
+            group = DeviceTaskGroup.query.get_or_404(taskGroup).tasks.all()
+            if group:
+                for task in group:
+                    if not task.path:
+                        flash(u'脚本{0}上传文件有误,请重新上传。')
+                        return redirect(url_for('main.index'))
+                    tasks.append(task.path)
+
+        print tasks
+        tasks_res = []
+        for task in tasks:
+            print task
+            tasks_res.append(playbook_runner(task, Inventory_hosts_file))
+
+        print tasks_res
+
+        return render_template('push_taskGroup.html', form=form, tasks_res=tasks_res)
+
+    return render_template('push_taskGroup.html', form=form)
+
+
+def command_runner(user, command, inventory):
+    res = ansible.runner.Runner(
+        module_name='shell',  # 调用shell模块，这个代码是为了示例执行shell命令
+        module_args=command,  # shell命令
+        remote_user=user,
+        host_list=inventory,
+        pattern='all',
+        private_key_file='/Users/kefatong/.ssh/id_rsa'
+    ).run()
+    return res
 
 
 @main.route('/push-command-to.device', methods=['GET', 'POST'])
@@ -791,23 +878,156 @@ def push_CommandsTo_device():
                 flash(u'内容包含删除了移动命令')
                 return redirect(url_for('main.push_CommandsTo_device'))
 
-            command_res = command_runner('kefatong',command, Inventory_hosts_file)
+            command_res = command_runner('kefatong', command, Inventory_hosts_file)
             print command_res
             return render_template('push_commands.html', form=form, command_res=command_res)
 
     return render_template('push_commands.html', form=form)
 
 
-@main.route('/push-tasksTo.deviceGroups', methods=['GET', 'POST'])
+
+@main.route('/show-device.system', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
-def push_TasksTo_deviceGroups(id):
-    pass
+def show_deviceSystems():
+    systems = System.query.all()
+    return render_template('show_deviceSystems.html', systems=systems)
 
 
-@main.route('/xxx')
-def xxx():
-    return render_template('xxx.html')
+
+@main.route('/create-device.system', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceSystem():
+    form = EditSystemForm()
+    if form.validate_on_submit():
+        system = System()
+        system.device_id = form.device_id.data
+        system.os_version = form.os_version.data
+        system.an = form.an.data
+        system.sn = form.sn.data
+        system.hostname = form.hostname.data
+        system.power_ip = form.power_ip.data
+        system.post = form.post.data
+        system.ip = form.ip.data
+        system.status = 1
+
+        db.session.add(system)
+        db.session.commit()
+
+        interfaces = {
+            'eth0': {
+                'bonding': u'',
+                'bonding_master': u'',
+                'bonding_opts': u'',
+                'bridge_opts': u'',
+                'cnames': [],
+                'connected_mode': False,
+                'dhcp_tag': u'',
+                'dns_name': u'114.114.114.114',
+                'if_gateway': u'172.16.46.2',
+                'interface_master': u'',
+                'interface_type': u'',
+                'ip_address': '',
+                'ipv6_address': u'',
+                'ipv6_default_gateway': u'',
+                'ipv6_mtu': u'',
+                'ipv6_prefix': u'',
+                'ipv6_secondaries': [],
+                'ipv6_static_routes': [],
+                'mac_address': '00:0C:29:F1:BC:31',
+                'management': False,
+                'mtu': u'',
+                'netmask': '255.255.255.0',
+                'static': True,
+                'static_routes': [],
+                'subnet': u'',
+                'virt_bridge': 'xenbr0'
+            }
+        }
+
+        new_system = cobbler_handle.new_system()
+        new_system.name = system.hostname
+        new_system.profile = 'RHEL6-x86_64'
+        new_system.hostname = system.hostname
+        new_system.set_hostname = system.hostname
+        interfaces['eth0']['ip_address'] = system.ip
+        new_system.interfaces = interfaces
+        new_system.set_netboot_enabled = True
+        cobbler_handle.add_system(new_system)
+        cobbler_handle.sync()
+        os.system('service cobblerd restart')
+
+        return redirect(url_for('main.show_deviceSystems'))
+
+    return render_template('create_system.html', form=form)
+
+
+@main.route('/delete-device.system/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceSystem(id):
+    system = System.query.get_or_404(id)
+    cobbler_system = cobbler_handle.find_system(system.hostname)
+    if cobbler_system:
+        cobbler_handle.remove_system(cobbler_system)
+        cobbler_handle.sync()
+        os.system('service cobblerd restart')
+    db.session.delete(system)
+    return redirect(url_for('main.show_deviceSystems'))
+
+
+@main.route('/deploy-device.system/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def deploy_deviceSystem(id):
+
+    def password_undo(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+
+        password = data.get('password', None)
+
+        if not password:
+            return False
+        return password
+
+    system = System.query.get_or_404(id)
+    devicePower = DevicePower.query.filter(DevicePower.device_id == system.id)
+
+
+
+    if not devicePower.all() and devicePower.all() > 1:
+        flash(u'请检查资产电源管理口配置是否正确, 可能没有配置或者配置了多个。')
+        return redirect(url_for('main.show_deviceSystems'))
+
+    devicePower = devicePower.first()
+    if not devicePower:
+        flash(u'电源管理卡未配置.')
+        return redirect(url_for('main.show_deviceSystems'))
+
+    if not devicePower.ip and not devicePower.user and not devicePower.password_hash:
+        flash(u'电源管理卡设置有误, 请检查电源管理卡IP, User, Password 是否配置正确.')
+        return redirect(url_for('main.show_deviceSystems'))
+
+    if not password_undo(devicePower.password_hash):
+        flash(u'密码Token解密失败, 请检查密码')
+        return redirect(url_for('main.show_deviceSystems'))
+
+
+    cobbler_system = cobbler_handle.find_system(system.hostname)
+    cobbler_system.power_address = devicePower.ip
+    cobbler_system.power_user = devicePower.user
+    cobbler_system.power_type = 'ipmitlan'
+    cobbler_system.power_pass = password_undo(devicePower.password_hash)
+    cobbler_system.reboot(cobbler_system)
+
+
+
+
 
 
 # @main.route('/test', methods=['GET', 'POST'])

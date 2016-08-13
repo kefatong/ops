@@ -12,6 +12,10 @@ from ..models import *
 from .. import db
 from wtforms import ValidationError
 
+import cobbler.api as capi
+
+cobbler_handle = capi.BootAPI()
+
 
 class EditProfileForm(Form):
     username = StringField('Username', validators=[InputRequired(), Length(0,64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Username must have only letters, number, dots or underscores')])
@@ -164,9 +168,29 @@ class EditDeviceTaskForm(Form):
 
 
 
+
+class EditModuleClassForm(Form):
+    name = StringField(u'目录名称', validators=[InputRequired()])
+    remarks = TextAreaField(u'备注')  # 备注
+    submit = SubmitField(u'提交')
+
+    def __init__(self, moduleClass, *args, **kwargs):
+        super(EditModuleClassForm, self).__init__(*args, **kwargs)
+        self.moduleClass = moduleClass
+
+    def validate_name(self,field):
+        if not self.moduleClass:
+            if ModuleClass.query.filter_by(name=field.data).first():
+                raise ValidationError(u'目录名称{0}已经存在.'.format(field.data))
+        else:
+            if field.data != self.moduleClass.name and ModuleClass.query.filter_by(name=field.data).first():
+                raise ValidationError(u'目录名称{0}已经存在.'.format(field.data))
+
+
+
 class EditDeviceTaskClassForm(Form):
     name = StringField(u'任务名称', validators=[InputRequired()])
-    type = SelectField(u'任务类型', coerce=int)
+    module_id = SelectField(u'任务类型', coerce=int)
     remarks = TextAreaField(u'备注')  # 备注
     submit = SubmitField(u'提交')
 
@@ -174,7 +198,19 @@ class EditDeviceTaskClassForm(Form):
         super(EditDeviceTaskClassForm, self).__init__(*args, **kwargs)
         self.taskClass = taskClass
 
-        self.type.choices = [(1, u'系统部署'),(2, u'合规巡检'), (3, u'应用发布')]
+        self.module_id.choices = [(moduleClass.id, moduleClass.name)
+                             for moduleClass in ModuleClass.query.all()]
+
+    def validate_name(self,field):
+        if not self.taskClass:
+            if TaskClass.query.filter_by(name=field.data).first():
+                raise ValidationError(u'任务名称{0}已经存在.'.format(field.data))
+        else:
+            if field.data != self.taskClass.name and TaskClass.query.filter_by(name=field.data).first():
+                raise ValidationError(u'任务名称{0}已经存在.'.format(field.data))
+
+
+
 
 class EditDeviceTaskGroupForm(Form):
     name = StringField(u'任务组名称', validators=[InputRequired()])
@@ -196,7 +232,7 @@ class EditDeviceTaskGroupForm(Form):
             self.tasks.choices = [(task.id, task.taskname)
                                   for task in deviceTaskGroup.tasks.all()]
 
-        self.type.choices = [(taskClass.id, taskClass.name)
+        self.type.choices = [(taskClass.id, u'--++{0} | {1}--++'.format(ModuleClass.query.filter(ModuleClass.id == taskClass.module_id).first().name,taskClass.name))
                              for taskClass in TaskClass.query.all()]
 
 
@@ -231,6 +267,7 @@ class EditRunningCommandForm(Form):
                                 for h in histroyCommands.query.filter(histroyCommands.user_id == current_user.id).all()]
 
 
+
 class EditPushTasksToDeviceForm(Form):
     devices = SelectMultipleField(u'设备', coerce=int)
     tasks = SelectMultipleField(u'任务', coerce=int)
@@ -247,11 +284,50 @@ class EditPushTasksToDeviceForm(Form):
                                 for task in DeviceTasks.query.all()]
 
 
+
+
 class EditPushTasksToDeviceGroupForm(Form):
-    devices = SelectMultipleField(u'设备组', coerce=int)
-    tasks = SelectMultipleField(u'任务组', coerce=int)
+    deviceGroup = SelectMultipleField(u'设备组', coerce=int)
+    taskGroup = SelectMultipleField(u'任务组', coerce=int)
     remarks = TextAreaField(u'备注')
     submit = SubmitField(u'推送')
 
+    def __init__(self, *args, **kwargs):
+        super(EditPushTasksToDeviceGroupForm, self).__init__(*args, **kwargs)
+
+        self.deviceGroup.choices = [(deviceGroup.id, deviceGroup.name)
+                                for deviceGroup in DeviceGroup.query.all()]
+
+        self.taskGroup.choices = [(taskGroup.id, taskGroup.name)
+                                for taskGroup in DeviceTaskGroup.query.all()]
+
+
+class EditSystemForm(Form):
+    device_id = SelectField(u'设备', coerce=int)
+    an = StringField(u'设备资产号')
+    sn = StringField(u'设备序列号')
+    ip = StringField(u'IP地址')
+    hostname = StringField(u'主机名')
+    os_version = SelectField(u'系统版本', coerce=int)
+    power_ip = StringField(u'电源管理IP')
+    assets = BooleanField(u'系统安装后更新')
+    post = SelectMultipleField(u'系统安装后', coerce=int)
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'推送')
+
+
+    def __init__(self, *args, **kwargs):
+        super(EditSystemForm, self).__init__(*args, **kwargs)
+
+        self.device_id.choices = [(device.id, device.hostname)
+                                    for device in Device.query.all()]
+
+        #self.os_version.choices = [(distros.name, distros.name)
+        #                           for distros in cobbler_handle.distros()]
+
+        self.os_version.choices = [(1,'CentOS6-x86_64')]
+
+        self.post.choices = [(taskGroup.id, taskGroup.name)
+                                  for taskGroup in DeviceTaskGroup.query.all()]
 
 

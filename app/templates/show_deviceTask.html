@@ -60,7 +60,15 @@
                                             </td>
                                             <td>{{ task.id }}</td>
                                             <td>{{ task.taskname }}</td>
-                                            <td>{{ task.type }}</td>
+
+                                            {% if task.type == 1 %}
+                                                <td>Shell</td>
+                                            {% elif task.type == 2 %}
+                                                <td>Playbook</td>
+                                            {% else %}
+                                                <td>Python</td>
+                                            {% endif %}
+
                                             <td>{{ task.scriptname }}</td>
                                             <td>{{ task.arch }}</td>
                                             <td>{{ task.enabled }}</td>

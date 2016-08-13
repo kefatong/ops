@@ -11,6 +11,17 @@ from ..models import Permission
 
 
 @main.app_context_processor
+def inject_db_session():
+    return dict(db=db)
+
+@main.app_context_processor
+def inject_models():
+    return dict(ModuleClass=ModuleClass,
+                TaskClass=TaskClass,)
+
+
+
+@main.app_context_processor
 def inject_permission():
     return dict(Permission=Permission)
 

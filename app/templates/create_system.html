@@ -23,107 +23,79 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">创建网络端口管理</h3>
+            <h3 class="title">创建系统</h3>
         </div>
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">端口管理</h3></div>
+                    <div class="panel-heading"><h3 class="panel-title">系统安装</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_devicePorts') }}"
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_deviceSystem') }}"
                               method="POST">
                             {{ form.csrf_token }}
                             <div class="form-group">
-                                <label class="col-md-2 control-label">接口名称</label>
+                                <label class="col-md-2 control-label">选择设备</label>
 
                                 <div class="col-md-6">
-                                    {{ form.name(class='form-control', placeholder='接口名称') }}
-                                    {{ macros.print_form_messages(form.errors.name) }}
+                                    {{ form.device_id(id="device", class='select2', placeholder='任务名称') }}
+                                    {{ macros.print_form_messages(form.errors.device_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">资产号</label>
+                                <div class="col-md-6">
+                                    {{ form.an(id="an", class='form-control', placeholder='资产号') }}
+                                    {{ macros.print_form_messages(form.errors.an) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">序列号</label>
+                                <div class="col-md-6">
+                                    {{ form.sn(id="sn", class='form-control', placeholder='序列号') }}
+                                    {{ macros.print_form_messages(form.errors.sn) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">IP地址</label>
-
                                 <div class="col-md-6">
-                                    {{ form.ip(class='form-control', placeholder='IP地址') }}
+                                    {{ form.ip(id="ip", class='form-control', placeholder='IP地址') }}
                                     {{ macros.print_form_messages(form.errors.ip) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Mac地址</label>
-
+                                <label class="col-md-2 control-label">主机名</label>
                                 <div class="col-md-6">
-                                    {{ form.mac(class='form-control', placeholder='Mac地址') }}
-                                    {{ macros.print_form_messages(form.errors.mac) }}
+                                    {{ form.hostname(id="hostname", class='form-control', placeholder='主机名') }}
+                                    {{ macros.print_form_messages(form.errors.hostname) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">接口类型</label>
-
+                                <label class="col-md-2 control-label">系统版本</label>
                                 <div class="col-md-6">
-                                    {{ form.type(class='select2', placeholder='接口类型') }}
-                                    {{ macros.print_form_messages(form.errors.type) }}
+                                    {{ form.os_version(class='select2', placeholder='系统版本') }}
+                                    {{ macros.print_form_messages(form.errors.os_version) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">端口类型</label>
-
+                                <label class="col-md-2 control-label">电源IP</label>
                                 <div class="col-md-6">
-                                    {{ form.mode(class='select2', placeholder='端口类型') }}
-                                    {{ macros.print_form_messages(form.errors.mode) }}
+                                    {{ form.power_ip(class='form-control', placeholder='电源IP') }}
+                                    {{ macros.print_form_messages(form.errors.power_ip) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">速率</label>
-
+                                <label class="col-md-2 control-label">安装结束后</label>
                                 <div class="col-md-6">
-                                    {{ form.rate(class='select2', placeholder='速率') }}
-                                    {{ macros.print_form_messages(form.errors.rate) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">VlanID</label>
-
-                                <div class="col-md-6">
-                                    {{ form.vlanid(class='form-control', placeholder='VlanID') }}
-                                    {{ macros.print_form_messages(form.errors.vlanid) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">模块</label>
-
-                                <div class="col-md-6">
-                                    {{ form.model_id(class='select2', placeholder='模块') }}
-                                    {{ macros.print_form_messages(form.errors.model_id) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">连接至</label>
-
-                                <div class="col-md-6">
-                                    {{ form.target(class='select2', placeholder='连接至') }}
-                                    {{ macros.print_form_messages(form.errors.target) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label cr-styled">在查询也显示</label>
-
-                                <div class="col-md-1">
-                                    <label class="cr-styled">
-                                        {{ form.display(class='form-control', placeholder='虚拟化') }}
-                                        {{ macros.print_form_messages(form.errors.display) }}
-                                        <i class="fa"></i>
-                                    </label>
+                                    {{ form.post(class='form-control', placeholder='安装结束后') }}
+                                    {{ macros.print_form_messages(form.errors.post) }}
                                 </div>
                             </div>
 
@@ -256,6 +228,14 @@
                 width: '100%'
             });
         });
+
+window.onload = function() {
+    $("#device").onchange(function () {
+        alert("#device").val();
+
+    });
+}
+
     </script>
 
 {% endblock scripts %}

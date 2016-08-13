@@ -1,7 +1,6 @@
 {% import "macros.html" as macros %}
 {% extends "common/base.html" %}
 
-
 {% block static %}
 
     {{ super() }}
@@ -18,105 +17,56 @@
 
 {% endblock static %}
 
-
 {% block page_content %}
     <!-- Page Content Start -->
     <!-- ================== -->
 
+
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">添加机房</h3>
+            <h3 class="title">任务下发</h3>
         </div>
 
 
         <div class="row">
-            <div class="col-sm-12">
+            <!-- Basic example -->
+            <div class="col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">机房信息</h3></div>
+                    <div class="panel-heading"><h3 class="panel-title">执行</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.create_idc') }}"
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"></label>
+                            <a href="{{ url_for('main.push_TasksTo_deviceGroup') }}">任务组推送</a>
+                            <a href="{{ url_for('main.push_TasksTo_devices') }}">任务推送</a>
+                        </div>
+
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.push_TasksTo_deviceGroup') }}"
                               method="POST">
                             {{ form.csrf_token }}
+
                             <div class="form-group">
-                                <label class="col-md-2 control-label">机房名称*</label>
+                                <label class="col-md-2 control-label">设备组</label>
 
                                 <div class="col-md-6">
-                                    {{ form.name(class='form-control', placeholder='机房名称') }}
-                                    {{ macros.print_form_messages(form.errors.name) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">运营商*</label>
-
-                                <div class="col-md-6">
-                                    {{ form.ispid(class='form-control', placeholder='运营商') }}
-                                    {{ macros.print_form_messages(form.errors.ispid) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">所在城市*</label>
-
-                                <div class="col-md-6">
-                                    {{ form.city(class='form-control', placeholder='所在城市') }}
-                                    {{ macros.print_form_messages(form.errors.city) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">联系人*</label>
-
-                                <div class="col-md-6">
-                                    {{ form.contactname(class='form-control', placeholder='联系人') }}
-                                    {{ macros.print_form_messages(form.errors.contactname) }}
+                                    {{ form.deviceGroup(style="position: absolute; left: -9999px;", class="multi-select", multiple="", id="my_multi_select3") }}
+                                    {{ macros.print_form_messages(form.errors.deviceGroup) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">联系电话*</label>
+                                <label class="col-md-2 control-label">任务组</label>
 
                                 <div class="col-md-6">
-                                    {{ form.contactphone(class='form-control', placeholder='联系电话') }}
-                                    {{ macros.print_form_messages(form.errors.contactphone) }}
+                                    {{ form.taskGroup(style="position: absolute; left: -9999px;", class="multi-select", multiple="", id="my_multi_select2") }}
+                                    {{ macros.print_form_messages(form.errors.taskGroup) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">网络类型*</label>
+                                <label class="col-md-2 control-label">推送原因</label>
 
-                                <div class="col-md-6">
-                                    {{ form.nettype(class='select2', placeholder='网络类型') }}
-                                    {{ macros.print_form_messages(form.errors.nettype) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">出口带宽(MB)*</label>
-
-                                <div class="col-md-6">
-                                    {{ form.netout(class='form-control', placeholder='出口带宽') }}
-                                    {{ macros.print_form_messages(form.errors.netout) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">运营商名称*</label>
-
-                                <div class="col-md-6">
-                                    {{ form.adnature(class='select2', placeholder='运营商名称') }}
-                                    {{ macros.print_form_messages(form.errors.ispid) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">机房地址*</label>
-
-                                <div class="col-md-6">
-                                    {{ form.address(class='form-control', placeholder='机房地址') }}
-                                    {{ macros.print_form_messages(form.errors.address) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">备注</label>
-
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
                                     {{ macros.print_form_messages(form.errors.remarks) }}
                                 </div>
@@ -129,22 +79,42 @@
                                     {{ form.submit(class='btn btn-info') }}
                                 </div>
                             </div>
-
                         </form>
-                    </div>
-                    <!-- panel-body -->
-                </div>
-                <!-- panel -->
-            </div>
-            <!-- col -->
+                    </div><!-- panel-body -->
+                </div> <!-- panel -->
+            </div> <!-- col-->
+
+
+            <!-- Horizontal form -->
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">任务结果</h3></div>
+                    <div class="panel-body">
+
+                        {% if tasks_res %}
+                            {% for tasks in tasks_res %}
+                                {% set index = loop.index0 %}
+                                {% for task in tasks %}
+                                    <div class="alert {% if tasks_res[index][task].unreachable or tasks_res[index][task].failures %} alert-danger {% else %} alert-success {% endif %} ">
+                                        host: {{ task }}: <br/>
+                                        <b>ok: {{ tasks_res[index][task].ok }} <br/></b>
+                                        changed: {{ tasks_res[index][task].changed }} <br/>
+                                        failures: {{ tasks_res[index][task].failures }} <br/>
+                                        <a href="#" class="alert-link">详细结果</a>.
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+
+                    </div> <!-- panel-body -->
+                </div> <!-- panel -->
+            </div> <!-- col -->
         </div>
         <!-- End row -->
-
-
     </div>
     <!-- Page Content Ends -->
     <!-- ================== -->
-{% endblock %}
+{% endblock page_content %}
 
 {% block scripts %}
 
@@ -242,6 +212,14 @@
                 width: '100%'
             });
         });
+
+
+        window.onload = function () {
+            document.getElementById("history").onchange = function () {
+                document.getElementById("command").value = this.value;
+            }
+        }
+
     </script>
 
 {% endblock scripts %}
