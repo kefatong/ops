@@ -2,65 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c410cb3-0002-4a66-a174-dfd8d475c2e3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/create_deviceAsset.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/create_devicePorts.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/create_idc.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/create_rack.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/create_virtmachine.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/edit_deviceAsset.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/edit_devicePorts.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/edit_idc.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/edit_rack.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/edit_virtmachine.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/show_deviceAssets.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/show_deviceNetworks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/show_devicePorts.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/show_idcs.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/show_racks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/templates/show_virtmachine.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/09607fdb09c9_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/19d0a72b32f6_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/19e1246a1eec_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/1d8bb067432a_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/3f9a538f0217_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/4d5a495efc84_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/5d2665390fc2_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/85dc92369a70_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/c49ca3edb511_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/c6f0677de892_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/d5e9aca66723_.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/templates/create_deviceNetwork.html" afterPath="$PROJECT_DIR$/app/templates/push_taskGroup.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/templates/create_devicePortMap.html" afterPath="$PROJECT_DIR$/app/templates/create_moduleClass.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/templates/edit_deviceNetwork.html" afterPath="$PROJECT_DIR$/app/templates/edit_moduleClass.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/templates/edit_devicePools.html" afterPath="$PROJECT_DIR$/app/templates/edit_deviceGroup.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/templates/show_devicePools.html" afterPath="$PROJECT_DIR$/app/templates/show_moduleClass.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ops.iml" afterPath="$PROJECT_DIR$/.idea/ops.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/main/cobbler_tasks.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/create_deviceCompliance.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/edit_deviceCompliance.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/show_deviceCompliance.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/22e95de86cfb_.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/88b7ad136413_.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/e9b9ca19e85b_.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/main/tasks.py" afterPath="$PROJECT_DIR$/app/main/ansible_tasks.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/__init__.py" afterPath="$PROJECT_DIR$/app/main/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/forms.py" afterPath="$PROJECT_DIR$/app/main/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/views.py" afterPath="$PROJECT_DIR$/app/main/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models.py" afterPath="$PROJECT_DIR$/app/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/common/base.html" afterPath="$PROJECT_DIR$/app/templates/common/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_deviceTaskClass.html" afterPath="$PROJECT_DIR$/app/templates/create_deviceTaskClass.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_deviceTaskClass.html" afterPath="$PROJECT_DIR$/app/templates/edit_deviceTaskClass.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_deviceTaskGroup.html" afterPath="$PROJECT_DIR$/app/templates/edit_deviceTaskGroup.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/push_taskGroup.html" afterPath="$PROJECT_DIR$/app/templates/push_taskGroup.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/push_tasks.html" afterPath="$PROJECT_DIR$/app/templates/push_tasks.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTask.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTask.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTaskClass.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTaskClass.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTaskGroup.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTaskGroup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTasks.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTasks.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceSystems.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceSystems.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manage.py" afterPath="$PROJECT_DIR$/manage.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/migrations/alembic.ini" afterPath="$PROJECT_DIR$/migrations/alembic.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upload/script_dirs/2/00dd579e9893ace64cdeeeea135fe04c" afterPath="$PROJECT_DIR$/upload/script_dirs/2/00dd579e9893ace64cdeeeea135fe04c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upload/script_dirs/2/0cf7e6ed8868bf1bbd3890c5de60b491" afterPath="$PROJECT_DIR$/upload/script_dirs/2/0cf7e6ed8868bf1bbd3890c5de60b491" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upload/script_dirs/2/23c4eda1e64c1ec8ff0b2a6cc826ea1f" afterPath="$PROJECT_DIR$/upload/script_dirs/2/23c4eda1e64c1ec8ff0b2a6cc826ea1f" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upload/script_dirs/2/278a92a8699ba745128005aecdde047c" afterPath="$PROJECT_DIR$/upload/script_dirs/2/278a92a8699ba745128005aecdde047c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upload/script_dirs/2/6df4ad0d2fcb9e5652040a5a3c3092e7" afterPath="$PROJECT_DIR$/upload/script_dirs/2/6df4ad0d2fcb9e5652040a5a3c3092e7" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upload/script_dirs/2/ee4da2543b6286adca0baefb2dfcba14" afterPath="$PROJECT_DIR$/upload/script_dirs/2/ee4da2543b6286adca0baefb2dfcba14" />
     </list>
     <ignored path="cmdb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,8 +47,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/main/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2355">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state relative-caret-position="501">
+              <caret line="1069" column="89" selection-start-line="1069" selection-start-column="89" selection-end-line="1069" selection-end-column="89" />
               <folding>
                 <element signature="e#15#85#0" expanded="true" />
               </folding>
@@ -96,14 +56,42 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/main/tasks.py">
+      <file leaf-file-name="edit_deviceCompliance.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceCompliance.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding>
-                <element signature="e#15#29#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="345">
+              <caret line="33" column="131" selection-start-line="33" selection-start-column="131" selection-end-line="33" selection-end-column="131" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_deviceCompliance.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/create_deviceCompliance.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="930">
+              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_deviceTaskGroup.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTaskGroup.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="64" column="51" selection-start-line="64" selection-start-column="51" selection-end-line="64" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_deviceGroup.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/create_deviceGroup.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="62" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -111,38 +99,8 @@
       <file leaf-file-name="show_deviceSystems.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/show_deviceSystems.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="74" column="48" selection-start-line="74" selection-start-column="48" selection-end-line="74" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="577">
-              <caret line="113" column="42" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create_system.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/create_system.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="235" column="7" selection-start-line="235" selection-start-column="7" selection-end-line="235" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="push_tasks.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/push_tasks.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
+            <state relative-caret-position="246">
+              <caret line="74" column="64" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -151,30 +109,18 @@
       <file leaf-file-name="push_commands.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/push_commands.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
+            <state relative-caret-position="682">
               <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models.py">
+      <file leaf-file-name="push_taskGroup.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/push_taskGroup.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="483" column="38" selection-start-line="483" selection-start-column="38" selection-end-line="483" selection-end-column="38" />
-              <folding>
-                <element signature="e#45#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="manage.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/manage.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="20" column="68" selection-start-line="20" selection-start-column="68" selection-end-line="20" selection-end-column="68" />
+            <state relative-caret-position="1200">
+              <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -183,11 +129,21 @@
       <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/main/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="314" column="34" selection-start-line="314" selection-start-column="34" selection-end-line="314" selection-end-column="34" />
+            <state relative-caret-position="622">
+              <caret line="350" column="0" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
               <folding>
                 <element signature="e#36#76#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show_deviceCompliance.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/show_deviceCompliance.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="795">
+              <caret line="66" column="68" selection-start-line="66" selection-start-column="68" selection-end-line="66" selection-end-column="68" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -211,12 +167,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/templates/create_devicePorts.html" />
-        <option value="$PROJECT_DIR$/app/templates/edit_devicePorts.html" />
-        <option value="$PROJECT_DIR$/app/templates/edit_devicePowermanage.html" />
-        <option value="$PROJECT_DIR$/app/templates/show_devicePowers.html" />
-        <option value="$PROJECT_DIR$/app/templates/edit_devicePower.html" />
-        <option value="$PROJECT_DIR$/app/templates/create_devicePower.html" />
         <option value="$PROJECT_DIR$/app/api_1_0/devices.py" />
         <option value="$PROJECT_DIR$/app/templates/show_devicePorts.html" />
         <option value="$PROJECT_DIR$/app/templates/base.html" />
@@ -251,16 +201,22 @@
         <option value="$PROJECT_DIR$/app/templates/show_deviceTaskGroup.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTask.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTasks.html" />
-        <option value="$PROJECT_DIR$/app/templates/push_taskGroup.html" />
-        <option value="$PROJECT_DIR$/app/templates/push_tasks.html" />
-        <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/app/templates/create_system.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceSystem.html" />
+        <option value="$PROJECT_DIR$/app/main/tasks.py" />
+        <option value="$PROJECT_DIR$/app/main/cobbler_tasks.py" />
+        <option value="$PROJECT_DIR$/upload/script_dirs/2/278a92a8699ba745128005aecdde047c" />
+        <option value="$PROJECT_DIR$/app/templates/push_tasks.html" />
+        <option value="$PROJECT_DIR$/app/templates/push_taskGroup.html" />
+        <option value="$PROJECT_DIR$/app/main/ansible_tasks.py" />
+        <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/main/forms.py" />
         <option value="$PROJECT_DIR$/app/templates/common/base.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceSystems.html" />
-        <option value="$PROJECT_DIR$/app/main/tasks.py" />
+        <option value="$PROJECT_DIR$/app/templates/create_deviceCompliance.html" />
+        <option value="$PROJECT_DIR$/app/templates/show_deviceCompliance.html" />
+        <option value="$PROJECT_DIR$/app/templates/edit_deviceCompliance.html" />
         <option value="$PROJECT_DIR$/app/main/views.py" />
       </list>
     </option>
@@ -272,7 +228,6 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="823" />
@@ -404,24 +359,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ops" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ops" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -450,17 +387,17 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="Z:\cmdb\app\templates" />
-      <recent name="Z:\cmdb" />
-      <recent name="$PROJECT_DIR$/app/templates" />
-      <recent name="$PROJECT_DIR$/app/templates/common" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/templates" />
       <recent name="Z:\ops\app\templates" />
       <recent name="Z:\cmdb\app\templates" />
       <recent name="$PROJECT_DIR$/app" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="Z:\cmdb\app\templates" />
+      <recent name="Z:\cmdb" />
+      <recent name="$PROJECT_DIR$/app/templates" />
+      <recent name="$PROJECT_DIR$/app/templates/common" />
     </key>
   </component>
   <component name="RunManager" selected="Python.ops">
@@ -774,14 +711,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="23" width="1440" height="823" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="23" width="1440" height="823" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23194444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822758" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275862" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -794,6 +730,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3144385" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275862" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -837,13 +774,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/templates/404.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/403.html" />
-    <entry file="file://$PROJECT_DIR$/app/email.py" />
-    <entry file="file://$PROJECT_DIR$/app/auth/views.py" />
-    <entry file="file://$PROJECT_DIR$/app/templates/index.html" />
-    <entry file="file://$PROJECT_DIR$/README.md" />
-    <entry file="file://$PROJECT_DIR$/LICENSE" />
     <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTask.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskScript.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/test.html">
@@ -861,13 +791,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/main/test.py" />
-    <entry file="file://$PROJECT_DIR$/app/templates/show_classType.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/show_idcs.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/create_deviceAsset.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceAsset.html" />
@@ -984,32 +907,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceGroup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTaskGroup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="62" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceGroup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="62" column="34" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskGroup.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="795">
           <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1027,104 +928,191 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/push_taskGroup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="41" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_system.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3525">
+          <caret line="235" column="7" selection-start-line="235" selection-start-column="7" selection-end-line="235" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
+    <entry file="file://$PROJECT_DIR$/upload/script_dirs/2/278a92a8699ba745128005aecdde047c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="20" column="68" selection-start-line="20" selection-start-column="68" selection-end-line="20" selection-end-column="68" />
+        <state relative-caret-position="165">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_classType.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/push_tasks.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
+        <state relative-caret-position="315">
+          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="109" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/create_system.html">
+    <entry file="file://$PROJECT_DIR$/app/main/cobbler_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="235" column="7" selection-start-line="235" selection-start-column="7" selection-end-line="235" selection-end-column="7" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/push_commands.html">
+    <entry file="file://$PROJECT_DIR$/app/main/ansible_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
+        <state relative-caret-position="636">
+          <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
+          <folding>
+            <element signature="e#16#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/main/views.py.bak">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/main/views.py___jb_tmp___">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="1065" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="17" column="97" selection-start-line="17" selection-start-column="97" selection-end-line="17" selection-end-column="97" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="483" column="38" selection-start-line="483" selection-start-column="38" selection-end-line="483" selection-end-column="38" />
+        <state relative-caret-position="345">
+          <caret line="483" column="35" selection-start-line="483" selection-start-column="35" selection-end-line="483" selection-end-column="35" />
           <folding>
             <element signature="e#45#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceGroup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="62" column="34" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="577">
-          <caret line="113" column="42" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
+        <state relative-caret-position="307">
+          <caret line="97" column="71" selection-start-line="97" selection-start-column="71" selection-end-line="97" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceGroup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="62" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTaskGroup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="64" column="51" selection-start-line="64" selection-start-column="51" selection-end-line="64" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/push_commands.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/push_taskGroup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceCompliance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/show_deviceSystems.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="74" column="48" selection-start-line="74" selection-start-column="48" selection-end-line="74" selection-end-column="48" />
+        <state relative-caret-position="246">
+          <caret line="74" column="64" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/main/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="314" column="34" selection-start-line="314" selection-start-column="34" selection-end-line="314" selection-end-column="34" />
+        <state relative-caret-position="622">
+          <caret line="350" column="0" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
           <folding>
             <element signature="e#36#76#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/main/tasks.py">
+    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceCompliance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#15#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="795">
+          <caret line="66" column="68" selection-start-line="66" selection-start-column="68" selection-end-line="66" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceCompliance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="33" column="131" selection-start-line="33" selection-start-column="131" selection-end-line="33" selection-end-column="131" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/main/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2355">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="501">
+          <caret line="1069" column="89" selection-start-line="1069" selection-start-column="89" selection-end-line="1069" selection-end-column="89" />
           <folding>
             <element signature="e#15#85#0" expanded="true" />
           </folding>

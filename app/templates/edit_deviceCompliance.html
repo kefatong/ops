@@ -21,56 +21,52 @@
     <!-- Page Content Start -->
     <!-- ================== -->
 
-
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">任务下发</h3>
+            <h3 class="title">修改合规修正任务</h3>
         </div>
 
         <div class="row">
-            <!-- Basic example -->
-            <div class="col-md-6">
+            <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a href="{{ url_for('main.push_TasksTo_devices') }}">
-                                <button class="btn btn-info">任务</button>
-                            </a>
-                            <a href="{{ url_for('main.push_TasksTo_deviceGroup') }}">
-                                <button class="btn btn-info">任务组</button>
-                            </a>
-                        </h3>
-                    </div>
+                    <div class="panel-heading"><h3 class="panel-title">合规修正信息</h3></div>
                     <div class="panel-body">
-
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.push_TasksTo_devices') }}"
+                        <form class="form-horizontal" role="form" action="{{ url_for('main.edit_deviceCompliance', id=compliance.id) }}"
                               method="POST">
                             {{ form.csrf_token }}
-
                             <div class="form-group">
-                                <label class="col-md-2 control-label">设备</label>
+                                <label class="col-md-2 control-label">任务名称</label>
 
                                 <div class="col-md-6">
-                                    {{ form.devices(style="position: absolute; left: -9999px;", class="multi-select", multiple="", id="my_multi_select3") }}
-                                    {{ macros.print_form_messages(form.errors.devices) }}
+                                    {{ form.name(class='form-control', placeholder='任务名称') }}
+                                    {{ macros.print_form_messages(form.errors.name) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">任务</label>
+                                <label class="col-md-2 control-label">设备组</label>
 
                                 <div class="col-md-6">
-                                    {{ form.tasks(style="position: absolute; left: -9999px;", class="multi-select", multiple="", id="my_multi_select2") }}
-                                    {{ macros.print_form_messages(form.errors.tasks) }}
+                                    {{ form.deviceGroup(style="position: absolute; left: -9999px;", class="multi-select", multiple="", id="my_multi_select3") }}
+                                    {{ macros.print_form_messages(form.errors.deviceGroup) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">推送原因</label>
+                                <label class="col-md-2 control-label">任务组</label>
 
-                                <div class="col-md-9">
-                                    {{ form.remarks(class='form-control autogrow', placeholder='', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
-                                    {{ macros.print_form_messages(form.errors.remarks) }}
+                                <div class="col-md-6">
+                                    {{ form.taskGroup(style="position: absolute; left: -9999px;", class="multi-select", multiple="", id="my_multi_select2") }}
+                                    {{ macros.print_form_messages(form.errors.taskGroup) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">启用</label>
+
+                                <div class="col-md-6">
+                                    {{ form.enabled(class='form-control', placeholder='启用') }}
+                                    {{ macros.print_form_messages(form.errors.enabled) }}
                                 </div>
                             </div>
 
@@ -81,39 +77,18 @@
                                     {{ form.submit(class='btn btn-info') }}
                                 </div>
                             </div>
+
                         </form>
-                    </div><!-- panel-body -->
-                </div> <!-- panel -->
-            </div> <!-- col-->
-
-
-            <!-- Horizontal form -->
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">任务结果</h3></div>
-                    <div class="panel-body">
-
-                        {% if tasks_res %}
-                            {% for tasks in tasks_res %}
-                                {% set index = loop.index0 %}
-                                {% for task in tasks['res'] %}
-                                    <div class="alert {% if tasks_res[index]['res'][task].unreachable or tasks_res[index]['res'][task].failures %} alert-danger {% else %} alert-success {% endif %} ">
-                                        host: {{ task }}: <br/>
-                                        <b>task: {{ tasks['name'] }} <br/></b>
-                                        <b>ok: {{ tasks_res[index]['res'][task].ok }} <br/></b>
-                                        changed: {{ tasks_res[index]['res'][task].changed }} <br/>
-                                        failures: {{ tasks_res[index]['res'][task].failures }} <br/>
-                                        <a href="#" class="alert-link">详细结果</a>.
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-                        {% endif %}
-
-                    </div> <!-- panel-body -->
-                </div> <!-- panel -->
-            </div> <!-- col -->
+                    </div>
+                    <!-- panel-body -->
+                </div>
+                <!-- panel -->
+            </div>
+            <!-- col -->
         </div>
         <!-- End row -->
+
+
     </div>
     <!-- Page Content Ends -->
     <!-- ================== -->
@@ -215,14 +190,6 @@
                 width: '100%'
             });
         });
-
-
-        window.onload = function () {
-            document.getElementById("history").onchange = function () {
-                document.getElementById("command").value = this.value;
-            }
-        }
-
     </script>
 
 {% endblock scripts %}

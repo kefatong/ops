@@ -17,7 +17,7 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">设备管理</h3>
+            <h3 class="title">创建合规修正</h3>
         </div>
 
 
@@ -25,11 +25,12 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="m-b-28">
-                        <a href="{{ url_for('main.create_deviceSystem') }}">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">创建安装任务<i
+                        <a href="{{ url_for('main.create_deviceCompliance') }}">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#con-close-modal">创建合规修正<i
                                     class="fa fa-plus"></i></button>
                         </a>
                     </div>
+
                     <div class="panel-body">
 
                         <div class="row">
@@ -38,23 +39,19 @@
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th>主机名</th>
-                                        <th>资产</th>
-                                        <th>序列号</th>
-                                        <th>IP</th>
-                                        <th>系统版本</th>
-                                        <th>电源IP</th>
-                                        <th>安装后</th>
+                                        <th>任务名称</th>
+                                        <th>设备组</th>
+                                        <th>任务组</th>
+                                        <th>任务类型</th>
+                                        <th>启用</th>
                                         <th>状态</th>
                                         <th>创建人</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
 
-
                                     <tbody>
-                                    {% for system in systems %}
-
+                                    {% for compliance in compliances %}
                                         <tr>
                                             <td>
                                                 <label class="cr-styled">
@@ -62,23 +59,25 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-
-                                            <td>{{ system.hostname }}</td>
-                                            <td>{{ system.an }}</td>
-                                            <td>{{ system.sn }}</td>
-                                            <td>{{ system.ip }}</td>
-                                            <td>{{ system.os_version }}</td>
-                                            <td>{{ system.power_ip }}</td>
-                                            <td>{{ system.post }}</td>
-                                            <td>{{ system.status }}</td>
-                                            <td>{{ system.instff }}</td>
+                                            <td>{{ compliance.name }}</td>
+                                            <td>{{ compliance.deviceGroup }}</td>
+                                            <td>{{ compliance.taskGroup }}</td>
+                                            <td>合规修正</td>
+                                            <th>{{ compliance.enabled }}</th>
+                                            <td>{{ compliance.status }}</td>
+                                            <td>{{ compliance.instaff }}</td>
                                             <td class="actions">
-                                                <a href="{{ url_for('main.deploy_deviceSystem', id=system.id) }}">
-                                                    <button>安装</button>
+
+                                                <a href="{{ url_for('main.deploy_deviceCompliance', id=compliance.id) }}">
+                                                    <button>执行</button>
                                                 </a>
-                                                <a href="{{ url_for('main.delete_deviceSystem', id=system.id) }}">
+                                                <a href="{{ url_for('main.edit_deviceCompliance', id=compliance.id) }}">
+                                                    <button>修改</button>
+                                                </a>
+                                                <a href="{{ url_for('main.delete_deviceCompliance', id=compliance.id) }}">
                                                     <button>删除</button>
                                                 </a>
+
                                             </td>
                                         </tr>
                                     {% endfor %}

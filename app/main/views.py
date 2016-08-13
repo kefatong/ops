@@ -20,12 +20,13 @@ import hashlib
 import random
 import time
 
-
-import Queue
-
 import cobbler.api as capi
 
 cobbler_handle = capi.BootAPI()
+
+
+import ansible_tasks
+import cobbler_tasks
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -684,75 +685,53 @@ def delete_device(id):
 ########################################################################
 
 
+# @main.route('/show-device.running.tasks', methods=['GET', 'POST'])
+# @login_required
+# @permission_required(Permission.DEVICE_LOOK)
+# def show_deviceRunningTasks(id):
+#     pass
 
 
-
-
-@main.route('/show-device.running.tasks', methods=['GET', 'POST'])
-@login_required
-@permission_required(Permission.DEVICE_LOOK)
-def show_deviceRunningTasks(id):
-    pass
-
-
-def generateInventory_hosts(current_app, devices=None):
+def dump_json_device(current_app,devices):
     if not devices:
-        return None
+        return False
+    deviceList = [Device.query.get_or_404(device) for device in devices]
+    if not deviceList:
+        return False
 
-    app = current_app._get_current_object()
-    FLASK_TMP_HOME = app.config['FLASK_TMP_HOME']
-    print FLASK_TMP_HOME
-    if not os.path.exists(FLASK_TMP_HOME):
-        os.mkdir(FLASK_TMP_HOME)
+    dumpFile = ansible_tasks.GenerateInventory(current_app,deviceList)
+    if not dumpFile:
+        return False
 
-    Inventory_devices = {
-        "devices": {
-            'hosts': [],
-        },
-    }
-
-    print Inventory_devices
-
-    for device in devices:
-        if device.ip is None:
-            flash(u'设备{0}IP地址未设置.'.format(device.hostname))
-            return None
-        Inventory_devices['devices']['hosts'].append(device.ip)
-
-    if len(Inventory_devices['devices']['hosts']) < 1:
-        return None
-
-    Inventory_devices = json.dumps(Inventory_devices)
-    print Inventory_devices
-    md5 = hashlib.md5(Inventory_devices)
-    print md5.hexdigest()
-
-    json_devices = '''#!/usr/bin/env python\n# encoding: utf-8\nimport json\ndevices = json.dumps({0})\nprint devices\n'''.format(
-        Inventory_devices)
-
-    Inventory_devices_file = FLASK_TMP_HOME + '/tasks/{0}'.format(str(md5.hexdigest()))
-
-    with open(Inventory_devices_file, 'w') as f:
-        f.write(json_devices)
-        os.chmod(Inventory_devices_file, stat.S_IRWXU | stat.S_IRGRP | stat.S_IROTH)
-
-    return Inventory_devices_file
+    return dumpFile
 
 
-def playbook_runner(playbook, inventory):
-    stats = callbacks.AggregateStats()
-    playbook_cb = callbacks.PlaybookCallbacks(verbose=utils.VERBOSITY)
-    runner_cb = callbacks.PlaybookRunnerCallbacks(stats, verbose=utils.VERBOSITY)
 
-    res = ansible.playbook.PlayBook(
-        playbook=playbook,
-        stats=stats,
-        callbacks=playbook_cb,
-        runner_callbacks=runner_cb,
-        host_list=inventory,
-    ).run()
 
-    return res
+
+def take_tasks(current_app, tasks):
+    taskList = []
+    if not tasks:
+        return False
+
+    for task in tasks:
+        t = DeviceTasks.query.get_or_404(task)
+        if not t.path:
+            flash(u'任务{0}上传有误, 请检查脚本文件是否正确。')
+            return redirect(url_for('main.push_TasksTo_devices'))
+        taskList.append({
+            'name' : t.taskname,
+            'path' : t.path,
+        })
+
+    if not taskList:
+        return False
+
+    return taskList
+
+
+
+
 
 
 @main.route('/push-tasksTo.devices', methods=['GET', 'POST'])
@@ -762,36 +741,67 @@ def push_TasksTo_devices():
     form = EditPushTasksToDeviceForm()
     if form.validate_on_submit():
 
-        TaskList = []
 
         devices = form.devices.data
         tasks = form.tasks.data
-        if not devices and not tasks:
-            flash(u'选择主机有误')
-            return render_template('push_tasks.html', form=form)
 
-        devices = [Device.query.get_or_404(device) for device in devices]
-        Inventory_hosts_file = generateInventory_hosts(current_app, devices)
+        dumpfile = dump_json_device(current_app,devices)
+        if not dumpfile:
+            flash(u'选择设备有误.')
+            return redirect(url_for('main.push_TasksTo_devices'))
 
-        for task in tasks:
-            t = DeviceTasks.query.get_or_404(task)
-            if not t.path:
-                flash(u'脚本{0}上传文件有误,请重新上传。')
-                return redirect(url_for('main.index'))
-            TaskList.append(t.path)
+        taskList = take_tasks(current_app, tasks)
+        if not taskList:
+            flash(u'选择任务有误.')
+            return redirect(url_for('main.push_TasksTo_devices'))
 
-        print TaskList
-
-        tasks_res = []
-        for task in TaskList:
-            print task
-            tasks_res.append(playbook_runner(task, Inventory_hosts_file))
-
+        tasks_res = ansible_tasks.task_runner(taskList, dumpfile)
         print tasks_res
 
         return render_template('push_tasks.html', form=form, tasks_res=tasks_res)
 
     return render_template('push_tasks.html', form=form)
+
+
+def dump_json_deviceGroup(current_app, deviceGroup):
+    if not deviceGroup:
+        return False
+
+    deviceList = []
+    for group in deviceGroup:
+        devices = DeviceGroup.query.get_or_404(deviceGroup).devices.all()
+        if devices:
+            deviceList.extend(devices)
+
+    dumpFile = ansible_tasks.GenerateInventory(current_app, deviceList)
+    if not dumpFile:
+        return False
+
+    return dumpFile
+
+
+def take_taskGroup(current_app, taskGroup):
+    taskList = []
+    if not taskGroup:
+        return False
+
+    for group in taskGroup:
+        Group = DeviceTaskGroup.query.get_or_404(group).tasks.all()
+        if Group:
+            for task in Group:
+
+                if not task.path:
+                    flash(u'脚本{0}上传文件有误,请重新上传。'.format(task.taskname))
+                    return redirect(url_for('main.push_TasksTo_deviceGroup'))
+                taskList.append({
+                    'name': task.taskname,
+                    'path': task.path,
+                })
+
+    if not taskList:
+        return False
+
+    return taskList
 
 
 @main.route('/push-tasksTo.deviceGroup', methods=['GET', 'POST'])
@@ -801,36 +811,20 @@ def push_TasksTo_deviceGroup():
     form = EditPushTasksToDeviceGroupForm()
     if form.validate_on_submit():
 
-        deviceGroups = form.deviceGroup.data
-        taskGroups = form.taskGroup.data
-        if not deviceGroups and not taskGroups:
-            flash(u'选择主机有误')
-            return render_template('push_taskGroup.html', form=form)
+        deviceGroup = form.deviceGroup.data
+        taskGroup = form.taskGroup.data
 
-        devices = []
-        for deviceGroup in deviceGroups:
-            group = DeviceGroup.query.get_or_404(deviceGroup).devices.all()
-            if group:
-                devices.extend(group)
+        dumpfile = dump_json_deviceGroup(current_app, deviceGroup)
+        if not dumpfile:
+            flash(u'选择设备有误.')
+            return redirect(url_for('main.push_TasksTo_deviceGroup'))
 
-        Inventory_hosts_file = generateInventory_hosts(current_app, devices)
+        taskList = take_taskGroup(current_app, taskGroup)
+        if not taskList:
+            flash(u'选择任务有误.')
+            return redirect(url_for('main.push_TasksTo_deviceGroup'))
 
-        tasks = []
-        for taskGroup in taskGroups:
-            group = DeviceTaskGroup.query.get_or_404(taskGroup).tasks.all()
-            if group:
-                for task in group:
-                    if not task.path:
-                        flash(u'脚本{0}上传文件有误,请重新上传。')
-                        return redirect(url_for('main.index'))
-                    tasks.append(task.path)
-
-        print tasks
-        tasks_res = []
-        for task in tasks:
-            print task
-            tasks_res.append(playbook_runner(task, Inventory_hosts_file))
-
+        tasks_res = ansible_tasks.task_runner(taskList, dumpfile)
         print tasks_res
 
         return render_template('push_taskGroup.html', form=form, tasks_res=tasks_res)
@@ -838,16 +832,6 @@ def push_TasksTo_deviceGroup():
     return render_template('push_taskGroup.html', form=form)
 
 
-def command_runner(user, command, inventory):
-    res = ansible.runner.Runner(
-        module_name='shell',  # 调用shell模块，这个代码是为了示例执行shell命令
-        module_args=command,  # shell命令
-        remote_user=user,
-        host_list=inventory,
-        pattern='all',
-        private_key_file='/Users/kefatong/.ssh/id_rsa'
-    ).run()
-    return res
 
 
 @main.route('/push-command-to.device', methods=['GET', 'POST'])
@@ -866,21 +850,19 @@ def push_CommandsTo_device():
             db.session.commit()
 
         devices = form.devices.data
-        if devices is None:
-            return redirect(url_for('main.index'))
-
-        devices = [Device.query.get_or_404(device) for device in devices]
-        Inventory_hosts_file = generateInventory_hosts(current_app, devices)
+        dumpfile = dump_json_device(current_app, devices)
+        if not dumpfile:
+            flash(u'选择设备有误')
+            return redirect(url_for('main.push_CommandsTo_device'))
 
         command = form.command.data
-        if command:
-            if re.findall('rm', command) or re.findall('mv', command):
-                flash(u'内容包含删除了移动命令')
-                return redirect(url_for('main.push_CommandsTo_device'))
+        if not command:
+            flash(u'请输入要执行的命令')
+            return redirect(url_for('main.push_CommandsTo_device'))
 
-            command_res = command_runner('kefatong', command, Inventory_hosts_file)
-            print command_res
-            return render_template('push_commands.html', form=form, command_res=command_res)
+        command_res = ansible_tasks.command_runner('eric', command, dumpfile, view='main.push_CommandsTo_device')
+        print command_res
+        return render_template('push_commands.html', form=form, command_res=command_res)
 
     return render_template('push_commands.html', form=form)
 
@@ -946,9 +928,10 @@ def create_deviceSystem():
             }
         }
 
+        print form.os_version.data
         new_system = cobbler_handle.new_system()
         new_system.name = system.hostname
-        new_system.profile = 'RHEL6-x86_64'
+        new_system.profile = system.os_version
         new_system.hostname = system.hostname
         new_system.set_hostname = system.hostname
         interfaces['eth0']['ip_address'] = system.ip
@@ -1001,7 +984,7 @@ def deploy_deviceSystem(id):
 
 
     if not devicePower.all() and devicePower.all() > 1:
-        flash(u'请检查资产电源管理口配置是否正确, 可能没有配置或者配置了多个。')
+        flash(u'请检查资产电源管理口配置是否正确')
         return redirect(url_for('main.show_deviceSystems'))
 
     devicePower = devicePower.first()
@@ -1027,6 +1010,87 @@ def deploy_deviceSystem(id):
 
 
 
+
+@main.route('/show-device.compliance', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceCompliance():
+    compliances = ComplianceTasks.query.all()
+    return render_template('show_deviceCompliance.html', compliances=compliances)
+
+
+
+@main.route('/create-device.compliance', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceCompliance():
+    form = EditComplianceTasksForm()
+    if form.validate_on_submit():
+        compliance = ComplianceTasks()
+        compliance.name = form.name.data
+        compliance.deviceGroup = form.deviceGroup.data
+        compliance.taskGroup = form.taskGroup.data
+        compliance.enabled = form.enabled.data
+        compliance.remarks = form.remarks.data
+        compliance.instaff = current_user.username
+
+        db.session.add(compliance)
+        db.session.commit()
+        return redirect(url_for('main.show_deviceCompliance'))
+
+
+    return render_template('create_deviceCompliance.html', form=form)
+    #return render_template('create_deviceCompliance.html')
+
+
+
+@main.route('/edit-device.compliance/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def edit_deviceCompliance(id):
+
+    compliance = ComplianceTasks.query.get_or_404(id)
+    form = EditComplianceTasksForm()
+    if form.validate_on_submit():
+        compliance.name = form.name.data
+        compliance.deviceGroup = form.deviceGroup.data
+        compliance.taskGroup = form.taskGroup.data
+        compliance.enabled = form.enabled.data
+        compliance.remarks = form.remarks.data
+
+        db.session.add(compliance)
+        db.session.commit()
+        return redirect(url_for('main.show_deviceCompliance'))
+
+    form.name.data = compliance.name
+    #form.deviceGroup.data = compliance.deviceGroup
+    #form.taskGroup.data = compliance.taskGroup
+    form.enabled.data = compliance.enabled
+    form.remarks.data = compliance.remarks
+    return render_template('edit_deviceCompliance.html', form=form, compliance=compliance)
+    #return render_template('create_deviceCompliance.html')
+
+
+@main.route('/deploy-device.compliance/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def deploy_deviceCompliance(id):
+    compliance = ComplianceTasks.query.get_or_404(id)
+    compliance.status = 2
+    db.session.add(compliance)
+    db.session.commit()
+    return redirect(url_for('main.show_deviceCompliance'))
+
+
+
+@main.route('/delete-device.compliance/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceCompliance(id):
+    compliances = ComplianceTasks.query.get_or_404(id)
+    db.session.delete(compliances)
+    db.session.commit()
+    return redirect(url_for('main.show_deviceCompliance'))
 
 
 

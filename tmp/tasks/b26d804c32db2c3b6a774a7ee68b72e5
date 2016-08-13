@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
+import json
+devices = json.dumps({"devices": {"hosts": ["172.16.46.130"]}})
+print devices

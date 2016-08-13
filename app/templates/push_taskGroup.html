@@ -32,16 +32,20 @@
             <!-- Basic example -->
             <div class="col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">执行</h3></div>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a href="{{ url_for('main.push_TasksTo_devices') }}">
+                                <button class="btn btn-info">任务</button>
+                            </a>
+                            <a href="{{ url_for('main.push_TasksTo_deviceGroup') }}">
+                                <button class="btn btn-info">任务组</button>
+                            </a>
+                        </h3>
+                    </div>
                     <div class="panel-body">
 
-                        <div class="form-group">
-                            <label class="col-md-2 control-label"></label>
-                            <a href="{{ url_for('main.push_TasksTo_deviceGroup') }}">任务组推送</a>
-                            <a href="{{ url_for('main.push_TasksTo_devices') }}">任务推送</a>
-                        </div>
-
-                        <form class="form-horizontal" role="form" action="{{ url_for('main.push_TasksTo_deviceGroup') }}"
+                        <form class="form-horizontal" role="form"
+                              action="{{ url_for('main.push_TasksTo_deviceGroup') }}"
                               method="POST">
                             {{ form.csrf_token }}
 
@@ -94,12 +98,13 @@
                         {% if tasks_res %}
                             {% for tasks in tasks_res %}
                                 {% set index = loop.index0 %}
-                                {% for task in tasks %}
-                                    <div class="alert {% if tasks_res[index][task].unreachable or tasks_res[index][task].failures %} alert-danger {% else %} alert-success {% endif %} ">
+                                {% for task in tasks['res'] %}
+                                    <div class="alert {% if tasks_res[index]['res'][task].unreachable or tasks_res[index]['res'][task].failures %} alert-danger {% else %} alert-success {% endif %} ">
                                         host: {{ task }}: <br/>
-                                        <b>ok: {{ tasks_res[index][task].ok }} <br/></b>
-                                        changed: {{ tasks_res[index][task].changed }} <br/>
-                                        failures: {{ tasks_res[index][task].failures }} <br/>
+                                        <b>task: {{ tasks['name'] }} <br/></b>
+                                        <b>ok: {{ tasks_res[index]['res'][task].ok }} <br/></b>
+                                        changed: {{ tasks_res[index]['res'][task].changed }} <br/>
+                                        failures: {{ tasks_res[index]['res'][task].failures }} <br/>
                                         <a href="#" class="alert-link">详细结果</a>.
                                     </div>
                                 {% endfor %}

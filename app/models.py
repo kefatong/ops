@@ -330,12 +330,12 @@ class DevicePower(db.Model):
 
 
 DeviceRelationshipDeviceGroup = db.Table('DeviceRelationshipDeviceGroup',
-    db.Column('deviceGroup_id', db.Integer, db.ForeignKey('deviceGroups.id')),
+    db.Column('deviceGroup_id', db.Integer, db.ForeignKey('deviceGroup.id')),
     db.Column('device_id', db.Integer, db.ForeignKey('devices.id')),
 )
 
 class DeviceGroup(db.Model):
-    __tablename__ = 'deviceGroups'
+    __tablename__ = 'deviceGroup'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     business = db.Column(db.String(64))    #所属业务
@@ -344,8 +344,6 @@ class DeviceGroup(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
     remarks = db.Column(db.Text)  # 澶囨敞
-
-
 
 
 class Device(db.Model):
@@ -463,7 +461,7 @@ class System(db.Model):
     ip = db.Column(db.String(20))           #设备IP地址 选择设备后自动获取设备IP  在正式安装时判断是否与设备一致
     hostname = db.Column(db.String(64))
     power_ip = db.Column(db.String(32))
-    os_version = db.Column(db.Integer)         #系统版本
+    os_version = db.Column(db.String(64))         #系统版本
     post = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))           #任务列表   安装系统后需要执行的
     status = db.Column(db.Integer, default=1)
     isdelete = db.Column(db.Boolean)
@@ -473,6 +471,28 @@ class System(db.Model):
 
     def __repr__(self):
         return '<TaskScripts %r>' % self.sn
+
+
+
+class ComplianceTasks(db.Model):
+    __tablename__ = 'Compliance'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    deviceGroup = db.Column(db.Integer, db.ForeignKey('deviceGroup.id'))
+    taskGroup = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))
+    status = db.Column(db.Integer, default=1)
+    enabled = db.Column(db.Boolean)
+    isdelete = db.Column(db.Boolean)
+    instaff = db.Column(db.String(64))  # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
+
+
+
+class ComplianceRecord(db.Model):
+    __tablename__ = 'ComplianceRecord'
+    id = db.Column(db.Integer, primary_key=True)
+
 
 
 class histroyCommands(db.Model):

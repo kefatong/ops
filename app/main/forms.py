@@ -308,7 +308,7 @@ class EditSystemForm(Form):
     sn = StringField(u'设备序列号')
     ip = StringField(u'IP地址')
     hostname = StringField(u'主机名')
-    os_version = SelectField(u'系统版本', coerce=int)
+    os_version = SelectField(u'系统版本', coerce=unicode)
     power_ip = StringField(u'电源管理IP')
     assets = BooleanField(u'系统安装后更新')
     post = SelectMultipleField(u'系统安装后', coerce=int)
@@ -322,12 +322,29 @@ class EditSystemForm(Form):
         self.device_id.choices = [(device.id, device.hostname)
                                     for device in Device.query.all()]
 
-        #self.os_version.choices = [(distros.name, distros.name)
-        #                           for distros in cobbler_handle.distros()]
-
-        self.os_version.choices = [(1,'CentOS6-x86_64')]
+        self.os_version.choices = [(distros.name, distros.name)
+                                   for distros in cobbler_handle.distros()]
 
         self.post.choices = [(taskGroup.id, taskGroup.name)
                                   for taskGroup in DeviceTaskGroup.query.all()]
 
+
+
+
+class EditComplianceTasksForm(Form):
+    name = StringField(u'任务名称')
+    deviceGroup = SelectMultipleField(u'设备组', coerce=int)
+    taskGroup = SelectMultipleField(u'任务组', coerce=int)
+    enabled = BooleanField(u'启用')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'推送')
+
+    def __init__(self, *args, **kwargs):
+        super(EditComplianceTasksForm, self).__init__(*args, **kwargs)
+
+        self.deviceGroup.choices = [(group.id, group.name)
+                                    for group in DeviceGroup.query.all()]
+
+        self.taskGroup.choices = [(group.id, group.name)
+                                  for group in DeviceTaskGroup.query.all()]
 
