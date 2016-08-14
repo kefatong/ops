@@ -361,6 +361,8 @@ def edit_deviceGroup(id):
 @permission_required(Permission.DEVICE_LOOK)
 def delete_deviceGroup(id):
     deviceGroup = DeviceGroup.query.get_or_404(id)
+    for device in deviceGroup.devices.all():
+        deviceGroup.devices.remove(device)
     db.session.delete(deviceGroup)
     db.session.commit()
     return redirect(url_for('main.show_deviceGroups'))
