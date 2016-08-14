@@ -886,6 +886,7 @@ def create_deviceSystem():
         system = System()
         system.device_id = form.device_id.data
         system.os_version = form.os_version.data
+        system.type = form.type.data
         system.an = form.an.data
         system.sn = form.sn.data
         system.hostname = form.hostname.data
@@ -893,6 +894,7 @@ def create_deviceSystem():
         system.post = form.post.data
         system.ip = form.ip.data
         system.status = 1
+        system.instaff = current_user.username
 
         db.session.add(system)
         db.session.commit()

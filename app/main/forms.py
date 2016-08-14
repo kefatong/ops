@@ -309,6 +309,7 @@ class EditSystemForm(Form):
     ip = StringField(u'IP地址')
     hostname = StringField(u'主机名')
     os_version = SelectField(u'系统版本', coerce=unicode)
+    type = SelectField(u'部署方式', coerce=int)
     power_ip = StringField(u'电源管理IP')
     assets = BooleanField(u'系统安装后更新')
     post = SelectMultipleField(u'系统安装后', coerce=int)
@@ -324,6 +325,8 @@ class EditSystemForm(Form):
 
         self.os_version.choices = [(distros.name, distros.name)
                                    for distros in cobbler_handle.distros()]
+
+        self.type.choices = [(1, u'IPMI'), (2, u'DHCP')]
 
         self.post.choices = [(taskGroup.id, taskGroup.name)
                                   for taskGroup in DeviceTaskGroup.query.all()]

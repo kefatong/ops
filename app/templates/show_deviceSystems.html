@@ -39,10 +39,10 @@
                                     <tr>
                                         <th></th>
                                         <th>主机名</th>
-                                        <th>资产</th>
                                         <th>序列号</th>
                                         <th>IP</th>
                                         <th>系统版本</th>
+                                        <th>部署方式</th>
                                         <th>电源IP</th>
                                         <th>安装后</th>
                                         <th>状态</th>
@@ -64,14 +64,20 @@
                                             </td>
 
                                             <td>{{ system.hostname }}</td>
-                                            <td>{{ system.an }}</td>
                                             <td>{{ system.sn }}</td>
                                             <td>{{ system.ip }}</td>
                                             <td>{{ system.os_version }}</td>
+                                            {% if system.type == 1 %}
+                                                <td>IPMI</td>
+                                            {% elif system.type == 2 %}
+                                                <td>DHCP</td>
+                                            {% else %}
+                                                <td>未知</td>
+                                            {% endif %}
                                             <td>{{ system.power_ip }}</td>
                                             <td>{{ system.post }}</td>
                                             <td>{{ system.status }}</td>
-                                            <td>{{ system.instff }}</td>
+                                            <td>{{ system.instaff }}</td>
                                             <td class="actions">
                                                 <a href="{{ url_for('main.deploy_deviceSystem', id=system.id) }}">
                                                     <button>安装</button>

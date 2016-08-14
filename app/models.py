@@ -462,6 +462,7 @@ class System(db.Model):
     hostname = db.Column(db.String(64))
     power_ip = db.Column(db.String(32))
     os_version = db.Column(db.String(64))         #系统版本
+    type = db.Column(db.Integer)      #部署方式  IPMI  DHCP
     post = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))           #任务列表   安装系统后需要执行的
     status = db.Column(db.Integer, default=1)
     isdelete = db.Column(db.Boolean)
