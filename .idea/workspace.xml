@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c410cb3-0002-4a66-a174-dfd8d475c2e3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_deviceCompliance.html" afterPath="$PROJECT_DIR$/app/templates/create_deviceCompliance.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/edit_deviceCompliance.html" afterPath="$PROJECT_DIR$/app/templates/edit_deviceCompliance.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ops.sql" afterPath="$PROJECT_DIR$/ops.sql" />
     </list>
     <ignored path="cmdb.iws" />
@@ -39,21 +40,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="edit_deviceCompliance.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceCompliance.html">
+      <file leaf-file-name="create_deviceCompliance.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/create_deviceCompliance.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="33" column="131" selection-start-line="33" selection-start-column="131" selection-end-line="33" selection-end-column="131" />
+            <state relative-caret-position="510">
+              <caret line="73" column="34" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create_deviceCompliance.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/templates/create_deviceCompliance.html">
+      <file leaf-file-name="edit_deviceCompliance.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceCompliance.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_devicePower.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/create_devicePower.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-420">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_deviceTask.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTask.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
-              <caret line="62" column="28" selection-start-line="62" selection-start-column="28" selection-end-line="62" selection-end-column="28" />
+              <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="83" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -84,28 +105,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="471">
               <caret line="65" column="74" selection-start-line="65" selection-start-column="74" selection-end-line="65" selection-end-column="74" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="465" column="63" selection-start-line="465" selection-start-column="63" selection-end-line="465" selection-end-column="63" />
-              <folding>
-                <element signature="e#45#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="push_taskGroup.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/push_taskGroup.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1200">
-              <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -194,7 +193,6 @@
         <option value="$PROJECT_DIR$/app/templates/push_taskGroup.html" />
         <option value="$PROJECT_DIR$/app/main/ansible_tasks.py" />
         <option value="$PROJECT_DIR$/manage.py" />
-        <option value="$PROJECT_DIR$/app/templates/edit_deviceCompliance.html" />
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceSystems.html" />
         <option value="$PROJECT_DIR$/app/templates/create_system.html" />
@@ -203,6 +201,7 @@
         <option value="$PROJECT_DIR$/app/main/views.py" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceCompliance.html" />
         <option value="$PROJECT_DIR$/app/templates/create_deviceCompliance.html" />
+        <option value="$PROJECT_DIR$/app/templates/edit_deviceCompliance.html" />
       </list>
     </option>
   </component>
@@ -759,8 +758,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTask.html" />
-    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskScript.html" />
     <entry file="file://$PROJECT_DIR$/app/templates/test.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1026,14 +1023,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceCompliance.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="33" column="131" selection-start-line="33" selection-start-column="131" selection-end-line="33" selection-end-column="131" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
@@ -1096,10 +1085,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceCompliance.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/create_devicePower.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-420">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceTask.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
-          <caret line="62" column="28" selection-start-line="62" selection-start-column="28" selection-end-line="62" selection-end-column="28" />
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="83" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_deviceCompliance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="73" column="34" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/edit_deviceCompliance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
           <folding />
         </state>
       </provider>
