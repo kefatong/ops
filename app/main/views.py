@@ -324,7 +324,7 @@ def create_deviceGroup():
 
         db.session.add(deviceGroup)
         db.session.commit()
-        redirect(url_for('main.show_deviceGroups'))
+        return redirect(url_for('main.show_deviceGroups'))
     return render_template('create_deviceGroup.html', form=form)
 
 
