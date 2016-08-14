@@ -19,8 +19,8 @@ cobbler_handle = capi.BootAPI()
 
 class EditProfileForm(Form):
     username = StringField('Username', validators=[InputRequired(), Length(0,64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Username must have only letters, number, dots or underscores')])
-    name = StringField(u'真实姓名', validators=[InputRequired(), Length(0,64)])
-    position = StringField(u'工作职位', validators=[InputRequired(), Length(0,64)])
+    name = StringField(u'真实姓名')
+    position = StringField(u'工作职位')
     qq = StringField(u'QQ号码')
     phone = StringField(u'手机号码')
     location = StringField(u'位置', validators=[Length(0,64)])
@@ -87,10 +87,10 @@ class EditDeviceForm(Form):
     an = StringField(u'资产号')
     sn = StringField(u'序列号')
     os = StringField(u'操作系统')
-    manufacturer = StringField(u'生产商', validators=[Length(1,64)])                 # 生产商
-    brand = StringField(u'品牌', validators=[Length(0,64)])                        # 品牌
-    model = StringField(u'型号', validators=[Length(0,64)])                        # 型号
-    cpumodel = StringField(u'CPU型号', validators=[Length(0,64)])                     # CPU 型号
+    manufacturer = StringField(u'生产商')                 # 生产商
+    brand = StringField(u'品牌')                        # 品牌
+    model = StringField(u'型号')                        # 型号
+    cpumodel = StringField(u'CPU型号')                     # CPU 型号
     cpucount = IntegerField(u'CPU(个)')                        # CPU 核数
     memsize = IntegerField(u'内存(GB)')                      # 内存容量
     disksize = IntegerField(u'磁盘(GB)')                        # 磁盘容量
@@ -98,9 +98,9 @@ class EditDeviceForm(Form):
     #business = SelectField(u'业务', coerce=int)
     powerstatus = SelectField(u'电源', coerce=int)
     onstatus = SelectField(u'状态', coerce=int)
-    usedept = StringField(u'使用部门', validators=[Length(1,64)])                       # 使用部门
-    usestaff = StringField(u'使用人', validators=[Length(1,64)])                     # 部门使用人
-    mainuses = StringField(u'主要用途', validators=[Length(1,128)])                    # 主要用途
+    usedept = StringField(u'使用部门')                       # 使用部门
+    usestaff = StringField(u'使用人')                     # 部门使用人
+    mainuses = StringField(u'主要用途')                    # 主要用途
     remarks = TextAreaField(u'备注')                          # 备注
     submit = SubmitField(u'提交')
 

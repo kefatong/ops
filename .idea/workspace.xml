@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c410cb3-0002-4a66-a174-dfd8d475c2e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python-pycurl-7.19.0-17.el7.x86_64.rpm" afterPath="$PROJECT_DIR$/python-pycurl-7.19.0-17.el7.x86_64.rpm" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/forms.py" afterPath="$PROJECT_DIR$/app/main/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/views.py" afterPath="$PROJECT_DIR$/app/main/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models.py" afterPath="$PROJECT_DIR$/app/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/common/base.html" afterPath="$PROJECT_DIR$/app/templates/common/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/create_system.html" afterPath="$PROJECT_DIR$/app/templates/create_system.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceSystems.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceSystems.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/migrations/alembic.ini" afterPath="$PROJECT_DIR$/migrations/alembic.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/migrations/versions/4a4bb8372cce_.py" afterPath="$PROJECT_DIR$/migrations/versions/4a4bb8372cce_.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upload/script_dirs/2/278a92a8699ba745128005aecdde047c" afterPath="$PROJECT_DIR$/upload/script_dirs/2/278a92a8699ba745128005aecdde047c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ops.sql" afterPath="$PROJECT_DIR$/ops.sql" />
     </list>
     <ignored path="cmdb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,7 +60,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="382">
@@ -120,11 +112,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/main/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="328" column="34" selection-start-line="328" selection-start-column="34" selection-end-line="328" selection-end-column="34" />
+            <state relative-caret-position="480">
+              <caret line="107" column="50" selection-start-line="107" selection-start-column="50" selection-end-line="107" selection-end-column="50" />
               <folding>
                 <element signature="e#36#76#0" expanded="true" />
               </folding>
@@ -207,11 +199,11 @@
         <option value="$PROJECT_DIR$/app/templates/show_deviceCompliance.html" />
         <option value="$PROJECT_DIR$/app/templates/edit_deviceCompliance.html" />
         <option value="$PROJECT_DIR$/app/models.py" />
-        <option value="$PROJECT_DIR$/app/main/forms.py" />
         <option value="$PROJECT_DIR$/app/main/views.py" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceSystems.html" />
         <option value="$PROJECT_DIR$/app/templates/create_system.html" />
         <option value="$PROJECT_DIR$/app/templates/common/base.html" />
+        <option value="$PROJECT_DIR$/app/main/forms.py" />
       </list>
     </option>
   </component>
@@ -705,7 +697,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="823" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="823" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23194444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1069,16 +1061,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/main/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="328" column="34" selection-start-line="328" selection-start-column="34" selection-end-line="328" selection-end-column="34" />
-          <folding>
-            <element signature="e#36#76#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/show_deviceSystems.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="471">
@@ -1110,6 +1092,16 @@
         <state relative-caret-position="382">
           <caret line="95" column="88" selection-start-line="95" selection-start-column="88" selection-end-line="95" selection-end-column="88" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/main/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="107" column="50" selection-start-line="107" selection-start-column="50" selection-end-line="107" selection-end-column="50" />
+          <folding>
+            <element signature="e#36#76#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
