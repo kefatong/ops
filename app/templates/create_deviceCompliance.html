@@ -60,14 +60,10 @@
                                     {{ macros.print_form_messages(form.errors.taskGroup) }}
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">启用</label>
-
-                                <div class="col-md-6">
-                                    {{ form.enabled(class='form-control', placeholder='启用') }}
-                                    {{ macros.print_form_messages(form.errors.enabled) }}
-                                </div>
+                            
+                            <div class="col-md-6">
+                                {{ form.enabled(class='form-control', placeholder='启用') }}
+                                {{ macros.print_form_messages(form.errors.enabled) }}
                             </div>
 
                             <div class="form-group">
