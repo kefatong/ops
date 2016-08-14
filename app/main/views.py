@@ -347,7 +347,7 @@ def edit_deviceGroup(id):
 
         db.session.add(deviceGroup)
         db.session.commit()
-        redirect(url_for('main.show_deviceGroups'))
+        return redirect(url_for('main.show_deviceGroups'))
 
     form.name.data = deviceGroup.name
     form.business.data = deviceGroup.business
