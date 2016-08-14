@@ -771,9 +771,9 @@ def dump_json_deviceGroup(current_app, deviceGroup):
 
     deviceList = []
     for group in deviceGroup:
-        devices = DeviceGroup.query.get_or_404(deviceGroup).devices.all()
-        if devices:
-            deviceList.extend(devices)
+        Group = DeviceGroup.query.get_or_404(group)
+        if Group:
+            deviceList.extend(Group.devices.all())
 
     dumpFile = ansible_tasks.GenerateInventory(current_app, deviceList)
     if not dumpFile:
