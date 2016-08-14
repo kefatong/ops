@@ -20,6 +20,10 @@ import hashlib
 import random
 import time
 
+import difflib
+import sys
+
+
 import cobbler.api as capi
 
 cobbler_handle = capi.BootAPI()
@@ -63,7 +67,7 @@ def index():
     json_device = get_api_json(current_app, postfix='/devices/')
     print json_device
 
-    return render_template('index.html')
+    return redirect(url_for('main.show_devices'))
 
 
 ########################################################################
@@ -932,7 +936,6 @@ def create_deviceSystem():
             }
         }
 
-        print form.os_version.data
         new_system = cobbler_handle.new_system()
         new_system.name = system.hostname
         new_system.profile = system.os_version
@@ -1095,6 +1098,245 @@ def delete_deviceCompliance(id):
     db.session.delete(compliances)
     db.session.commit()
     return redirect(url_for('main.show_deviceCompliance'))
+
+
+@main.route('/show-device.SoftwareDistribution', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceSoftwareDistribution():
+    softwareDistribution = SoftwareDistribution.query.all()
+    return render_template('show_softwareDistribution.html', softwareDistribution=softwareDistribution)
+
+
+
+@main.route('/create-device.SoftwareDistribution', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceSoftwareDistribution():
+    form = EditSoftwareDistributionForm()
+    if form.validate_on_submit():
+        softwareDistribution = SoftwareDistribution()
+        softwareDistribution.name = form.name.data
+        if form.devices.data:
+            for device in form.devices.data:
+                softwareDistribution.devices.append(Device.query.get_or_404(device))
+        softwareDistribution.taskGroup = form.taskGroup.data
+        softwareDistribution.type = form.type.data
+        softwareDistribution.status = 1
+        softwareDistribution.remarks = form.remarks.data
+
+        db.session.add(softwareDistribution)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+
+    return render_template('create_softwareDistribution.html', form=form)
+
+
+@main.route('/delete-device.SoftwareDistribution/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceSoftwareDistribution(id):
+    softwareDistribution = SoftwareDistribution.query.get_or_404(id)
+    for device in softwareDistribution.devices.all():
+        softwareDistribution.devices.remove(device)
+    db.session.delete(softwareDistribution)
+    db.session.commit()
+    flash(u'删除任务{0}成功'.format(softwareDistribution.name))
+    return redirect(url_for('main.show_deviceSoftwareDistribution'))
+
+
+
+@main.route('/deploy-device.SoftwareDistribution/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def deploy_deviceSoftwareDistribution(id):
+    softwareDistribution = SoftwareDistribution.query.get_or_404(id)
+    softwareDistribution.status =2
+    db.session.add(softwareDistribution)
+    db.session.commit()
+    flash(u'任务{0}执行'.format(softwareDistribution.name))
+    return redirect(url_for('main.show_deviceSoftwareDistribution'))
+
+
+
+
+@main.route('/deploy-device.ContrastTask/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def deploy_deviceContrastTask(id):
+    contrastTasks = ContrastTasks.query.get_or_404(id)
+    contrastTasks.status = 2
+
+    files = []
+
+    for task in contrastTasks.fileOrDirectory.all():
+        device = Device.query.get_or_404(task.device_id)
+        files.append({
+            'filePath' : task.path,
+            'device' : device.ip,
+        })
+
+
+    db.session.add(contrastTasks)
+    db.session.commit()
+    return redirect(url_for('main.show_deviceContrastTask'))
+
+
+@main.route('/show-device.ContrastTask', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceContrastTask():
+    contrastTask = ContrastTasks.query.all()
+    return render_template('show_deviceContrastTask.html', contrastTask=contrastTask)
+
+
+
+@main.route('/create-device.ContrastTask', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceContrastTask():
+    form = EditContrastTasksForm()
+    if form.validate_on_submit():
+        contrastTask = ContrastTasks()
+        contrastTask.name = form.name.data
+        contrastTask.type = form.type.data
+        for file in form.fileOrDirectory.data:
+            contrastTask.fileOrDirectory.append(ContrastFilesOrDirectory.query.get_or_404(file))
+        contrastTask.remarks = form.remarks.data
+        contrastTask.instaff = current_user.username
+
+        db.session.add(contrastTask)
+        db.session.commit()
+        flash(u'创建{0}成功'.format(contrastTask.name))
+        return redirect(url_for('main.index'))
+
+    return render_template('create_deviceConstratTask.html', form=form)
+
+
+@main.route('/edit-device.ContrastTask/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def edit_deviceContrastTask(id):
+    contrastTask = ContrastTasks.query.get_or_404(id)
+    form = EditContrastTasksForm()
+    if form.validate_on_submit():
+        contrastTask.name = form.name.data
+        contrastTask.type = form.type.data
+
+        for file in contrastTask.fileOrDirectory.all():
+            contrastTask.fileOrDirectory.remove(file)
+
+        for file in form.fileOrDirectory.data:
+            contrastTask.fileOrDirectory.append(ContrastFilesOrDirectory.query.get_or_404(file))
+        contrastTask.remarks = form.remarks.data
+        contrastTask.instaff = current_user.username
+
+        db.session.add(contrastTask)
+        db.session.commit()
+        flash(u'修改{0}成功'.format(contrastTask.name))
+        return redirect(url_for('main.index'))
+
+    form.name.data = contrastTask.name
+    form.type.data = contrastTask.type
+    form.fileOrDirectory.data = []
+
+    for file in contrastTask.fileOrDirectory.all():
+        form.fileOrDirectory.data.append(file)
+
+    form.enabled.data = contrastTask.enabled
+    form.remarks.data = contrastTask.remarks
+    return render_template('edit_deviceConstratTask.html', form=form, contrastTask=contrastTask)
+
+
+@main.route('/delete-device.ContrastTask/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceContrastTask(id):
+    contrastTask = ContrastTasks.query.get_or_404(id)
+    for file in contrastTask.fileOrDirectory.all():
+        contrastTask.fileOrDirectory.remove(file)
+    db.session.delete(contrastTask)
+    db.session.commit()
+    flash(u'删除{0}成功!'.format(contrastTask.name))
+    return redirect(url_for('main.index'))
+
+
+
+@main.route('/show-device.ContrastFileOrDirectory', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceContrastFileOrDirectory():
+    contrastFileOrDirectory = ContrastFilesOrDirectory.query.all()
+    return render_template('show_ContrastFileOrDirectory.html', contrastFileOrDirectory=contrastFileOrDirectory)
+
+
+
+@main.route('/create-device.ContrastFileOrDirectory', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceContrastFileOrDirectory():
+    form = EditConttastFileOrDirectoryForm()
+    if form.validate_on_submit():
+        contrastFileOrDirectory = ContrastFilesOrDirectory()
+        contrastFileOrDirectory.name = form.name.data
+        contrastFileOrDirectory.type = form.type.data
+        contrastFileOrDirectory.device_id = form.device_id.data
+        contrastFileOrDirectory.path = form.path.data
+        contrastFileOrDirectory.enabled = form.enabled.data
+        contrastFileOrDirectory.remarks = form.remarks.data
+        contrastFileOrDirectory.instaff = current_user.username
+
+        db.session.add(contrastFileOrDirectory)
+        db.session.commit()
+
+        flash(u'创建{0}成功'.format(contrastFileOrDirectory.name))
+        return redirect(url_for('main.index'))
+
+    return render_template('create_deviceConstratFileOrDirectory.html', form=form)
+
+
+
+@main.route('/edit-device.ContrastFileOrDirectory/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def edit_deviceContrastFileOrDirectory(id):
+    contrastFileOrDirectory = ContrastFilesOrDirectory.query.get_or_404(id)
+    form = EditConttastFileOrDirectoryForm()
+    if form.validate_on_submit():
+        contrastFileOrDirectory.name = form.name.data
+        contrastFileOrDirectory.type = form.type.data
+        contrastFileOrDirectory.device_id = form.device_id.data
+        contrastFileOrDirectory.path = form.path.data
+        contrastFileOrDirectory.enabled = form.enabled.data
+        contrastFileOrDirectory.remarks = form.remarks.data
+        contrastFileOrDirectory.instaff = current_user.username
+
+        db.session.add(contrastFileOrDirectory)
+        db.session.commit()
+
+        flash(u'创建{0}成功'.format(contrastFileOrDirectory.name))
+        return redirect(url_for('main.index'))
+
+
+    form.name.data = contrastFileOrDirectory.name
+    form.type.data = contrastFileOrDirectory.type
+    form.device_id.data = contrastFileOrDirectory.device_id
+    form.path.data = contrastFileOrDirectory.path
+    form.enabled.data = contrastFileOrDirectory.enabled
+    form.remarks.data = contrastFileOrDirectory.remarks
+    return render_template('edit_deviceConstratFileOrDirectory.html', form=form, contrastFileOrDirectory=contrastFileOrDirectory)
+
+
+@main.route('/delete-device.ContrastFileOrDirectory/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceContrastFileOrDirectory(id):
+    contrastFileOrDirectory = ContrastFilesOrDirectory.query.get_or_404(id)
+    db.session.delete(contrastFileOrDirectory)
+    db.session.commit()
+    return redirect(url_for('main.index'))
+
+
 
 
 

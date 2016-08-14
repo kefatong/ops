@@ -141,6 +141,7 @@ class EditDeviceTaskForm(Form):
     scriptfile = FileField(u'脚本名称', validators=[InputRequired()])
     scriptname = StringField(u'脚本名称')
     type = SelectField(u'脚本类型', coerce=int)
+    extra_vars = TextAreaField(u'变量')
     arch = SelectField(u'系统架构', coerce=int)
     path = StringField(u'文件路径')
     version = StringField(u'版本')
@@ -351,3 +352,60 @@ class EditComplianceTasksForm(Form):
         self.taskGroup.choices = [(group.id, group.name)
                                   for group in DeviceTaskGroup.query.all()]
 
+
+class EditSoftwareDistributionForm(Form):
+    name = StringField(u'任务名称', validators=[InputRequired()])
+    devices = SelectMultipleField(u'设备', coerce=int)
+    taskGroup = SelectField(u'任务组', coerce=int)
+    type = SelectField(u'任务类型', coerce=int)
+    enabled = BooleanField(u'启用')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'保存')
+
+    def __init__(self, *args, **kwargs):
+        super(EditSoftwareDistributionForm, self).__init__(*args, **kwargs)
+
+        self.devices.choices = [(device.id, device.hostname)
+                                for device in Device.query.all()]
+
+        self.taskGroup.choices = [(Group.id, Group.name)
+                                  for Group in DeviceTaskGroup.query.all()]
+
+        self.type.choices = [(1, u'软件分发')]
+
+
+
+class EditContrastTasksForm(Form):
+    name = StringField(u'任务名称')
+    fileOrDirectory = SelectMultipleField(u'文件或目录(s)', coerce=int)
+    type = SelectField(u'类型', coerce=int)
+    enabled = BooleanField(u'启用')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'保存')
+
+    def __init__(self, *args, **kwargs):
+        super(EditContrastTasksForm, self).__init__(*args, **kwargs)
+
+        self.fileOrDirectory.choices = [(File.id, '{0}.{1}'.format(Device.query.filter(Device.id == File.device_id).first().hostname, File.name))
+                                for File in ContrastFilesOrDirectory.query.all()]
+
+        self.type.choices = [(1, u'文件对比'), (2, u'目录对比')]
+
+
+
+class EditConttastFileOrDirectoryForm(Form):
+    name = StringField(u'文件或目录名称')
+    device_id = SelectField(u'设备', coerce=int)
+    type = SelectField(u'类型', coerce=int)
+    path = StringField(u'文件或目录PATH')
+    enabled = BooleanField(u'启用')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'保存')
+
+    def __init__(self, *args, **kwargs):
+        super(EditConttastFileOrDirectoryForm, self).__init__(*args, **kwargs)
+
+        self.device_id.choices = [(device.id, device.hostname)
+                                for device in Device.query.all()]
+
+        self.type.choices = [(1, u'文件对比'), (2, u'目录对比')]

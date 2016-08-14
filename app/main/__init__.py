@@ -17,7 +17,8 @@ def inject_db_session():
 @main.app_context_processor
 def inject_models():
     return dict(ModuleClass=ModuleClass,
-                TaskClass=TaskClass,)
+                TaskClass=TaskClass,
+                Device=Device,)
 
 
 

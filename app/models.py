@@ -32,11 +32,11 @@ class Role(db.Model):
 
     def to_json(self):
         json_role = {
-            'url' : self.id,
-            'name' : self.name,
-            'default' : self.default,
-            'permissions' : self.permissions,
-            'users' : self.users,
+            'url': self.id,
+            'name': self.name,
+            'default': self.default,
+            'permissions': self.permissions,
+            'users': self.users,
         }
 
         return json_role
@@ -48,12 +48,12 @@ class Role(db.Model):
 
             'manager': (Permission.USER_EDIT |
                         Permission.DEVICE_LOOK |
-                        Permission.DEVICE_EDIT, False ),
+                        Permission.DEVICE_EDIT, False),
 
             'Administrator': (Permission.USER_EDIT |
                               Permission.DEVICE_LOOK |
                               Permission.DEVICE_EDIT |
-                              Permission.DEVICE_DEL  |
+                              Permission.DEVICE_DEL |
                               Permission.ADMINISTER, False)
         }
 
@@ -89,22 +89,21 @@ class User(UserMixin, db.Model):
     avatar_hash = db.Column(db.String(32))  # 澶村儚
     logs = db.relationship('Logger', backref='user', lazy='dynamic')
 
-
     def to_json(self):
         json_user = {
-            'url' : self.id,
-            'email' : self.email,
-            'username' : self.username,
-            'password_hash' : self.password_hash,
-            'role' : self.role,
-            'name' : self.name,
-            'location' : self.location,
-            'position' : self.position,
-            'about_me' : self.about_me,
-            'phone' : self.phone,
-            'qq' : self.qq,
-            'member_sine' : self.member_since,
-            'last_seen' : self.last_seen,
+            'url': self.id,
+            'email': self.email,
+            'username': self.username,
+            'password_hash': self.password_hash,
+            'role': self.role,
+            'name': self.name,
+            'location': self.location,
+            'position': self.position,
+            'about_me': self.about_me,
+            'phone': self.phone,
+            'qq': self.qq,
+            'member_sine': self.member_since,
+            'last_seen': self.last_seen,
         }
 
         return json_user
@@ -120,7 +119,6 @@ class User(UserMixin, db.Model):
 
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = hashlib.md5(self.email.encode('UTF-8')).hexdigest()
-
 
     @staticmethod
     def insert_admin_user():
@@ -141,7 +139,6 @@ class User(UserMixin, db.Model):
 
         db.session.add(u)
         db.session.commit()
-
 
     @staticmethod
     def generate_fake(count=1000):
@@ -279,7 +276,6 @@ class User(UserMixin, db.Model):
         return '<User %r>' % self.username
 
 
-
 class DevicePower(db.Model):
     __tablename__ = 'devicePowers'
     id = db.Column(db.Integer, primary_key=True)
@@ -295,7 +291,6 @@ class DevicePower(db.Model):
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
 
-
     def generate_password_token(self, password):
         from itsdangerous import JSONWebSignatureSerializer as Serializer
         s = Serializer(current_app.config['SECRET_KEY'])
@@ -309,37 +304,37 @@ class DevicePower(db.Model):
     def password(self, password):
         self.password_hash = self.generate_password_token(password)
 
-
     def to_json(self):
         json_power = {
-            'url' : self.id,
-            'type' : self.type,
-            'enabled' : self.enabled,
-            'ip' : self.ip,
-            'user' : self.user,
+            'url': self.id,
+            'type': self.type,
+            'enabled': self.enabled,
+            'ip': self.ip,
+            'user': self.user,
             'password': self.password_hash,
             'powerid': self.powerid,
-            'device_id' : self.device_id,
+            'device_id': self.device_id,
         }
 
         return json_power
 
     def __repr__(self):
-        return '<DevicePower %r>' %self.id
-
+        return '<DevicePower %r>' % self.id
 
 
 DeviceRelationshipDeviceGroup = db.Table('DeviceRelationshipDeviceGroup',
-    db.Column('deviceGroup_id', db.Integer, db.ForeignKey('deviceGroup.id')),
-    db.Column('device_id', db.Integer, db.ForeignKey('devices.id')),
-)
+                                         db.Column('deviceGroup_id', db.Integer, db.ForeignKey('deviceGroup.id')),
+                                         db.Column('device_id', db.Integer, db.ForeignKey('devices.id')),
+                                         )
+
 
 class DeviceGroup(db.Model):
     __tablename__ = 'deviceGroup'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    business = db.Column(db.String(64))    #所属业务
-    devices = db.relationship('Device', secondary=DeviceRelationshipDeviceGroup, backref=db.backref('DeviceGroup', lazy='dynamic'), lazy='dynamic')
+    business = db.Column(db.String(64))  # 所属业务
+    devices = db.relationship('Device', secondary=DeviceRelationshipDeviceGroup,
+                              backref=db.backref('DeviceGroup', lazy='dynamic'), lazy='dynamic')
     isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
@@ -362,8 +357,8 @@ class Device(db.Model):
     cpucount = db.Column(db.Integer)  # CPU 鏍告暟
     memsize = db.Column(db.Integer)  # 鍐呭瓨瀹归噺
     disksize = db.Column(db.String(64))
-    business = db.Column(db.String(64))    #所属业务
-    powerstatus = db.Column(db.Integer)  #电源状态
+    business = db.Column(db.String(64))  # 所属业务
+    powerstatus = db.Column(db.Integer)  # 电源状态
     onstatus = db.Column(db.Integer)  # 浣跨敤鐘舵��
     usedept = db.Column(db.String(64))  # 浣跨敤閮ㄩ棬
     usestaff = db.Column(db.String(64))  # 閮ㄩ棬浣跨敤浜�
@@ -375,7 +370,6 @@ class Device(db.Model):
 
     def __repr__(self):
         return '<Device %r>' % self.hostname
-
 
 
 class ModuleClass(db.Model):
@@ -407,22 +401,21 @@ class TaskClass(db.Model):
         return '<TaskClass %r>' % self.name
 
 
-
 TaskRelationshipTaskGroup = db.Table('TaskRelationshipTaskGroup',
-    db.Column('deviceTaskGroup_id', db.Integer, db.ForeignKey('deviceTaskGroup.id')),
-    db.Column('deviceTask_id', db.Integer, db.ForeignKey('deviceTasks.id')),
-    db.Column('PQ', db.Integer)
-)
-
+                                     db.Column('deviceTaskGroup_id', db.Integer, db.ForeignKey('deviceTaskGroup.id')),
+                                     db.Column('deviceTask_id', db.Integer, db.ForeignKey('deviceTasks.id')),
+                                     db.Column('PQ', db.Integer)
+                                     )
 
 
 class DeviceTaskGroup(db.Model):
     __tablename__ = 'deviceTaskGroup'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    enabled = db.Column(db.Boolean)    #是否启用
+    enabled = db.Column(db.Boolean)  # 是否启用
     type = db.Column(db.Integer)
-    tasks = db.relationship('DeviceTasks', secondary=TaskRelationshipTaskGroup, backref=db.backref('taskGroup', lazy='dynamic'), lazy='dynamic')
+    tasks = db.relationship('DeviceTasks', secondary=TaskRelationshipTaskGroup,
+                            backref=db.backref('taskGroup', lazy='dynamic'), lazy='dynamic')
     isdelete = db.Column(db.Boolean)
     instaff = db.Column(db.String(64))  # 褰曞叆浜�
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 褰曞叆鏃堕棿
@@ -435,16 +428,17 @@ class DeviceTaskGroup(db.Model):
 class DeviceTasks(db.Model):
     __tablename__ = 'deviceTasks'
     id = db.Column(db.Integer, primary_key=True)
-    taskname = db.Column(db.String(64))     #任务名称
-    scriptname = db.Column(db.String(256))  #脚本名称
-    type = db.Column(db.Integer)        #脚本类型   python  shell  playbook  perl
-    arch = db.Column(db.Integer)        #系统架构   避免脚本运行出错
-    md5code = db.Column(db.String(128))  #脚本md5码   防止被修改
-    path = db.Column(db.String(256))     #脚本uuid
-    version = db.Column(db.String(20))   #脚本版本
-    enabled = db.Column(db.Boolean)   #启用
+    taskname = db.Column(db.String(64))  # 任务名称
+    scriptname = db.Column(db.String(256))  # 脚本名称
+    type = db.Column(db.Integer)  # 脚本类型   python  shell  playbook  perl
+    arch = db.Column(db.Integer)  # 系统架构   避免脚本运行出错
+    md5code = db.Column(db.String(128))  # 脚本md5码   防止被修改
+    path = db.Column(db.String(256))  # 脚本uuid
+    extra_vars = db.Column(db.Text)
+    version = db.Column(db.String(20))  # 脚本版本
+    enabled = db.Column(db.Boolean)  # 启用
     isdelete = db.Column(db.Boolean)
-    instaff = db.Column(db.String(64))   #录入人
+    instaff = db.Column(db.String(64))  # 录入人
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
     remarks = db.Column(db.Text)  # 备注
 
@@ -455,24 +449,23 @@ class DeviceTasks(db.Model):
 class System(db.Model):
     __tablename__ = 'System'
     id = db.Column(db.Integer, primary_key=True)
-    device_id = db.Column(db.Integer)       #设备id  通过cmdb读取设备
+    device_id = db.Column(db.Integer)  # 设备id  通过cmdb读取设备
     an = db.Column(db.String(64))
     sn = db.Column(db.String(64))
-    ip = db.Column(db.String(20))           #设备IP地址 选择设备后自动获取设备IP  在正式安装时判断是否与设备一致
+    ip = db.Column(db.String(20))  # 设备IP地址 选择设备后自动获取设备IP  在正式安装时判断是否与设备一致
     hostname = db.Column(db.String(64))
     power_ip = db.Column(db.String(32))
-    os_version = db.Column(db.String(64))         #系统版本
-    type = db.Column(db.Integer)      #部署方式  IPMI  DHCP
-    post = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))           #任务列表   安装系统后需要执行的
+    os_version = db.Column(db.String(64))  # 系统版本
+    type = db.Column(db.Integer)  # 部署方式  IPMI  DHCP
+    post = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))  # 任务列表   安装系统后需要执行的
     status = db.Column(db.Integer, default=1)
     isdelete = db.Column(db.Boolean)
-    instaff = db.Column(db.String(64))   #录入人
+    instaff = db.Column(db.String(64))  # 录入人
     inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
     remarks = db.Column(db.Text)  # 备注
 
     def __repr__(self):
         return '<TaskScripts %r>' % self.sn
-
 
 
 class ComplianceTasks(db.Model):
@@ -489,11 +482,76 @@ class ComplianceTasks(db.Model):
     remarks = db.Column(db.Text)  # 备注
 
 
-
 class ComplianceRecord(db.Model):
     __tablename__ = 'ComplianceRecord'
     id = db.Column(db.Integer, primary_key=True)
 
+
+SoftwareRelationshipDevice = db.Table('SoftwareRelationshipDevice',
+                                      db.Column('SoftwareDistribution_id', db.Integer,
+                                                db.ForeignKey('SoftwareDistribution.id')),
+                                      db.Column('device_id', db.Integer, db.ForeignKey('devices.id'))
+                                      )
+
+
+class SoftwareDistribution(db.Model):
+    __tablename__ = 'SoftwareDistribution'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    devices = db.relationship('Device', secondary=SoftwareRelationshipDevice, lazy='dynamic')
+    taskGroup = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))
+    type = db.Column(db.Integer)
+    status = db.Column(db.Integer)
+    instaff = db.Column(db.String(64))  # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
+
+
+ContrastTaskRelationshipContrastFilesOrDirectory = db.Table('ContrastTaskRelationshipContrastFilesOrDirectory',
+                                      db.Column('ContrastTask_id', db.Integer,
+                                                db.ForeignKey('ContrastTasks.id')),
+                                      db.Column('ContrastFilesOrDirectory', db.Integer, db.ForeignKey('ContrastFilesOrDirectory.id'))
+                                      )
+
+
+class ContrastTasks(db.Model):
+    __tablename__ = 'ContrastTasks'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    fileOrDirectory = db.relationship('ContrastFilesOrDirectory', secondary=ContrastTaskRelationshipContrastFilesOrDirectory,
+                            backref=db.backref('tasks', lazy='dynamic'), lazy='dynamic')
+    type = db.Column(db.Integer)
+    enabled = db.Column(db.Boolean)
+    status = db.Column(db.Integer)
+    instaff = db.Column(db.String(64))  # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
+
+
+
+class ContrastFilesOrDirectory(db.Model):
+    __tablename__ = 'ContrastFilesOrDirectory'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    device_id = db.Column(db.ForeignKey('devices.id'))
+    type = db.Column(db.Integer)        # 对比类型,   文件或目录
+    path = db.Column(db.String(512))
+    enabled = db.Column(db.String(64))
+    instaff = db.Column(db.String(64))  # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
+
+
+
+class ContrastResults(db.Model):
+    __tablename__ = 'ContrastResults'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    task = db.Column(db.ForeignKey('ContrastTasks.id'))
+    template = db.Column(db.String(512))
+    instaff = db.Column(db.String(64))  # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
 
 
 class histroyCommands(db.Model):
@@ -534,4 +592,3 @@ class Logger(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-

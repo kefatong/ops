@@ -15,7 +15,8 @@ migrate = Migrate(app,db)
 def make_shell_context():
     return dict(app=app, db=db, User=User, Role=Role, Device=Device, DeviceGroup=DeviceGroup, DeviceTasks=DeviceTasks,
                 DeviceTaskGroup=DeviceTaskGroup, histroyCommands=histroyCommands, ModuleClass=ModuleClass, TaskClass=TaskClass,
-                System=System, ComplianceTasks=ComplianceTasks, ComplianceRecord=ComplianceRecord)
+                System=System, ComplianceTasks=ComplianceTasks, ComplianceRecord=ComplianceRecord,
+                ContrastTasks=ContrastTasks, ContrastFilesOrDirectory=ContrastFilesOrDirectory, ContrastResults=ContrastResults)
                 
 
 manager.add_command('shell', Shell(make_context=make_shell_context))

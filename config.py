@@ -28,7 +28,7 @@ class Config:
     FLASK_POSTS_PER_PAGE = 30
     FLASK_FOLLOWERS_PER_PAGE = 20
 
-    FLASK_USE_CMDB_API = 'http://localhost:5001/api/v1.0'
+    FLASK_USE_CMDB_API = 'http://localhost:5000/api/v1.0'
     FLASK_USE_CMDB_USER = 'kefatong@qq.com'
     FLASK_USE_CMDB_PASSWORD = '123456'
 

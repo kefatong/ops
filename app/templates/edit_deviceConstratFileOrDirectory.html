@@ -23,61 +23,51 @@
 
     <div class="wraper container-fluid">
         <div class="page-title">
-            <h3 class="title">创建任务脚本</h3>
+            <h3 class="title">创建对比任务</h3>
         </div>
-
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">任务脚本信息</h3></div>
+                    <div class="panel-heading"><h3 class="panel-title">任务信息</h3></div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" enctype="multipart/form-data"
-                              action="{{ url_for('main.create_deviceTask') }}"
+                        <form class="form-horizontal" role="form"
+                              action="{{ url_for('main.edit_deviceContrastFileOrDirectory',id=contrastFileOrDirectory.id) }}"
                               method="POST">
                             {{ form.csrf_token }}
                             <div class="form-group">
                                 <label class="col-md-2 control-label">任务名称</label>
 
                                 <div class="col-md-6">
-                                    {{ form.taskname(class='form-control', placeholder='任务名称') }}
-                                    {{ macros.print_form_messages(form.errors.taskname) }}
+                                    {{ form.name(class='form-control', placeholder='任务名称') }}
+                                    {{ macros.print_form_messages(form.errors.name) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">任务类型</label>
+                                <label class="col-md-2 control-label">关联设备</label>
 
                                 <div class="col-md-6">
-                                    {{ form.type(class='select2', placeholder='任务类型') }}
+                                    {{ form.device_id(class='select2', placeholder='关联设备') }}
+                                    {{ macros.print_form_messages(form.errors.device_id) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">类型</label>
+
+                                <div class="col-md-6">
+                                    {{ form.type(class='select2', placeholder='类型') }}
                                     {{ macros.print_form_messages(form.errors.type) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">任务脚本</label>
+                                <label class="col-md-2 control-label">文件或目录Path</label>
 
                                 <div class="col-md-6">
-                                    {{ form.scriptfile(class='', placeholder='任务脚本') }}
-                                    {{ macros.print_form_messages(form.errors.scriptfile) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">变量</label>
-
-                                <div class="col-md-6">
-                                    {{ form.remarks(class='form-control autogrow', placeholder='{"install_path":"/home/tomcat", "tomcat_user": "tomcat"}', style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;") }}
-                                    {{ macros.print_form_messages(form.errors.remarks) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">系统架构</label>
-
-                                <div class="col-md-6">
-                                    {{ form.arch(class='select2', placeholder='系统架构') }}
-                                    {{ macros.print_form_messages(form.errors.arch) }}
+                                    {{ form.path(class='form-control', placeholder='/etc/hosts') }}
+                                    {{ macros.print_form_messages(form.errors.path) }}
                                 </div>
                             </div>
 
