@@ -1127,7 +1127,7 @@ def create_deviceSoftwareDistribution():
 
         db.session.add(softwareDistribution)
         db.session.commit()
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceSoftwareDistribution'))
 
     return render_template('create_softwareDistribution.html', form=form)
 
