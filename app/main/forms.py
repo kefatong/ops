@@ -395,7 +395,7 @@ class EditApplicationOfReleaseForm(Form):
         self.taskGroup.choices = [(Group.id, Group.name)
                                   for Group in DeviceTaskGroup.query.all()]
 
-        self.type.choices = [(1, u'软件分发')]
+        self.type.choices = [(1, u'应用发布')]
 
 
 
