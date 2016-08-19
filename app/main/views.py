@@ -1045,7 +1045,6 @@ def create_deviceCompliance():
         db.session.commit()
         return redirect(url_for('main.show_deviceCompliance'))
 
-
     return render_template('create_deviceCompliance.html', form=form)
     #return render_template('create_deviceCompliance.html')
 

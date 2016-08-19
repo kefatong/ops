@@ -69,8 +69,11 @@
                                                     <i class="fa"></i>
                                                 </label>
                                             </td>
-                                            <td><a href="{{ url_for('main.show_deviceTaskGroup', id=taskGroup.id) }}">{{ taskGroup.name }}</a></td>
-                                            <td><a href="{{ url_for('main.show_deviceTask', id=taskGroup.id) }}">{{ taskGroup.tasks.count() }}</a></td>
+                                            <td>
+                                                <a href="{{ url_for('main.show_deviceTaskGroup', id=taskGroup.id) }}">{{ taskGroup.name }}</a>
+                                            </td>
+                                            <td><a href="{{ url_for('main.show_deviceTask', id=taskGroup.id) }}"><span
+                                                    class="badge bg-pink">{{ taskGroup.tasks.count() }}</span></a></td>
                                             <td>{{ taskGroup.type }}</td>
                                             <td>{{ taskGroup.enabled }}</td>
                                             <td>{{ taskGroup.instaff }}</td>

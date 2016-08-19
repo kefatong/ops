@@ -4,7 +4,8 @@
     <list default="true" id="7c410cb3-0002-4a66-a174-dfd8d475c2e3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/views.py" afterPath="$PROJECT_DIR$/app/main/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceContrastTask.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceContrastTask.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/common/base.html" afterPath="$PROJECT_DIR$/app/templates/common/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" afterPath="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/migrations/alembic.ini" afterPath="$PROJECT_DIR$/migrations/alembic.ini" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/migrations/versions/1f73ecc4ca5b_.py" afterPath="$PROJECT_DIR$/migrations/versions/1f73ecc4ca5b_.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ops.sql" afterPath="$PROJECT_DIR$/ops.sql" />
@@ -36,8 +37,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/main/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="651">
-              <caret line="1260" column="57" selection-start-line="1260" selection-start-column="57" selection-end-line="1260" selection-end-column="57" />
+            <state relative-caret-position="2916">
+              <caret line="1018" column="0" selection-start-line="1018" selection-start-column="0" selection-end-line="1018" selection-end-column="0" />
               <folding>
                 <element signature="e#15#85#0" expanded="true" />
               </folding>
@@ -45,7 +46,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show_deviceContrastTask.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="show_deviceContrastTask.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/show_deviceContrastTask.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="525">
@@ -85,21 +86,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ansible_tasks.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/main/ansible_tasks.py">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="282">
+              <caret line="112" column="47" selection-start-line="111" selection-start-column="112" selection-end-line="112" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
+      <file leaf-file-name="show_deviceTask.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTask.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1695">
-              <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+            <state relative-caret-position="696">
+              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="69" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show_deviceTaskGroups.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="75" column="103" selection-start-line="75" selection-start-column="103" selection-end-line="75" selection-end-column="103" />
               <folding />
             </state>
           </provider>
@@ -159,7 +170,6 @@
         <option value="$PROJECT_DIR$/app/templates/create_deviceTaskClass.html" />
         <option value="$PROJECT_DIR$/app/templates/edit_deviceTaskClass.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTaskClass.html" />
-        <option value="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceGroup.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTaskGroup.html" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceTask.html" />
@@ -190,11 +200,12 @@
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/app/templates/auth/change_password.html" />
         <option value="$PROJECT_DIR$/app/templates/auth/login.html" />
-        <option value="$PROJECT_DIR$/app/templates/common/base.html" />
         <option value="$PROJECT_DIR$/app/templates/show_softwareDistribution.html" />
         <option value="$PROJECT_DIR$/app/main/views.py___jb_old___" />
-        <option value="$PROJECT_DIR$/app/main/views.py" />
         <option value="$PROJECT_DIR$/app/templates/show_deviceContrastTask.html" />
+        <option value="$PROJECT_DIR$/app/templates/common/base.html" />
+        <option value="$PROJECT_DIR$/app/main/views.py" />
+        <option value="$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html" />
       </list>
     </option>
   </component>
@@ -710,7 +721,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="823" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="823" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23194444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -830,24 +841,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="42" column="28" selection-start-line="42" selection-start-column="28" selection-end-line="42" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskGroup.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="795">
           <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTask.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="69" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -1059,14 +1056,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1695">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/create_softwareDistribution.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
@@ -1100,20 +1089,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceContrastTask.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="54" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/main/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="1260" column="57" selection-start-line="1260" selection-start-column="57" selection-end-line="1260" selection-end-column="57" />
+        <state relative-caret-position="2916">
+          <caret line="1018" column="0" selection-start-line="1018" selection-start-column="0" selection-end-line="1018" selection-end-column="0" />
           <folding>
             <element signature="e#15#85#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceContrastTask.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTask.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="54" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
+        <state relative-caret-position="696">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="69" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="112" column="47" selection-start-line="111" selection-start-column="112" selection-end-line="112" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_deviceTaskGroups.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="75" column="103" selection-start-line="75" selection-start-column="103" selection-end-line="75" selection-end-column="103" />
           <folding />
         </state>
       </provider>
