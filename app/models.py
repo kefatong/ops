@@ -554,6 +554,29 @@ class ContrastResults(db.Model):
     remarks = db.Column(db.Text)  # 备注
 
 
+ApplicationOfReleaseRelationshipDevice = db.Table('ApplicationOfReleaseRelationshipDevice',
+                                      db.Column('ApplicationOfRelease_id', db.Integer,
+                                                db.ForeignKey('ApplicationOfRelease.id')),
+                                      db.Column('device_id', db.Integer, db.ForeignKey('devices.id'))
+                                      )
+
+
+class ApplicationOfRelease(db.Model):
+    __tablename__ = 'ApplicationOfRelease'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    devices = db.relationship('Device', secondary=ApplicationOfReleaseRelationshipDevice, lazy='dynamic')
+    taskGroup = db.Column(db.Integer, db.ForeignKey('deviceTaskGroup.id'))
+    type = db.Column(db.Integer)
+    status = db.Column(db.Integer)
+    instaff = db.Column(db.String(64))  # 录入人
+    inputtime = db.Column(db.DateTime, default=datetime.now)  # 录入时间
+    remarks = db.Column(db.Text)  # 备注
+
+
+
+
+
 class histroyCommands(db.Model):
     __tablename__ = 'histroyCommands'
     id = db.Column(db.Integer, primary_key=True)

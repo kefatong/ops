@@ -377,6 +377,28 @@ class EditSoftwareDistributionForm(Form):
 
 
 
+class EditApplicationOfReleaseForm(Form):
+    name = StringField(u'任务名称', validators=[InputRequired()])
+    devices = SelectMultipleField(u'设备', coerce=int)
+    taskGroup = SelectField(u'任务组', coerce=int)
+    type = SelectField(u'任务类型', coerce=int)
+    enabled = BooleanField(u'启用')
+    remarks = TextAreaField(u'备注')
+    submit = SubmitField(u'保存')
+
+    def __init__(self, *args, **kwargs):
+        super(EditApplicationOfReleaseForm, self).__init__(*args, **kwargs)
+
+        self.devices.choices = [(device.id, device.hostname)
+                                for device in Device.query.all()]
+
+        self.taskGroup.choices = [(Group.id, Group.name)
+                                  for Group in DeviceTaskGroup.query.all()]
+
+        self.type.choices = [(1, u'软件分发')]
+
+
+
 class EditContrastTasksForm(Form):
     name = StringField(u'任务名称')
     fileOrDirectory = SelectMultipleField(u'文件或目录(s)', coerce=int)

@@ -1158,6 +1158,66 @@ def deploy_deviceSoftwareDistribution(id):
 
 
 
+@main.route('/show-device.applicationOfRelease', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def show_deviceApplicationOfRelease():
+    applicationOfRelease = ApplicationOfRelease.query.all()
+    return render_template('show_applicationOfRelease.html', applicationOfRelease=applicationOfRelease)
+
+
+
+@main.route('/create-device.applicationOfRelease', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def create_deviceApplicationOfRelease():
+    form = EditSoftwareDistributionForm()
+    if form.validate_on_submit():
+        applicationOfRelease = ApplicationOfRelease()
+        applicationOfRelease.name = form.name.data
+        if form.devices.data:
+            for device in form.devices.data:
+                applicationOfRelease.devices.append(Device.query.get_or_404(device))
+        applicationOfRelease.taskGroup = form.taskGroup.data
+        applicationOfRelease.type = form.type.data
+        applicationOfRelease.status = 1
+        applicationOfRelease.remarks = form.remarks.data
+
+        db.session.add(applicationOfRelease)
+        db.session.commit()
+        return redirect(url_for('main.show_deviceApplicationOfRelease'))
+
+    return render_template('create_applicationOfRelease.html', form=form)
+
+
+@main.route('/delete-device.applicationOfRelease/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def delete_deviceApplicationOfRelease(id):
+    applicationOfRelease = ApplicationOfRelease.query.get_or_404(id)
+    for device in applicationOfRelease.devices.all():
+        applicationOfRelease.devices.remove(device)
+    db.session.delete(applicationOfRelease)
+    db.session.commit()
+    flash(u'删除任务{0}成功'.format(applicationOfRelease.name))
+    return redirect(url_for('main.show_deviceApplicationOfRelease'))
+
+
+
+@main.route('/deploy-device.applicationOfRelease/<int:id>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.DEVICE_LOOK)
+def deploy_deviceApplicationOfRelease(id):
+    applicationOfRelease = ApplicationOfRelease.query.get_or_404(id)
+    applicationOfRelease.status =2
+    db.session.add(applicationOfRelease)
+    db.session.commit()
+    flash(u'任务{0}执行'.format(applicationOfRelease.name))
+    return redirect(url_for('main.show_deviceApplicationOfRelease'))
+
+
+
+
 
 @main.route('/deploy-device.ContrastTask/<int:id>', methods=['GET', 'POST'])
 @login_required
