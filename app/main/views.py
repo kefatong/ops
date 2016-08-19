@@ -23,11 +23,11 @@ import time
 import difflib
 import sys
 
-
-import cobbler.api as capi
-
-cobbler_handle = capi.BootAPI()
-
+try:
+    import cobbler.api as capi
+    cobbler_handle = capi.BootAPI()
+except ImportError:
+    pass
 
 import ansible_tasks
 import cobbler_tasks
@@ -66,8 +66,8 @@ def edit_profile():
 def index():
     json_device = get_api_json(current_app, postfix='/devices/')
     print json_device
-
-    return redirect(url_for('main.show_devices'))
+    return render_template('index.html')
+    #return redirect(url_for('main.show_devices'))
 
 
 ########################################################################

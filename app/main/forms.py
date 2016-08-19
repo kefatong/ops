@@ -12,9 +12,11 @@ from ..models import *
 from .. import db
 from wtforms import ValidationError
 
-import cobbler.api as capi
-
-cobbler_handle = capi.BootAPI()
+try:
+    import cobbler.api as capi
+    cobbler_handle = capi.BootAPI()
+except ImportError:
+    pass
 
 
 class EditProfileForm(Form):
