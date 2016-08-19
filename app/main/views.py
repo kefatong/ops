@@ -1171,7 +1171,7 @@ def show_deviceApplicationOfRelease():
 @login_required
 @permission_required(Permission.DEVICE_LOOK)
 def create_deviceApplicationOfRelease():
-    form = EditSoftwareDistributionForm()
+    form = EditApplicationOfReleaseForm()
     if form.validate_on_submit():
         applicationOfRelease = ApplicationOfRelease()
         applicationOfRelease.name = form.name.data
