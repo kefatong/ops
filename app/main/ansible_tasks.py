@@ -26,7 +26,7 @@ def command_runner(user, command, inventory, view):
         remote_user=user,
         host_list=inventory,
         pattern='all',
-        private_key_file='/home/eric/.ssh/id_rsa'
+        private_key_file='/root/.ssh/id_rsa'
     ).run()
     return res
 
