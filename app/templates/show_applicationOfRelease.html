@@ -63,10 +63,10 @@
                                             <td>{{ application.type }}</td>
                                             <td>{{ application.status }}</td>
                                             <td>
-                                                <a href="{{ url_for('main.deploy_deviceSoftwareDistribution', id=application.id) }}">
+                                                <a href="{{ url_for('main.deploy_deviceApplicationOfRelease', id=application.id) }}">
                                                     <button>发布</button>
                                                 </a>
-                                                <a href="{{ url_for('main.delete_deviceSoftwareDistribution', id=application.id) }}">
+                                                <a href="{{ url_for('main.delete_deviceApplicationOfRelease', id=application.id) }}">
                                                     <button>删除</button>
                                                 </a>
                                             </td>
