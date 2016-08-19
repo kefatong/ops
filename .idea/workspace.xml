@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ca74912-5d11-499b-9216-481b8ca5d910" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/common/base.html" afterPath="$PROJECT_DIR$/app/templates/common/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/show_applicationOfRelease.html" afterPath="$PROJECT_DIR$/app/templates/show_applicationOfRelease.html" />
     </list>
     <ignored path="ops.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="435">
-              <caret line="107" column="81" selection-start-line="107" selection-start-column="81" selection-end-line="107" selection-end-column="81" />
+              <caret line="107" column="81" selection-start-line="107" selection-start-column="50" selection-end-line="107" selection-end-column="81" />
               <folding />
             </state>
           </provider>
@@ -81,8 +81,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/main/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="1163" column="35" selection-start-line="1163" selection-start-column="4" selection-end-line="1163" selection-end-column="35" />
+            <state relative-caret-position="283">
+              <caret line="1172" column="37" selection-start-line="1172" selection-start-column="4" selection-end-line="1172" selection-end-column="37" />
               <folding>
                 <element signature="e#15#85#0" expanded="true" />
               </folding>
@@ -90,11 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show_applicationOfRelease.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="show_applicationOfRelease.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/templates/show_applicationOfRelease.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
+            <state relative-caret-position="375">
+              <caret line="33" column="44" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -152,9 +152,9 @@
         <option value="$PROJECT_DIR$/app/main/forms.py" />
         <option value="$PROJECT_DIR$/app/main/views.py" />
         <option value="$PROJECT_DIR$/app/templates/create_applicationOfRelease.html" />
-        <option value="$PROJECT_DIR$/app/templates/show_applicationOfRelease.html" />
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/templates/common/base.html" />
+        <option value="$PROJECT_DIR$/app/templates/show_applicationOfRelease.html" />
       </list>
     </option>
   </component>
@@ -664,22 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/create_applicationOfRelease.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-300">
-          <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/show_applicationOfRelease.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="478">
@@ -688,10 +672,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/create_applicationOfRelease.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-300">
+          <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/main/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="1163" column="35" selection-start-line="1163" selection-start-column="4" selection-end-line="1163" selection-end-column="35" />
+        <state relative-caret-position="283">
+          <caret line="1172" column="37" selection-start-line="1172" selection-start-column="4" selection-end-line="1172" selection-end-column="37" />
           <folding>
             <element signature="e#15#85#0" expanded="true" />
           </folding>
@@ -701,7 +693,15 @@
     <entry file="file://$PROJECT_DIR$/app/templates/common/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
-          <caret line="107" column="81" selection-start-line="107" selection-start-column="81" selection-end-line="107" selection-end-column="81" />
+          <caret line="107" column="81" selection-start-line="107" selection-start-column="50" selection-end-line="107" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/show_applicationOfRelease.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="33" column="44" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
           <folding />
         </state>
       </provider>
