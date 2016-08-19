@@ -1208,7 +1208,7 @@ def create_deviceContrastTask():
         db.session.add(contrastTask)
         db.session.commit()
         flash(u'创建{0}成功'.format(contrastTask.name))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceContrastTask'))
 
     return render_template('create_deviceConstratTask.html', form=form)
 
@@ -1234,7 +1234,7 @@ def edit_deviceContrastTask(id):
         db.session.add(contrastTask)
         db.session.commit()
         flash(u'修改{0}成功'.format(contrastTask.name))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceContrastTask'))
 
     form.name.data = contrastTask.name
     form.type.data = contrastTask.type
@@ -1258,7 +1258,7 @@ def delete_deviceContrastTask(id):
     db.session.delete(contrastTask)
     db.session.commit()
     flash(u'删除{0}成功!'.format(contrastTask.name))
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.show_deviceContrastTask'))
 
 
 
@@ -1290,7 +1290,7 @@ def create_deviceContrastFileOrDirectory():
         db.session.commit()
 
         flash(u'创建{0}成功'.format(contrastFileOrDirectory.name))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceContrastFileOrDirectory'))
 
     return render_template('create_deviceConstratFileOrDirectory.html', form=form)
 
@@ -1315,7 +1315,7 @@ def edit_deviceContrastFileOrDirectory(id):
         db.session.commit()
 
         flash(u'创建{0}成功'.format(contrastFileOrDirectory.name))
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.show_deviceContrastFileOrDirectory'))
 
 
     form.name.data = contrastFileOrDirectory.name
@@ -1334,7 +1334,7 @@ def delete_deviceContrastFileOrDirectory(id):
     contrastFileOrDirectory = ContrastFilesOrDirectory.query.get_or_404(id)
     db.session.delete(contrastFileOrDirectory)
     db.session.commit()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.show_deviceContrastFileOrDirectory'))
 
 
 
