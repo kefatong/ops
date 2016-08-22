@@ -61,11 +61,105 @@ def edit_profile():
     return render_template('edit_profile.html', form=form, username=current_user.username, logs=logs)
 
 
+
+
+@main.route('/show-system.users', methods=['GET', 'POST'])
+@login_required
+#@permission_required(Permission.USER_LOOK)
+def show_system_users():
+    users = User.query.all()
+    current_user.Location = {'menu': 'users', 'active': 'users'}
+    return render_template('show_system_users.html', users=users)
+
+
+@main.route('/create-system.users', methods=['GET', 'POST'])
+@login_required
+#@permission_required(Permission.USER_EDIT)
+def create_system_users():
+    current_user.Location = {'menu': 'users', 'active': 'users'}
+    form = EditProfileAdminForm(None)
+    if form.validate_on_submit():
+
+        user = User()
+        user.email = form.email.data
+        user.name = form.name.data
+        user.username = form.username.data
+        user.password = form.password.data
+        user.confirmed = form.confirmed.data
+        user.role = Role.query.get(form.role.data)
+        user.position = form.position.data
+        user.phone = form.phone.data
+        user.location = form.location.data
+
+        db.session.add(user)
+        db.session.commit()
+        flash(u'创建用户:{0}成功!'.format(user.username))
+        return redirect(url_for('main.show_system_users'))
+
+    return render_template('create_system_users.html', form=form)
+
+
+
+@main.route('/edit-system.users/<int:id>', methods=['GET', 'POST'])
+@login_required
+#@permission_required(Permission.USER_EDIT)
+def edit_system_users(id):
+    current_user.Location = {'menu': 'users', 'active': 'users'}
+    user = User.query.get_or_404(id)
+    form = EditProfileAdminForm(user)
+    if form.validate_on_submit():
+
+        user.email = form.email.data
+        user.name = form.name.data
+        user.username = form.username.data
+        user.password = form.password.data
+        user.confirmed = form.confirmed.data
+        user.role = Role.query.get(form.role.data)
+        user.position = form.position.data
+        user.phone = form.phone.data
+        user.location = form.location.data
+
+        db.session.add(user)
+        db.session.commit()
+        flash(u'修改用户:{0}成功!'.format(user.username))
+        return redirect(url_for('main.show_system_users'))
+
+    form.email.data = user.email
+    form.name.data = user.name
+    form.username.data = user.username
+    form.confirmed.data = user.confirmed
+    form.role.data = user.role
+    form.position.data = user.position
+    form.phone.data = user.phone
+    form.location.data = user.location
+
+    return render_template('edit_system_users.html', form=form, user=user)
+
+
+@main.route('/delete-system.users/<int:id>', methods=['GET', 'POST'])
+@login_required
+#@permission_required(Permission.USER_DEL)
+def delete_system_users(id):
+    current_user.Location = {'menu': 'users', 'active': 'users'}
+    user = User.query.get_or_404(id)
+    db.session.delete(user)
+    flash(u'删除用户:{0}成功!'.format(user.username))
+    return redirect(url_for('main.show_system_users'))
+
+
+##################################################################
+
+
+
+
+
+
+
+
+
 @main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    json_device = get_api_json(current_app, postfix='/devices/')
-    print json_device
     return render_template('index.html')
     #return redirect(url_for('main.show_devices'))
 

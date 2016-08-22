@@ -82,7 +82,7 @@
     <!-- Navbar Start -->
     <nav class="navigation">
         <ul class="list-unstyled">
-            <li class="active"><a href=""><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a>
+            <li class="active"><a href="{{ url_for('main.index') }}"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a>
             </li>
 
             <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span class="nav-label">设备信息</span></a>
@@ -137,9 +137,21 @@
                     class="badge bg-pink">5</span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{ url_for('main.show_moduleClass') }}">目录管理</a></li>
-                    <li><a href="">用户权限</a></li>
                 </ul>
             </li>
+
+            <li class="has-submenu"><a href="#"><i
+                    class="ion-document"></i> <span class="nav-label">用户管理</span><span
+                    class="badge bg-pink">{{ db.session.query(User).count() }}</span></a>
+                <ul class="list-unstyled">
+                    <li><a
+                            href="{{ url_for('main.show_system_users') }} ">用户管理
+                        <span class="badge bg-purple">{{ db.session.query(User).count() }}</span>
+                    </a></li>
+                    <li><a href="#">权限管理</a></li>
+                </ul>
+            </li>
+
         </ul>
     </nav>
 
@@ -306,7 +318,7 @@
 
     <!-- Footer Start -->
     <footer class="footer">
-        2016 © CMDB.
+        2016 © OPS.
     </footer>
     <!-- Footer Ends -->
 

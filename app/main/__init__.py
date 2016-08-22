@@ -18,7 +18,8 @@ def inject_db_session():
 def inject_models():
     return dict(ModuleClass=ModuleClass,
                 TaskClass=TaskClass,
-                Device=Device,)
+                Device=Device,
+                User=User,)
 
 
 
