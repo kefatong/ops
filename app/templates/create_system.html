@@ -38,7 +38,7 @@
                                 <label class="col-md-2 control-label">选择设备</label>
 
                                 <div class="col-md-6">
-                                    {{ form.device_id(id="device", class='select2', placeholder='任务名称') }}
+                                    {{ form.device_id(id="device", class='select2', onchange="aa(this)", placeholder='任务名称') }}
                                     {{ macros.print_form_messages(form.errors.device_id) }}
                                 </div>
                             </div>
@@ -229,11 +229,9 @@
             });
         });
 
-window.onload = function() {
-    $("#device").onchange(function () {
-        alert("#device").val();
-
-    });
+        function aa(obj) {
+        document.getElementById("hostname").value = obj.value
+        };
 }
 
     </script>
